@@ -5,6 +5,8 @@
  *
  **/
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public class MovieFile
 	private static RandomAccessFile raf;
 	private static long numRecords;
 	private static MovieRecord record;
+	private static BufferedReader bR;
+	private static ArrayList<String> databaseMovies;
 	
 	
 	public static void initialize() throws IOException
@@ -22,6 +26,27 @@ public class MovieFile
 		record = new MovieRecord();
 		raf = new RandomAccessFile("movie_info", "rw");
 		numRecords = raf.length() / record.recSize;
+		
+		//csv file
+		bR = new BufferedReader(new FileReader("movies.csv"));
+		databaseMovies = new ArrayList<String>();
+		String line = bR.readLine();
+		line = bR.readLine();
+		int counter = 0;
+		while(line != null)
+		{
+			databaseMovies.add(line);
+			line = bR.readLine();
+		}
+		for(int i = 0; i < databaseMovies.size(); i++)
+		{
+			String[] movieInfo = databaseMovies.get(i).split(";");
+			int[] tempShowTimes = {Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5])};
+			String[] tempCast = {movieInfo[6], movieInfo[7], movieInfo[8]};
+			record = new MovieRecord(movieInfo[0], movieInfo[1], tempShowTimes, tempCast, Integer.parseInt(movieInfo[9]));
+			writeRecord(i + 1, record);
+		}
+		
 	}
 	
 	//get a specific record
