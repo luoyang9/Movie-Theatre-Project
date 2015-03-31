@@ -156,10 +156,14 @@ public class SearchPanel extends JPanel{
 		
 	}
 	public class movieBlock extends JPanel{
-			
+		private JLabel image;
 		public movieBlock(MovieRecord e) {
 			setLayout(new BorderLayout());
+			image = new JLabel();
+			image.setIcon(new ImageIcon(new ImageIcon(Main.class.getResource(e.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
+			add(image, BorderLayout.CENTER);
 			add(new JLabel(e.getTitle(),JLabel.CENTER),BorderLayout.PAGE_END);
+			
 		}
 		/*public movieBlock(MovieRecord record){
 		  
