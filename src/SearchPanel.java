@@ -1,6 +1,9 @@
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -8,6 +11,10 @@ import javax.swing.event.DocumentListener;
 
 
 public class SearchPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Panels inside
 	protected JPanel searchPnl;
 	protected JPanel byDatePnl; //Cardlayout for search types
@@ -24,12 +31,21 @@ public class SearchPanel extends JPanel{
 	private static JTextField searchBox; //Search by title
 	private static JList searchBox2; //Search by date
 	
+	protected List<MovieRecord> records;
+	
 	public SearchPanel(){
-		this.setLayout(new BorderLayout());
+		try {
+			records = MovieFile.getAllRecords();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		setLayout(new BorderLayout());
 		byDatePnl = new JPanel(new CardLayout());
 		byTitlePnl = new JPanel(new CardLayout());
 		centerPnl = new JPanel(new BorderLayout());
-		filmsPnl = new JPanel(new GridLayout(1,5));
+		filmsPnl = new JPanel(new GridLayout(1,10));
 		searchPnl = new JPanel(new BorderLayout());
 		searchBox = new JTextField();
 		byDateBtn = new JButton("Search By Date");
@@ -46,15 +62,7 @@ public class SearchPanel extends JPanel{
 				  public void insertUpdate(DocumentEvent e) {
 					  updateFilm();
 				  }
-				  public void updateFilm(){
-					  String query = searchBox.getText();
-					  filmsPnl.removeAll();
-					  if(query.equals("")){
-						  searchType.setText("Featured");
-					  }else{
-						  searchType.setText("Results:");
-					  }
-				  }
+				  
 				});
 		byDatePnl.add("1",byDateBtn);
 		byDatePnl.add("2",searchBox2);
@@ -67,7 +75,7 @@ public class SearchPanel extends JPanel{
 		
 		//Add to panel
 		centerPnl.add(searchType,BorderLayout.LINE_START);
-		centerPnl.add(filmsPnl,BorderLayout.CENTER);
+		centerPnl.add(new JScrollPane(filmsPnl),BorderLayout.CENTER);
 		searchPnl.add(byDatePnl,BorderLayout.LINE_START);
 		searchPnl.add(byTitlePnl,BorderLayout.CENTER);
 		
@@ -76,6 +84,19 @@ public class SearchPanel extends JPanel{
 		
 		
 	}
+	private void updateFilm(){
+		  String query = searchBox.getText();
+		  filmsPnl.removeAll();
+		  if(query.equals("")){
+			  searchType.setText("Featured");
+		  }else{
+			  searchType.setText("Results:");
+			  for(MovieRecord e:records){
+				  if(e.movieTitle.contains(query))
+					  filmsPnl.add(new movieBlock(e));
+			  }
+		  }
+	  }
 	private static void switchCard(JPanel panel, int card){
 		 CardLayout cardLayout = (CardLayout)panel.getLayout();
 	     cardLayout.show(panel,""+card);
@@ -105,9 +126,15 @@ public class SearchPanel extends JPanel{
 			}else if(command == byTitleBtn)
 				searchMode(2);
 		}
+
 		
 	}
 	public class movieBlock extends JPanel{
+			
+		public movieBlock(MovieRecord e) {
+			setLayout(new BorderLayout());
+			add(new JLabel(e.getTitle(),JLabel.CENTER),BorderLayout.PAGE_END);
+		}
 		/*public movieBlock(MovieRecord record){
 		  
 		  
