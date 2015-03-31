@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -13,7 +12,18 @@ public class Main {
 	//
 	public static void main(String[] args) throws Exception 
 	{
-		guiApp();
+		javax.swing.SwingUtilities.invokeLater (new Runnable ( )
+		{
+		    public void run ( )
+		    {
+		    	try {
+					guiApp();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
 	}
 	
 	private static void guiApp() throws Exception

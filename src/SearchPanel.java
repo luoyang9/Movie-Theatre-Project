@@ -52,31 +52,19 @@ public class SearchPanel extends JPanel{
 		byTitleBtn = new JButton("Search By Title");
 		searchBox2 = new JList<String>();
 		searchType = new JLabel("Featured");
-		//Adding change Listener for search box
-		searchBox.getDocument().addDocumentListener(new DocumentListener() {
-			  public void changedUpdate(DocumentEvent e) {
-			  	}
-				  public void removeUpdate(DocumentEvent e) {
-					  filmsPnl.removeAll();
-					  updateFilm();
-					  System.out.println("r");
-				  }
-				  public void insertUpdate(DocumentEvent e) {
-					  filmsPnl.removeAll();
-					  updateFilm();
-					  
-					  System.out.println("i");
-				  }
-				  
-				});
+		
 		byDatePnl.add("1",byDateBtn);
 		byDatePnl.add("2",searchBox2);
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
+		
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
 		byDateBtn.addActionListener(onClick);
 		byTitleBtn.addActionListener(onClick);
+		//Adding document Listener for search box
+		SearchHandler onSearch = new SearchHandler();
+		searchBox.getDocument().addDocumentListener(onSearch);
 		
 		//Add to panel
 		centerPnl.add(searchType,BorderLayout.LINE_START);
@@ -89,27 +77,34 @@ public class SearchPanel extends JPanel{
 		
 		
 	}
-	private void updateFilm(){
-		  String query = searchBox.getText();
-		  filmsPnl.removeAll();
-		  System.out.println("Search Query: " + query);
-		  if(query.equals("")){
-			  searchType.setText("Featured");
-		  }else{
-			  searchType.setText("Results:");
-			  for(int x = 0;x<records.size();x++){
-				  if(records.get(x).movieTitle.toLowerCase().contains(query.toLowerCase()))
-				  {
-					  filmsPnl.add(new movieBlock(records.get(x)));
-				  }
-			  }
-		  }
-	  }
-	private static void switchCard(JPanel panel, int card){
+	private void updateFilm()
+	{
+		String query = searchBox.getText();
+		filmsPnl.removeAll();
+		System.out.println("Search Query: " + query);
+		if(query.equals(""))
+		{
+			searchType.setText("Featured");
+		}
+		else
+		{
+			searchType.setText("Results:");
+			for(int x = 0;x<records.size();x++)
+			{
+				if(records.get(x).movieTitle.toLowerCase().contains(query.toLowerCase()))
+				{
+					filmsPnl.add(new movieBlock(records.get(x)));
+				}
+			}
+		}
+	}
+	private static void switchCard(JPanel panel, int card)
+	{
 		 CardLayout cardLayout = (CardLayout)panel.getLayout();
 	     cardLayout.show(panel,""+card);
 	}
-	private void searchMode(int mode){
+	private void searchMode(int mode)
+	{
 		if(mode ==1){
 			switchCard(byDatePnl,2);
 			switchCard(byTitlePnl,1);
@@ -123,6 +118,29 @@ public class SearchPanel extends JPanel{
 			searchPnl.add(byTitlePnl,BorderLayout.CENTER);
 		}
 	}
+	
+	private class SearchHandler implements DocumentListener
+	{
+
+		public void changedUpdate(DocumentEvent e){}
+		public void removeUpdate(DocumentEvent e) 
+		{
+		  filmsPnl.removeAll();
+		  updateFilm();
+		  System.out.println("r");
+		  filmsPnl.repaint();
+		  filmsPnl.validate();
+		}
+		public void insertUpdate(DocumentEvent e) 
+		{
+		  filmsPnl.removeAll();
+		  updateFilm();
+		  System.out.println("i");
+		  filmsPnl.repaint();
+		  filmsPnl.validate();
+		}
+	}
+	
 	private class ButtonHandler implements ActionListener{
 
 		@Override
