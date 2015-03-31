@@ -27,7 +27,7 @@ public class Main {
 	}
 	
 	private static void guiApp() throws Exception
-	{		
+	{	
 		MovieFile.initialize();
 		frame = new JFrame("Movie Theatre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

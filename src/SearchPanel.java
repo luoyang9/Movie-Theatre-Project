@@ -125,17 +125,13 @@ public class SearchPanel extends JPanel{
 		public void changedUpdate(DocumentEvent e){}
 		public void removeUpdate(DocumentEvent e) 
 		{
-		  filmsPnl.removeAll();
 		  updateFilm();
-		  System.out.println("r");
 		  filmsPnl.repaint();
 		  filmsPnl.validate();
 		}
 		public void insertUpdate(DocumentEvent e) 
 		{
-		  filmsPnl.removeAll();
 		  updateFilm();
-		  System.out.println("i");
 		  filmsPnl.repaint();
 		  filmsPnl.validate();
 		}
