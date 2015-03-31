@@ -13,7 +13,7 @@ public class Main {
 	}
 	
 	private static void guiApp(){
-		frame = new JFrame("Movie Tickets");
+		frame = new JFrame("Movie Theatre");
 		mainPanel = new JPanel(new CardLayout());
 		mainPanel.add("1",new SearchPanel());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
