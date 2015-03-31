@@ -31,7 +31,7 @@ public class SearchPanel extends JPanel{
 	private static JTextField searchBox; //Search by title
 	private static JList searchBox2; //Search by date
 	
-	protected List<MovieRecord> records;
+	protected static List<MovieRecord> records;
 	
 	public SearchPanel(){
 		try {
@@ -57,10 +57,15 @@ public class SearchPanel extends JPanel{
 			  public void changedUpdate(DocumentEvent e) {
 			  	}
 				  public void removeUpdate(DocumentEvent e) {
+					  filmsPnl.removeAll();
 					  updateFilm();
+					  System.out.println("r");
 				  }
 				  public void insertUpdate(DocumentEvent e) {
+					  filmsPnl.removeAll();
 					  updateFilm();
+					  
+					  System.out.println("i");
 				  }
 				  
 				});
@@ -87,13 +92,16 @@ public class SearchPanel extends JPanel{
 	private void updateFilm(){
 		  String query = searchBox.getText();
 		  filmsPnl.removeAll();
+		  System.out.println("Search Query: " + query);
 		  if(query.equals("")){
 			  searchType.setText("Featured");
 		  }else{
 			  searchType.setText("Results:");
-			  for(MovieRecord e:records){
-				  if(e.movieTitle.contains(query))
-					  filmsPnl.add(new movieBlock(e));
+			  for(int x = 0;x<records.size();x++){
+				  if(records.get(x).movieTitle.toLowerCase().contains(query.toLowerCase()))
+				  {
+					  filmsPnl.add(new movieBlock(records.get(x)));
+				  }
 			  }
 		  }
 	  }

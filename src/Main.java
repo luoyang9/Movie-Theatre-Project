@@ -18,6 +18,7 @@ public class Main {
 	
 	private static void guiApp() throws Exception
 	{		
+		MovieFile.initialize();
 		frame = new JFrame("Movie Theatre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
@@ -26,7 +27,7 @@ public class Main {
 		
 
 		//initialize movie raf (open the file connection)
-		MovieFile.initialize();
+		
 
 		//make up data for an example movie (will use a database later)
 		int[] ironManTimes = {600, 1200, 300, 500};
