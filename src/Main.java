@@ -38,13 +38,14 @@ public class Main {
 
 		cards.add("1",searchPanel);
 		cards.add("2", moviePanel);
+		searchPanel.setCards(cards);
+		moviePanel.setCards(cards);
 		
 		//Execute frame
 		frame.add(cards);
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
 	public static void switchCard(int card){
 		 CardLayout cardLayout = (CardLayout)cards.getLayout();
 	     cardLayout.show(cards,""+card);
