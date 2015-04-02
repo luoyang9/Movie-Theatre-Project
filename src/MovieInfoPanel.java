@@ -125,7 +125,7 @@ public class MovieInfoPanel extends JPanel
 		movieImage.setIcon(movieImageIcon);
 	}
 	
-	public void setCardPanel(JPanel masterCards)
+	public void setCards(JPanel masterCards)
 	{
 		cards = masterCards;
 	}
@@ -138,7 +138,7 @@ public class MovieInfoPanel extends JPanel
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			if(command.equals("Back"))
 			{
-				cl.show(cards, "main");
+				cl.show(cards, "1");
 			}
 		}
 	}

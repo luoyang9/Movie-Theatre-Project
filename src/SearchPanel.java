@@ -15,6 +15,10 @@ public class SearchPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static JPanel cards;
+	private static JPanel movieInfoPanel;
+	
 	//Panels inside
 	protected JPanel searchPnl;
 	protected JPanel byDatePnl; //Cardlayout for search types
@@ -166,21 +170,34 @@ public class SearchPanel extends JPanel{
 
 		
 	}
-	public class movieBlock extends JPanel{
+	public class movieBlock extends JButton{
 		private JLabel image;
+		protected MovieRecord record;
 		public movieBlock(MovieRecord e) {
+			record = e;
 			setLayout(new BorderLayout());
 			image = new JLabel();
 			image.setIcon(new ImageIcon(new ImageIcon(Main.class.getResource(e.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
 			add(image, BorderLayout.CENTER);
 			add(new JLabel(e.getTitle(),JLabel.CENTER),BorderLayout.PAGE_END);
 			
+			ButtonHandler onClick = new ButtonHandler();
+			addActionListener(onClick);
 		}
-		/*public movieBlock(MovieRecord record){
-		  
-		  
-		  }
-		 */
+		private class ButtonHandler implements ActionListener{
+			public void actionPerformed(ActionEvent arg0) {
+				 CardLayout cardLayout = (CardLayout)cards.getLayout();
+			     cardLayout.show(cards,"2");
+			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
+			     moviePanel.setMovie(record);
+			}
+			
+		}
+	}
+	
+	public static void setCards(JPanel masterCards)
+	{
+		cards = masterCards;
 	}
 	
 }

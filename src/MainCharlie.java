@@ -45,7 +45,7 @@ public class MainCharlie
 		cards = new JPanel(new CardLayout());
 		cards.add(main, "main");
 		cards.add(moviePanel, "movie");
-		moviePanel.setCardPanel(cards);
+		moviePanel.setCards(cards);
 		main.setCardPanel(cards);
 		
 		frame.add(cards);
