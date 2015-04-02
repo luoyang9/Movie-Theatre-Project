@@ -56,20 +56,23 @@ public class MovieFile
 		
 		position = record.recSize*(recordNum - 1);
 		raf.seek(position);
-		
+		char nullChar = (char)0;
+		char nextChar;
 		//get chars for movie title
-		char title[] = new char[20];
-		for(int i = 0; i < title.length; i++)
+		StringBuilder title = new StringBuilder(20);
+		for(int i = 0; i < 20; i++)
 		{
-			title [i] = raf.readChar ();
+			nextChar = raf.readChar();
+			if(nextChar != nullChar) title.append(nextChar);
 		}
-		record.movieTitle = new String (title);
+		record.movieTitle = new String(title);
 		
 		// get chars for summary
-		char summary[] = new char [500];
-		for (int i = 0 ; i < summary.length ; i++)
+		StringBuilder summary = new StringBuilder(500);
+		for (int i = 0 ; i < 500 ; i++)
 		{
-			summary [i] = raf.readChar ();
+			nextChar = raf.readChar();
+			if(nextChar != nullChar) summary.append(nextChar);
 		}
 		record.movieSummary = new String (summary);
 		
@@ -91,10 +94,11 @@ public class MovieFile
 		//get movie cast
 		for(int i = 0; i < record.movieCast.length; i++)
 		{
-			char cast[] = new char[20];
-			for(int j = 0; j < cast.length; j++)
+			StringBuilder cast = new StringBuilder(20);
+			for(int j = 0; j < 20; j++)
 			{
-				cast [j] = raf.readChar ();
+				nextChar = raf.readChar();
+				if(nextChar != nullChar) cast.append(nextChar);
 			}
 			record.movieCast[i] = new String(cast);
 		}
@@ -128,7 +132,7 @@ public class MovieFile
 		//put movie title data into StringBuffer
 		temp = new StringBuffer(record.movieTitle);
 		temp.setLength(20); //max length	
-		raf.writeChars(temp.toString()); //write to file	
+		raf.writeChars(String.format("%20s", temp.toString())); //write to file	
 		
 		//put movie summary data into StringBuffer
 		temp = new StringBuffer(record.movieSummary);

@@ -44,6 +44,7 @@ public class Main {
 		//Execute frame
 		frame.add(cards);
 		frame.pack();
+		frame.setSize(800, 700);
 		frame.setVisible(true);
 	}
 	public static void switchCard(int card){

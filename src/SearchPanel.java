@@ -14,6 +14,7 @@ public class SearchPanel extends JPanel{
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	private static JPanel cards;
@@ -177,7 +178,7 @@ public class SearchPanel extends JPanel{
 			record = e;
 			setLayout(new BorderLayout());
 			image = new JLabel();
-			image.setIcon(new ImageIcon(new ImageIcon(Main.class.getResource(e.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
+			image.setIcon(new ImageIcon(new ImageIcon(Main.class.getResource(record.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
 			add(image, BorderLayout.CENTER);
 			add(new JLabel(e.getTitle(),JLabel.CENTER),BorderLayout.PAGE_END);
 			
@@ -195,7 +196,7 @@ public class SearchPanel extends JPanel{
 		}
 	}
 	
-	public static void setCards(JPanel masterCards)
+	public void setCards(JPanel masterCards)
 	{
 		cards = masterCards;
 	}

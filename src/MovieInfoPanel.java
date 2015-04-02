@@ -16,9 +16,6 @@ public class MovieInfoPanel extends JPanel
 	//cards
 	private static JPanel cards;
 	
-	//movie info
-	private String movieCast;
-	
 	//JPanels
 	private static JPanel showTimesPanel;
 	private static JPanel selectTimePanel;
@@ -114,14 +111,9 @@ public class MovieInfoPanel extends JPanel
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			btnShowTimes[i].setText(Integer.toString(movie.showTimes[i]));
-		};
-		movieCast = "";
-		for(int i = 0; i < movie.movieCast.length; i++)
-		{
-			movieCast += movie.movieCast[i] + " ";
 		}
-		lblCast.setText(movieCast);
-		movieImageIcon = new ImageIcon(Main.class.getResource(movie.imageID + ".jpg"));
+		lblCast.setText("<html><b>Director:</b> " + movie.movieCast[0] + "&nbsp;&nbsp;&nbsp;<b>Producer</b>: " + movie.movieCast[1] + "&nbsp;&nbsp;&nbsp;<b>Featuring:</b> " + movie.movieCast[2] + "</html>");
+		movieImageIcon = new ImageIcon(new ImageIcon(Main.class.getResource(movie.imageID + ".jpg")).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
 		movieImage.setIcon(movieImageIcon);
 	}
 	
