@@ -115,6 +115,7 @@ public class MovieFile
 			currMovie = getRecord(i+1);
 			list.add(new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.showTimes, currMovie.movieCast, currMovie.imageID));
 		}
+		log.i(numRecords +" Records found");
 		return list;
 	}
 	
