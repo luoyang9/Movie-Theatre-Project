@@ -18,7 +18,6 @@ public class SearchPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private static JPanel cards;
-	private static JPanel movieInfoPanel;
 	
 	//Panels inside
 	protected JPanel searchPnl;

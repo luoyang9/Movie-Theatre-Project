@@ -32,7 +32,6 @@ public class MovieFile
 		databaseMovies = new ArrayList<String>();
 		String line = bR.readLine();
 		line = bR.readLine();
-		int counter = 0;
 		while(line != null)
 		{
 			databaseMovies.add(line);
