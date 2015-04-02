@@ -58,6 +58,14 @@ public class SearchPanel extends JPanel{
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
 		
+		for(int i = 0; i < records.size(); i++)
+		{
+			if(i < 5)
+			{
+				filmsPnl.add(new movieBlock(records.get(i)));
+			}
+		}
+		
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
 		byDateBtn.addActionListener(onClick);
@@ -85,6 +93,13 @@ public class SearchPanel extends JPanel{
 		if(query.equals(""))
 		{
 			searchType.setText("Featured");
+			for(int i = 0; i < records.size(); i++)
+			{
+				if(i < 5)
+				{
+					filmsPnl.add(new movieBlock(records.get(i)));
+				}
+			}
 		}
 		else
 		{
