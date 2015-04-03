@@ -45,7 +45,7 @@ public class SearchPanel extends JPanel{
 			mBlocks = new movieBlock[records.size()];
 			for(int x = 0;x<records.size();x++){
 				mBlocks[x] = new movieBlock(records.get(x));
-				log.v("Record " + x + " loaded" );
+				log.v("Record " + (x + 1) + " loaded" );
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
