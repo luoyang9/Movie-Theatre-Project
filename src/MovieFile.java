@@ -63,11 +63,6 @@ public class MovieFile
 		{
 			nextChar = raf.readChar();
 			if(nextChar != nullChar) title.append(nextChar);
-			else
-			{
-				raf.seek(position + 40);
-				break;
-			}
 		}
 		record.movieTitle = new String(title);
 		
@@ -77,11 +72,6 @@ public class MovieFile
 		{
 			nextChar = raf.readChar();
 			if(nextChar != nullChar) summary.append(nextChar);
-			else
-			{
-				raf.seek(position + 1040);
-				break;
-			}
 		}
 		record.movieSummary = new String (summary);
 		
@@ -108,11 +98,6 @@ public class MovieFile
 			{
 				nextChar = raf.readChar();
 				if(nextChar != nullChar) cast.append(nextChar);
-				else
-				{
-					raf.seek(position + (1224 - (40 - 20 * i)));
-					break;
-				}
 			}
 			record.movieCast[i] = new String(cast);
 		}
