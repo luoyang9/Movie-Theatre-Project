@@ -207,7 +207,7 @@ public class SearchPanel extends JPanel{
 			     cardLayout.show(cards,"2");
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
 			     moviePanel.setMovie(record);
-			     allFrame.dispose();
+			     if(allFrame != null)allFrame.dispose();
 			}
 			
 		}
