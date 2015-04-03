@@ -38,15 +38,20 @@ public class SearchPanel extends JPanel{
 	private static JTextField searchBox; //Search by title
 	private static JList searchBox2; //Search by date
 	
-	protected static List<MovieRecord> records;
-	
+	protected static movieBlock[] mBlocks;
 	public SearchPanel(){
 		try {
-			records = MovieFile.getAllRecords();
+			List<MovieRecord>records = MovieFile.getAllRecords();
+			mBlocks = new movieBlock[records.size()];
+			for(int x = 0;x<records.size();x++){
+				mBlocks[x] = new movieBlock(records.get(x));
+				log.v("Record " + x + " loaded" );
+			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		
 		setLayout(new BorderLayout());
 		byDatePnl = new JPanel(new CardLayout());
@@ -68,13 +73,7 @@ public class SearchPanel extends JPanel{
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
 		
-		for(int i = 0; i < records.size(); i++)
-		{
-			if(i < 5)
-			{
-				filmsPnl.add(new movieBlock(records.get(i)));
-			}
-		}
+		updateFilm();
 		
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
@@ -106,22 +105,22 @@ public class SearchPanel extends JPanel{
 		if(query.equals(""))
 		{
 			searchType.setText("Featured");
-			for(int i = 0; i < records.size(); i++)
+			for(int i = 0; i < mBlocks.length; i++)
 			{
 				if(i < 5)
 				{
-					filmsPnl.add(new movieBlock(records.get(i)));
+					filmsPnl.add(mBlocks[i]);
 				}
 			}
 		}
 		else
 		{
 			searchType.setText("Results:");
-			for(int x = 0;x<records.size();x++)
+			for(int x = 0;x<mBlocks.length;x++)
 			{
-				if(records.get(x).movieTitle.toLowerCase().contains(query.toLowerCase()))
+				if(mBlocks[x].getRecord().movieTitle.toLowerCase().contains(query.toLowerCase()))
 				{
-					filmsPnl.add(new movieBlock(records.get(x)));
+					filmsPnl.add(mBlocks[x]);
 				}
 			}
 		}
@@ -175,14 +174,15 @@ public class SearchPanel extends JPanel{
 				searchMode(1);
 			else if(command == byTitleBtn)
 				searchMode(2);
-			else if(command == viewAll)
+			else if(command == viewAll){
 				allFrame = new JFrame("All Movies");
 				Container c = allFrame.getContentPane();
-				c.setLayout(new GridLayout((int)Math.ceil(Math.sqrt(records.size())),(int)Math.ceil(records.size()/Math.sqrt(records.size()))));
-				for(int x = 0;x<records.size();x++)
-					allFrame.add(new movieBlock(records.get(x)));
+				c.setLayout(new GridLayout((int)Math.ceil(Math.sqrt(mBlocks.length)),(int)Math.ceil(mBlocks.length/Math.sqrt(mBlocks.length))));
+				for(int x = 0;x<mBlocks.length;x++)
+					allFrame.add(mBlocks[x]);
 				allFrame.pack();
 				allFrame.setVisible(true);
+		}
 		}
 
 		
@@ -201,6 +201,7 @@ public class SearchPanel extends JPanel{
 			ButtonHandler onClick = new ButtonHandler();
 			addActionListener(onClick);
 		}
+		public MovieRecord getRecord(){return record;}
 		private class ButtonHandler implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				 CardLayout cardLayout = (CardLayout)cards.getLayout();
