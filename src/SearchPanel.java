@@ -34,7 +34,7 @@ public class SearchPanel extends JPanel{
 	private static JButton viewAll;
 	private JButton optionsBtn;
 	private JButton managementBtn;
-	
+	private JScrollPane scroll;
 	private static JTextField searchBox; //Search by title
 	private static JList searchBox2; //Search by date
 	
@@ -73,7 +73,7 @@ public class SearchPanel extends JPanel{
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
 		
-		updateFilm();
+		
 		
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
@@ -83,25 +83,26 @@ public class SearchPanel extends JPanel{
 		//Adding document Listener for search box
 		SearchHandler onSearch = new SearchHandler();
 		searchBox.getDocument().addDocumentListener(onSearch);
-		
+		//
+		scroll = new JScrollPane(filmsPnl);
 		//Add to panel
 		leftPanel.add(searchType, BorderLayout.CENTER);
 		leftPanel.add(viewAll,BorderLayout.PAGE_END);
 		centerPnl.add(leftPanel,BorderLayout.LINE_START);
-		centerPnl.add(new JScrollPane(filmsPnl),BorderLayout.CENTER);
+		centerPnl.add(scroll,BorderLayout.CENTER);
 		searchPnl.add(byDatePnl,BorderLayout.LINE_START);
 		searchPnl.add(byTitlePnl,BorderLayout.CENTER);
 		
 		add(searchPnl,BorderLayout.PAGE_START);
 		add(centerPnl,BorderLayout.CENTER);
 		
-		
+		updateFilm();
 	}
 	private void updateFilm()
 	{
 		String query = searchBox.getText();
 		filmsPnl.removeAll();
-		log.v("Search Query: " + query);
+		
 		if(query.equals(""))
 		{
 			searchType.setText("Featured");
@@ -123,7 +124,13 @@ public class SearchPanel extends JPanel{
 					filmsPnl.add(mBlocks[x]);
 				}
 			}
+			log.v("Search Query: " + query);
+			
 		}
+		filmsPnl.repaint();
+		scroll.repaint();
+		filmsPnl.validate();
+		scroll.validate();
 	}
 	private static void switchCard(JPanel panel, int card)
 	{
@@ -153,14 +160,11 @@ public class SearchPanel extends JPanel{
 		public void removeUpdate(DocumentEvent e) 
 		{
 		  updateFilm();
-		  filmsPnl.repaint();
-		  filmsPnl.validate();
 		}
 		public void insertUpdate(DocumentEvent e) 
 		{
 		  updateFilm();
-		  filmsPnl.repaint();
-		  filmsPnl.validate();
+		  
 		}
 	}
 	
