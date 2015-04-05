@@ -110,7 +110,19 @@ public class MovieInfoPanel extends JPanel
 		lblSummary.setText(movie.movieSummary);
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
-			btnShowTimes[i].setText(Integer.toString(movie.showTimes[i]));
+			String formattedShowTime;
+			String stringShowTime = Integer.toString(movie.showTimes[i]);
+			if(stringShowTime.length() <= 4)
+			{
+				String timePeriod = stringShowTime.substring(3, 4).equals("0") ? "AM" : "PM";
+				formattedShowTime = stringShowTime.substring(0, 1) + ":" + stringShowTime.substring(1, 3) + timePeriod;
+			}
+			else
+			{
+				String timePeriod = stringShowTime.substring(4, 5).equals("0") ? "AM" : "PM";
+				formattedShowTime = stringShowTime.substring(0,  2) + ":" + stringShowTime.substring(2, 4) + timePeriod;
+			}
+			btnShowTimes[i].setText(formattedShowTime);
 		}
 		lblCast.setText("<html><b>Director:</b> " + movie.movieCast[0] + "&nbsp;&nbsp;&nbsp;<b>Producer</b>: " + movie.movieCast[1] + "&nbsp;&nbsp;&nbsp;<b>Featuring:</b> " + movie.movieCast[2] + "</html>");
 		movieImageIcon = new ImageIcon(new ImageIcon(Main.class.getResource(movie.imageID + ".jpg")).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));

@@ -45,13 +45,15 @@ public class MovieFile
 			record = new MovieRecord(movieInfo[0], movieInfo[1], tempShowTimes, tempCast, Integer.parseInt(movieInfo[9]));
 			writeRecord(i + 1, record);
 		}
-		
+		raf.close();
 	}
 	
 	//get a specific record
 	public static MovieRecord getRecord(long recordNum) throws Exception
 	{
 		long position;
+		record = new MovieRecord();
+		raf = new RandomAccessFile("movie_info", "rw");
 		
 		position = record.recSize*(recordNum - 1);
 		raf.seek(position);
@@ -108,11 +110,6 @@ public class MovieFile
 			{
 				nextChar = raf.readChar();
 				if(nextChar != nullChar) cast.append(nextChar);
-				else
-				{
-					raf.seek(position + (1224 - (40 - 20 * i)));
-					break;
-				}
 			}
 			record.movieCast[i] = new String(cast);
 		}
@@ -120,6 +117,7 @@ public class MovieFile
 		//get image id
 		record.imageID = raf.readInt();
 		
+		raf.close();
 		return record;
 	}
 	
@@ -131,7 +129,8 @@ public class MovieFile
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currMovie = getRecord(i+1);
-			list.add(new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.showTimes, currMovie.movieCast, currMovie.imageID));
+			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.showTimes, currMovie.movieCast, currMovie.imageID);
+			list.add(movie);
 		}
 		log.i(numRecords +" Records found");
 		return list;
@@ -139,6 +138,7 @@ public class MovieFile
 	
 	public static void writeRecord(long recordNum, MovieRecord record) throws IOException
 	{
+		raf = new RandomAccessFile("movie_info", "rw");
 		long position = record.recSize * (recordNum - 1);
 		raf.seek(position);
 		
@@ -181,6 +181,7 @@ public class MovieFile
 		raf.writeInt(record.imageID);
 
 		numRecords = raf.length() / record.recSize;
+		raf.close();
 	}
 	
 	public static RandomAccessFile getMovieFile(){return raf;}
