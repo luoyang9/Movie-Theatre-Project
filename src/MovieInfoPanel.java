@@ -131,6 +131,8 @@ public class MovieInfoPanel extends JPanel
 			if(command.equals("Back"))
 			{
 				cl.show(cards, "1");
+				SearchPanel sp = (SearchPanel) cards.getComponent(0);
+				sp.updateFilm();
 			}
 		}
 	}
