@@ -2,6 +2,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class SearchPanel extends JPanel{
 		
 		updateFilm();
 	}
-	private void updateFilm()
+	public void updateFilm()
 	{
 		String query = searchBox.getText();
 		filmsPnl.removeAll();
@@ -180,6 +182,11 @@ public class SearchPanel extends JPanel{
 				searchMode(2);
 			else if(command == viewAll){
 				allFrame = new JFrame("All Movies");
+				allFrame.addWindowListener(new WindowAdapter(){
+	                public void windowClosing(WindowEvent e){
+	                    updateFilm();
+	                }
+	            });
 				Container c = allFrame.getContentPane();
 				c.setLayout(new GridLayout((int)Math.ceil(Math.sqrt(mBlocks.length)),(int)Math.ceil(mBlocks.length/Math.sqrt(mBlocks.length))));
 				for(int x = 0;x<mBlocks.length;x++)
@@ -205,6 +212,7 @@ public class SearchPanel extends JPanel{
 			ButtonHandler onClick = new ButtonHandler();
 			addActionListener(onClick);
 		}
+
 		public MovieRecord getRecord(){return record;}
 		private class ButtonHandler implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
