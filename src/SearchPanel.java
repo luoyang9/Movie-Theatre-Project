@@ -184,7 +184,9 @@ public class SearchPanel extends JPanel{
 				allFrame = new JFrame("All Movies");
 				allFrame.addWindowListener(new WindowAdapter(){
 	                public void windowClosing(WindowEvent e){
-	                    updateFilm();
+	                	Main.frame.setVisible(true);
+	                	updateFilm();
+	                    
 	                }
 	            });
 				Container c = allFrame.getContentPane();
@@ -193,6 +195,7 @@ public class SearchPanel extends JPanel{
 					allFrame.add(mBlocks[x]);
 				allFrame.pack();
 				allFrame.setVisible(true);
+				Main.frame.setVisible(false);
 		}
 		}
 
@@ -220,7 +223,10 @@ public class SearchPanel extends JPanel{
 			     cardLayout.show(cards,"2");
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
 			     moviePanel.setMovie(record);
-			     if(allFrame != null)allFrame.dispose();
+			     if(allFrame != null){
+			    	 allFrame.dispose();
+			    	 Main.frame.setVisible(true);
+			     }
 			}
 			
 		}
