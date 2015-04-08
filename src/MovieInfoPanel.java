@@ -16,6 +16,9 @@ public class MovieInfoPanel extends JPanel
 	//cards
 	private static JPanel cards;
 	
+	//movie
+	private static MovieRecord movie;
+	
 	//JPanels
 	private static JPanel showTimesPanel;
 	private static JPanel selectTimePanel;
@@ -106,8 +109,32 @@ public class MovieInfoPanel extends JPanel
 	
 	public void setMovie(MovieRecord movie)
 	{	
+		this.movie = movie;
+		
+		
 		lblTitle.setText(movie.movieTitle);
 		lblSummary.setText(movie.movieSummary);
+		
+		String releaseDate = Integer.toString(movie.releaseDate);
+		if(releaseDate.length() == 3)
+		{
+			releaseDate = releaseDate.substring(0, 1) + "/" + releaseDate.substring(1, 3);
+		}
+		else if(releaseDate.length() == 4)
+		{
+			releaseDate = releaseDate.substring(0, 2) + "/" + releaseDate.substring(2, 4);
+		}
+		String finalDate = Integer.toString(movie.finalDate);
+		if(finalDate.length() == 3)
+		{
+			finalDate = finalDate.substring(0, 1) + "/" + finalDate.substring(1, 3);
+		}
+		else if(finalDate.length() == 4)
+		{
+			finalDate = finalDate.substring(0, 2) + "/" + finalDate.substring(2, 4);
+		}
+		
+		lblSummary.append("\nReleased: " + releaseDate + " --- Final date: " + finalDate);
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			String formattedShowTime;
@@ -145,6 +172,16 @@ public class MovieInfoPanel extends JPanel
 				cl.show(cards, "1");
 				SearchPanel sp = (SearchPanel) cards.getComponent(0);
 				sp.updateFilm();
+			}
+			
+			for(int i = 0; i < btnShowTimes.length; i++)
+			{
+				if(command.equals(btnShowTimes[i].getActionCommand()))
+				{
+					cl.show(cards, "3");
+					TicketPanel tp = (TicketPanel) cards.getComponent(2);
+					tp.setMovie(movie, (String)showDate.getSelectedItem(), btnShowTimes[i].getText());
+				}
 			}
 		}
 	}

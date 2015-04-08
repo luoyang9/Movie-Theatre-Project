@@ -21,7 +21,7 @@ public class MovieFile
 	private static ArrayList<String> databaseMovies;
 	
 	
-	public static void initialize() throws IOException
+	public static void initialize() throws Exception
 	{
 		record = new MovieRecord();
 		raf = new RandomAccessFile("movie_info", "rw");
@@ -40,9 +40,21 @@ public class MovieFile
 		for(int i = 0; i < databaseMovies.size(); i++)
 		{
 			String[] movieInfo = databaseMovies.get(i).split(";");
-			int[] tempShowTimes = {Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5])};
-			String[] tempCast = {movieInfo[6], movieInfo[7], movieInfo[8]};
-			record = new MovieRecord(movieInfo[0], movieInfo[1], tempShowTimes, tempCast, Integer.parseInt(movieInfo[9]));
+			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
+			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
+			boolean[][] seats = getRecord(i + 1).seats;
+			if(seats == null) 
+			{
+				seats = new boolean[3][4];
+				for(int a = 0; a < seats.length; a++)
+				{
+					for(int b = 0; b < seats[a].length; b++)
+					{
+						seats[a][b] = false;
+					}
+				}
+			}
+			record = new MovieRecord(movieInfo[0], movieInfo[1], Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), tempShowTimes, seats, tempCast, Integer.parseInt(movieInfo[11]));
 			writeRecord(i + 1, record);
 		}
 		raf.close();
@@ -87,6 +99,9 @@ public class MovieFile
 		}
 		record.movieSummary = new String (summary);
 		
+		record.releaseDate = raf.readInt();
+		record.finalDate = raf.readInt();
+		
 		//get show times
 		for(int i = 0; i < record.showTimes.length; i++)
 		{
@@ -129,7 +144,7 @@ public class MovieFile
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currMovie = getRecord(i+1);
-			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.showTimes, currMovie.movieCast, currMovie.imageID);
+			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.releaseDate, currMovie.finalDate, currMovie.showTimes, currMovie.seats, currMovie.movieCast, currMovie.imageID);
 			list.add(movie);
 		}
 		log.i(numRecords +" Records found");
@@ -153,6 +168,10 @@ public class MovieFile
 		temp = new StringBuffer(record.movieSummary);
 		temp.setLength(500); //max length	
 		raf.writeChars(temp.toString()); //write to file
+		
+		//write release and final dates
+		raf.writeInt(record.releaseDate);
+		raf.writeInt(record.finalDate);
 		
 		//write show times
 		for(int i = 0; i < record.showTimes.length; i++)
@@ -190,6 +209,8 @@ public class MovieFile
 	{
 		raf.close();
 	}
+	
+	
 	
 	
 }

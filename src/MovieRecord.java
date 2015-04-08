@@ -7,26 +7,30 @@
 public class MovieRecord 
 {
 	protected String movieTitle; //20 chars - 40 bytes							 
-	protected String movieSummary; //500 chars - 1000 bytes						
+	protected String movieSummary; //500 chars - 1000 bytes	
+	protected int releaseDate; //1 int - 4 bytes
+	protected int finalDate;//1 int - 4 bytes
 	protected int[] showTimes; //4 int - 16 bytes
-	protected boolean[][] seats; //48 booleans - 48 bytes
+	protected boolean[][] seats; //12 booleans - 12 bytes
 	protected String[] movieCast; //3 * 20 chars - 120 bytes
 	protected int imageID;//1 int - 4 bytes
 	
-	protected final int recSize = 1228; //40+1000+16+48+120+4
+	protected final int recSize = 1200; //40+1000+16+48+120+4 + 4 + 4
 	
 	public MovieRecord()
 	{
 		//initialize all properties
 		movieTitle = "not set";
 		movieSummary = "not set";
+		releaseDate = 0;
+		finalDate = 0;
 		showTimes = new int[4];
-		seats = new boolean[4][12];
+		seats = new boolean[3][4];
 		movieCast = new String[3];
 		imageID = 1;
 	}
 	
-	public MovieRecord(String movieTitle, String movieSummary, int[] showTimes, String[] movieCast, int imageID)
+	public MovieRecord(String movieTitle, String movieSummary, int releaseDate, int finalDate, int[] showTimes, boolean[][] seats, String[] movieCast, int imageID)
 	{
 		//set movieTitle
 		if (movieTitle.length () > 20)
@@ -52,17 +56,21 @@ public class MovieRecord
 			this.movieSummary = movieSummary;
 		}
 		
+		//set release and final dates
+		this.releaseDate = releaseDate;
+		this.finalDate = finalDate;
+		
 		//set show times
 		this.showTimes = showTimes;
 		
 		//initialize seats
-		this.seats = new boolean[4][12];
+		this.seats = new boolean[3][4];
 		//sets all seats to open (not ordered)
-		for(int i = 0; i < seats.length; i++)
+		for(int i = 0; i < this.seats.length; i++)
 		{
-			for(int j = 0; j < seats[i].length; j++)
+			for(int j = 0; j < this.seats[i].length; j++)
 			{
-				seats[i][j] = false;
+				this.seats[i][j] = seats[i][j];
 			}
 		}
 		
