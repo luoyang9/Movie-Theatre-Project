@@ -46,6 +46,7 @@ public class SearchPanel extends JPanel{
 	//Labels
 	private static JLabel time;
 	protected static movieBlock[] mBlocks;
+	final static int SLIDER_INTERVAL = 4;
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -74,14 +75,14 @@ public class SearchPanel extends JPanel{
 		leftPanel = new JPanel(new BorderLayout());
 		viewAll = new JButton("All Movies");
 		time = new JLabel("Choose a time");
-		timeSlide = new JSlider(0,24,12);
+		timeSlide = new JSlider(0,12*SLIDER_INTERVAL,12/2*SLIDER_INTERVAL);
 		byDateContent.add(timeSlide, BorderLayout.CENTER);
 		byDateContent.add(time, BorderLayout.PAGE_START);
 		byDatePnl.add("1",byDateBtn);
 		byDatePnl.add("2",byDateContent);
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
-		
+		timeSlide.addChangeListener(new SliderListener());
 		
 		
 		//add action listeners
@@ -107,6 +108,33 @@ public class SearchPanel extends JPanel{
 		add(centerPnl,BorderLayout.CENTER);
 		
 		updateFilm();
+	}
+	public void updateFilm(int time){
+		filmsPnl.removeAll();
+		searchType.setText("Results");
+		int timeMin = (time*60/SLIDER_INTERVAL);
+		log.v("Searching for time " + timeMin);
+		String displayTime;
+		if(timeMin>=60)
+			displayTime = ""+((int)timeMin/60)+":"+ ((timeMin%60 ==0)?"00":timeMin%60);
+		else displayTime = "12:" + ((timeMin ==0)?"00":timeMin);
+		this.time.setText(displayTime);
+		loop:
+		for(movieBlock i:mBlocks){
+			for(Integer x:i.getRecord().showTimes){
+				int timeMin1 = (int)( x*60/100) + x%100;
+				if(timeMin == timeMin1){
+					filmsPnl.add(i);
+				}else if(timeMin>timeMin1) continue loop;
+			}
+		}
+		
+		
+		
+		filmsPnl.repaint();
+		scroll.repaint();
+		filmsPnl.validate();
+		scroll.validate();
 	}
 	public void updateFilm()
 	{
@@ -177,7 +205,14 @@ public class SearchPanel extends JPanel{
 		  
 		}
 	}
-	
+	class SliderListener implements ChangeListener {
+	    public void stateChanged(ChangeEvent e) {
+	        JSlider source = (JSlider)e.getSource();
+	            int value = source.getValue();
+	            updateFilm(value);
+	            
+	    }
+	}
 	private class ButtonHandler implements ActionListener{
 
 		@Override
