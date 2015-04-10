@@ -42,15 +42,18 @@ public class MovieFile
 			String[] movieInfo = databaseMovies.get(i).split(";");
 			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
-			boolean[][] seats = getRecord(i + 1).seats;
+			boolean[][][] seats = getRecord(i + 1).seats;
 			if(seats == null) 
 			{
-				seats = new boolean[3][4];
+				seats = new boolean[4][3][4];
 				for(int a = 0; a < seats.length; a++)
 				{
 					for(int b = 0; b < seats[a].length; b++)
 					{
-						seats[a][b] = false;
+						for(int c = 0; c < seats[a][b].length; c++)
+						{
+							seats[a][b][c] = false;
+						}
 					}
 				}
 			}
@@ -113,7 +116,10 @@ public class MovieFile
 		{
 			for(int j = 0; j < record.seats[i].length; j++)
 			{
-				record.seats[i][j] = raf.readBoolean();
+				for(int k = 0; k < record.seats[i][j].length; k++)
+				{
+					record.seats[i][j][k] = raf.readBoolean();
+				}
 			}
 		}
 		
@@ -184,7 +190,10 @@ public class MovieFile
 		{
 			for(int j = 0; j < record.seats[i].length; j++)
 			{
-				raf.writeBoolean(record.seats[i][j]);
+				for(int k = 0; k < record.seats[i][j].length; k++)
+				{
+					raf.writeBoolean(record.seats[i][j][k]);
+				}
 			}
 		}
 		
@@ -201,6 +210,34 @@ public class MovieFile
 
 		numRecords = raf.length() / record.recSize;
 		raf.close();
+	}
+	
+	public static int getRecordNum(String movieTitle) throws IOException
+	{
+		raf = new RandomAccessFile("movie_info", "rw");
+		int recordNum = 1;
+		for(int a = 0; a < numRecords * record.recSize; a+=record.recSize)
+		{
+			raf.seek(a);
+			
+			char nullChar = (char)0;
+			char nextChar;
+			//get chars for movie title
+			StringBuilder title = new StringBuilder(20);
+			for(int i = 0; i < 20; i++)
+			{
+				nextChar = raf.readChar();
+				if(nextChar != nullChar) title.append(nextChar);
+			}
+			String currTitle = new String(title);
+			if(currTitle.equalsIgnoreCase(movieTitle))
+			{
+				recordNum = a / record.recSize + 1;
+				break;
+			}
+		}
+		raf.close();
+		return recordNum;
 	}
 	
 	public static RandomAccessFile getMovieFile(){return raf;}
