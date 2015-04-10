@@ -47,6 +47,8 @@ public class SearchPanel extends JPanel{
 	private static JLabel time;
 	protected static movieBlock[] mBlocks;
 	final static int SLIDER_INTERVAL = 4;
+	static int lastValue = -1;
+	
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -59,7 +61,7 @@ public class SearchPanel extends JPanel{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+		searchBox2 = new JList<String>(new String[]{"Today" , "Tomorrow", "Day after that", "Day after that"});
 		
 		setLayout(new BorderLayout());
 		byDatePnl = new JPanel(new CardLayout());
@@ -74,10 +76,11 @@ public class SearchPanel extends JPanel{
 		byDateContent = new JPanel(new BorderLayout());
 		leftPanel = new JPanel(new BorderLayout());
 		viewAll = new JButton("All Movies");
-		time = new JLabel("Choose a time");
+		time = new JLabel("Choose a time", JLabel.CENTER);
 		timeSlide = new JSlider(0,12*SLIDER_INTERVAL,12/2*SLIDER_INTERVAL);
 		byDateContent.add(timeSlide, BorderLayout.CENTER);
 		byDateContent.add(time, BorderLayout.PAGE_START);
+		byDateContent.add(searchBox2,BorderLayout.LINE_START);
 		byDatePnl.add("1",byDateBtn);
 		byDatePnl.add("2",byDateContent);
 		byTitlePnl.add("1",byTitleBtn);
@@ -115,10 +118,12 @@ public class SearchPanel extends JPanel{
 		int timeMin = (time*60/SLIDER_INTERVAL);
 		log.v("Searching for time " + timeMin);
 		String displayTime;
+		boolean am = false;
+		if(timeMin == 720) am = true;
 		if(timeMin>=60)
 			displayTime = ""+((int)timeMin/60)+":"+ ((timeMin%60 ==0)?"00":timeMin%60);
 		else displayTime = "12:" + ((timeMin ==0)?"00":timeMin);
-		this.time.setText(displayTime);
+		this.time.setText(displayTime + ((am)?"AM":"PM"));
 		loop:
 		for(movieBlock i:mBlocks){
 			for(Integer x:i.getRecord().showTimes){
@@ -205,11 +210,17 @@ public class SearchPanel extends JPanel{
 		  
 		}
 	}
-	class SliderListener implements ChangeListener {
+	private class SliderListener implements ChangeListener {
+		
 	    public void stateChanged(ChangeEvent e) {
 	        JSlider source = (JSlider)e.getSource();
 	            int value = source.getValue();
-	            updateFilm(value);
+	            if(value!=lastValue){
+	            	updateFilm(value);
+	            	lastValue = value;
+	            }
+	            
+	            
 	            
 	    }
 	}

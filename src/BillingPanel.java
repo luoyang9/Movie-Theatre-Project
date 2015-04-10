@@ -13,7 +13,7 @@ public class BillingPanel {
 	static JButton back, proceed;
 	static JTextField nameIn, bDayIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
 	static JPanel mainPanel, personal, credInfo, inputCVV, allInfo, button;
-	public static void guiApp(){
+	public BillingPanel(){
 		JFrame mainFrame = new JFrame("Billing");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -88,12 +88,5 @@ public class BillingPanel {
 			if (action.equals("Proceed"))
 				System.out.println("Proceed guys");
 		}
-	}
-	public static void main(String[] args) {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				guiApp();
-			}
-		});
 	}
 }
