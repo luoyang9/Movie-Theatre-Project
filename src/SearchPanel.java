@@ -8,6 +8,8 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -24,6 +26,7 @@ public class SearchPanel extends JPanel{
 	//Panels inside
 	protected JPanel searchPnl;
 	protected JPanel byDatePnl; //Cardlayout for search types
+	protected JPanel byDateContent;
 	protected JPanel byTitlePnl;
 	protected JPanel filmsPnl; //Displays results and shows featured films
 	protected JPanel centerPnl; //Contains filmsPnl and the picture
@@ -39,7 +42,9 @@ public class SearchPanel extends JPanel{
 	private JScrollPane scroll;
 	private static JTextField searchBox; //Search by title
 	private static JList searchBox2; //Search by date
-	
+	private static JSlider timeSlide;
+	//Labels
+	private static JLabel time;
 	protected static movieBlock[] mBlocks;
 	public SearchPanel(){
 		try {
@@ -64,14 +69,16 @@ public class SearchPanel extends JPanel{
 		searchBox = new JTextField();
 		byDateBtn = new JButton("Search By Date");
 		byTitleBtn = new JButton("Search By Title");
-		searchBox2 = new JList<String>();
 		searchType = new JLabel("Featured");
-		
+		byDateContent = new JPanel(new BorderLayout());
 		leftPanel = new JPanel(new BorderLayout());
 		viewAll = new JButton("All Movies");
-		
+		time = new JLabel("Choose a time");
+		timeSlide = new JSlider(0,24,12);
+		byDateContent.add(timeSlide, BorderLayout.CENTER);
+		byDateContent.add(time, BorderLayout.PAGE_START);
 		byDatePnl.add("1",byDateBtn);
-		byDatePnl.add("2",searchBox2);
+		byDatePnl.add("2",byDateContent);
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
 		
@@ -85,6 +92,7 @@ public class SearchPanel extends JPanel{
 		//Adding document Listener for search box
 		SearchHandler onSearch = new SearchHandler();
 		searchBox.getDocument().addDocumentListener(onSearch);
+		
 		//
 		scroll = new JScrollPane(filmsPnl);
 		//Add to panel
