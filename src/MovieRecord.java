@@ -7,26 +7,30 @@
 public class MovieRecord 
 {
 	protected String movieTitle; //20 chars - 40 bytes							 
-	protected String movieSummary; //500 chars - 1000 bytes						
+	protected String movieSummary; //500 chars - 1000 bytes	
+	protected int releaseDate; //1 int - 4 bytes
+	protected int finalDate;//1 int - 4 bytes
 	protected int[] showTimes; //4 int - 16 bytes
-	protected boolean[][] seats; //48 booleans - 48 bytes
+	protected boolean[][][] seats; //48 booleans - 48 bytes
 	protected String[] movieCast; //3 * 20 chars - 120 bytes
 	protected int imageID;//1 int - 4 bytes
 	
-	protected final int recSize = 1228; //40+1000+16+48+120+4
+	protected final int recSize = 1236; //40+1000+16+48+120+4 + 4 + 4
 	
 	public MovieRecord()
 	{
 		//initialize all properties
 		movieTitle = "not set";
 		movieSummary = "not set";
+		releaseDate = 0;
+		finalDate = 0;
 		showTimes = new int[4];
-		seats = new boolean[4][12];
+		seats = new boolean[4][3][4];
 		movieCast = new String[3];
 		imageID = 1;
 	}
 	
-	public MovieRecord(String movieTitle, String movieSummary, int[] showTimes, String[] movieCast, int imageID)
+	public MovieRecord(String movieTitle, String movieSummary, int releaseDate, int finalDate, int[] showTimes, boolean[][][] seats, String[] movieCast, int imageID)
 	{
 		//set movieTitle
 		if (movieTitle.length () > 20)
@@ -52,17 +56,24 @@ public class MovieRecord
 			this.movieSummary = movieSummary;
 		}
 		
+		//set release and final dates
+		this.releaseDate = releaseDate;
+		this.finalDate = finalDate;
+		
 		//set show times
 		this.showTimes = showTimes;
 		
 		//initialize seats
-		this.seats = new boolean[4][12];
+		this.seats = new boolean[4][3][4];
 		//sets all seats to open (not ordered)
-		for(int i = 0; i < seats.length; i++)
+		for(int a = 0; a < this.seats.length; a++)
 		{
-			for(int j = 0; j < seats[i].length; j++)
+			for(int i = 0; i < this.seats[a].length; i++)
 			{
-				seats[i][j] = false;
+				for(int j = 0; j < this.seats[a][i].length; j++)
+				{
+					this.seats[a][i][j] = seats[a][i][j];
+				}
 			}
 		}
 		
@@ -123,7 +134,7 @@ public class MovieRecord
 		this.showTimes = showTimes;
 	}
 
-	public void setSeats(boolean[][] seats)
+	public void setSeats(boolean[][][] seats)
 	{
 		this.seats = seats;
 	}
@@ -141,7 +152,7 @@ public class MovieRecord
 	public String getTitle(){return movieTitle;}
 	public String getSummary(){return movieSummary;}
 	public int[] getShowTimes(){return showTimes;}
-	public boolean[][] getSeats(){return seats;}
+	public boolean[][][] getSeats(){return seats;}
 	public String[] getCast(){return movieCast;}
 	public int getImageID(){return imageID;}
 	

@@ -9,6 +9,7 @@ public class Main {
 	public static JPanel cards;
 	public static MovieInfoPanel moviePanel;
 	public static SearchPanel searchPanel;
+	public static TicketPanel ticketPanel;
 	//
 	public static void main(String[] args) throws Exception 
 	{
@@ -35,11 +36,14 @@ public class Main {
 		cards = new JPanel(new CardLayout());
 		searchPanel = new SearchPanel();
 		moviePanel = new MovieInfoPanel();
+		ticketPanel = new TicketPanel();
 
 		cards.add("1",searchPanel);
 		cards.add("2", moviePanel);
+		cards.add("3", ticketPanel);
 		searchPanel.setCards(cards);
 		moviePanel.setCards(cards);
+		ticketPanel.setCards(cards);
 		
 		//Execute frame
 		frame.add(cards);

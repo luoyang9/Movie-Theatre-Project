@@ -25,14 +25,14 @@ public class MainCharlie
 		String[] ironManCast = {"Michael Bay", "Bill Cosby", "Matt Damon"};
 		
 		//new movies 
-		MovieRecord movie = new MovieRecord("Iron Man", "It's a cool movie", ironManTimes, ironManCast, 1);
-		MovieRecord movie2 = new MovieRecord("Iron Man 2", "the same movie but the sequel", ironManTimes, ironManCast, 2);
-		MovieRecord movie3 = new MovieRecord("Iron Man 3", "its iron man but with more 3", ironManTimes, ironManCast, 3);
+		//MovieRecord movie = new MovieRecord("Iron Man", "It's a cool movie", ironManTimes, ironManCast, 1);
+		//MovieRecord movie2 = new MovieRecord("Iron Man 2", "the same movie but the sequel", ironManTimes, ironManCast, 2);
+		//MovieRecord movie3 = new MovieRecord("Iron Man 3", "its iron man but with more 3", ironManTimes, ironManCast, 3);
 		
 		//write to movieFile
-		MovieFile.writeRecord(1, movie);
-		MovieFile.writeRecord(2, movie2);
-		MovieFile.writeRecord(3, movie3);
+		//MovieFile.writeRecord(1, movie);
+		//MovieFile.writeRecord(2, movie2);
+		//MovieFile.writeRecord(3, movie3);
 		
 		//movie panel
 		MovieInfoPanel moviePanel = new MovieInfoPanel();
