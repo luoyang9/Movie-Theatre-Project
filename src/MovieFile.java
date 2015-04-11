@@ -6,6 +6,7 @@
  **/
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -40,24 +41,17 @@ public class MovieFile
 		for(int i = 0; i < databaseMovies.size(); i++)
 		{
 			String[] movieInfo = databaseMovies.get(i).split(";");
+			
 			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
-			boolean[][][] seats = getRecord(i + 1).seats;
-			if(seats == null) 
+			
+			SeatPlan seatplan = new SeatPlan(getRecord(i + 1).seatplan.getSeats());
+			if(seatplan.getSeats() == null) 
 			{
-				seats = new boolean[4][3][4];
-				for(int a = 0; a < seats.length; a++)
-				{
-					for(int b = 0; b < seats[a].length; b++)
-					{
-						for(int c = 0; c < seats[a][b].length; c++)
-						{
-							seats[a][b][c] = false;
-						}
-					}
-				}
+				seatplan = new SeatPlan();
+				seatplan.setAllFalse();
 			}
-			record = new MovieRecord(movieInfo[0], movieInfo[1], Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), tempShowTimes, seats, tempCast, Integer.parseInt(movieInfo[11]));
+			record = new MovieRecord(movieInfo[0], movieInfo[1], Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), tempShowTimes, seatplan.getSeats(), tempCast, Integer.parseInt(movieInfo[11]));
 			writeRecord(i + 1, record);
 		}
 		raf.close();
@@ -101,7 +95,7 @@ public class MovieFile
 			}
 		}
 		record.movieSummary = new String (summary);
-		
+
 		record.releaseDate = raf.readInt();
 		record.finalDate = raf.readInt();
 		
@@ -110,15 +104,18 @@ public class MovieFile
 		{
 			record.showTimes[i] = raf.readInt();
 		}
-		
+
 		//get seats
-		for(int i = 0; i < record.seats.length; i++)
+		for(int i = 0; i < record.seatplan.getSeats().length; i++)
 		{
-			for(int j = 0; j < record.seats[i].length; j++)
+			for(int j = 0; j < record.seatplan.getSeats()[i].length; j++)
 			{
-				for(int k = 0; k < record.seats[i][j].length; k++)
+				for(int k = 0; k < record.seatplan.getSeats()[i][j].length; k++)
 				{
-					record.seats[i][j][k] = raf.readBoolean();
+					for(int l = 0; l < record.seatplan.getSeats()[i][j][k].length; l++)
+					{
+						record.seatplan.getSeats()[i][j][k][l] = raf.readBoolean();
+					}
 				}
 			}
 		}
@@ -150,7 +147,7 @@ public class MovieFile
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currMovie = getRecord(i+1);
-			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.releaseDate, currMovie.finalDate, currMovie.showTimes, currMovie.seats, currMovie.movieCast, currMovie.imageID);
+			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.releaseDate, currMovie.finalDate, currMovie.showTimes, currMovie.seatplan.getSeats(), currMovie.movieCast, currMovie.imageID);
 			list.add(movie);
 		}
 		log.i(numRecords +" Records found");
@@ -186,13 +183,16 @@ public class MovieFile
 		}
 		
 		//write seats
-		for(int i = 0; i < record.seats.length; i++)
+		for(int i = 0; i < record.seatplan.getSeats().length; i++)
 		{
-			for(int j = 0; j < record.seats[i].length; j++)
+			for(int j = 0; j < record.seatplan.getSeats()[i].length; j++)
 			{
-				for(int k = 0; k < record.seats[i][j].length; k++)
+				for(int k = 0; k < record.seatplan.getSeats()[i][j].length; k++)
 				{
-					raf.writeBoolean(record.seats[i][j][k]);
+					for(int l = 0; l < record.seatplan.getSeats()[i][j][k].length; l++)
+					{
+						raf.writeBoolean(record.seatplan.getSeats()[i][j][k][l]);
+					}
 				}
 			}
 		}

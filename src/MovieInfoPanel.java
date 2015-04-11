@@ -58,10 +58,6 @@ public class MovieInfoPanel extends JPanel
 			btnShowTimes[i] = new JButton();
 		}
 		dates = new DefaultComboBoxModel<String>();
-		dates.addElement("Today");
-		dates.addElement("March 28, 2015");
-		dates.addElement("March 29, 2015");
-		dates.addElement("March 30, 2015");
 		showDate = new JComboBox<String>(dates);
 		
 		//set label properties
@@ -135,6 +131,13 @@ public class MovieInfoPanel extends JPanel
 		}
 		
 		lblSummary.append("\nReleased: " + releaseDate + " --- Final date: " + finalDate);
+
+		for(int i = 0; i < movie.finalDate - movie.releaseDate; i++)
+		{
+			dates.addElement(""+(movie.releaseDate + i));
+		}
+		showDate = new JComboBox<String>(dates);
+		
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			String formattedShowTime;

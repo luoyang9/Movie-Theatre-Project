@@ -216,9 +216,10 @@ public class SearchPanel extends JPanel{
 			record = e;
 			setLayout(new BorderLayout());
 			image = new JLabel("",JLabel.CENTER);
+			System.out.println(record.imageID);
 			image.setIcon(new ImageIcon(new ImageIcon(Main.class.getResource(record.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
 			add(image, BorderLayout.CENTER);
-			add(new JLabel(e.getTitle(),JLabel.CENTER),BorderLayout.PAGE_END);
+			add(new JLabel(e.movieTitle,JLabel.CENTER),BorderLayout.PAGE_END);
 			
 			ButtonHandler onClick = new ButtonHandler();
 			addActionListener(onClick);

@@ -23,6 +23,7 @@ public class TicketPanel extends JPanel
 	private JLabel movieTitle;
 	private JLabel movieDateTime;
 	private int showTimeIndex;
+	private int dateIndex;
 	private seatBlock[][] seatBlocks;
 	
 	private ButtonHandler onClick;
@@ -51,25 +52,34 @@ public class TicketPanel extends JPanel
 		
 		movieTitle.setText(movie.movieTitle);
 		movieDateTime.setText(date + " ---- " + time);
-		for(int i = 0; i < movie.seats.length; i++)
+		for(int i = 0; i < movie.seatplan.getSeats().length; i++) //loop thoruhg dates
 		{
-			String showTimeString = time;
-			showTimeString = showTimeString.replaceAll(":", "");
-			showTimeString = showTimeString.replaceAll("AM", "0");
-			showTimeString = showTimeString.replaceAll("PM", "1");
-		
-			if(Integer.toString(movie.showTimes[i]).equalsIgnoreCase(showTimeString))
+			//convert dates
+			dateIndex = Integer.parseInt(date) - movie.releaseDate;
+			if(i == dateIndex) //find date we are on
 			{
-				showTimeIndex = i;
-				for(int j = 0; j < movie.seats[i].length; j++)
+				for(int j = 0; j < movie.seatplan.getSeats()[i].length; j++)//loop through showtimes
 				{
-					for(int k = 0; k < movie.seats[i][j].length; k++)
+					//convert showtime
+					String showTimeString = time;
+					showTimeString = showTimeString.replaceAll(":", "");
+					showTimeString = showTimeString.replaceAll("AM", "0");
+					showTimeString = showTimeString.replaceAll("PM", "1");
+
+					if(Integer.toString(movie.showTimes[j]).equalsIgnoreCase(showTimeString)) //find showtime we are on
 					{
-						seatBlock seat = new seatBlock();
-						if(movie.seats[i][j][k]) seat.setEnabled(false);
-						seat.setActionCommand(j + "" +  k);
-						seatBlocks[j][k] = seat;
-						seatPanel.add(seat);
+						showTimeIndex = j;
+						for(int k = 0; k < movie.seatplan.getSeats()[i][j].length; k++) //loop row
+						{
+							for(int l = 0; l < movie.seatplan.getSeats()[i][j][k].length; l++) //loop col
+							{
+								seatBlock seat = new seatBlock();
+								if(movie.seatplan.getSeats()[i][j][k][l]) seat.setEnabled(false);
+								seat.setActionCommand(k + "" +  l);
+								seatBlocks[k][l] = seat;
+								seatPanel.add(seat);
+							}
+						}
 					}
 				}
 			}
@@ -106,8 +116,8 @@ public class TicketPanel extends JPanel
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
 						}
-						movie.seats[showTimeIndex][i][j] = true;
-						log.v("Seat row index " + i + " and col index " + j + " booked for record " + recordNum + " at show index " + showTimeIndex);
+						movie.seatplan.getSeats()[dateIndex][showTimeIndex][i][j] = true;
+						log.v("Seat row index " + i + " and col index " + j + " booked for record " + recordNum + " at show index " + showTimeIndex + " for date index"  + dateIndex);
 						try {
 							MovieFile.writeRecord(recordNum, movie);
 						} catch (IOException e1) {
