@@ -7,6 +7,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -33,6 +34,7 @@ public class MovieInfoPanel extends JPanel
 	//JComboBox
 	protected static JComboBox<String> showDate;
 	protected static DefaultComboBoxModel<String> dates;
+	protected static ArrayList<Integer> numberDates;
 	protected static JList<String> dateList;
 	
 	//Image
@@ -59,6 +61,7 @@ public class MovieInfoPanel extends JPanel
 		}
 		dates = new DefaultComboBoxModel<String>();
 		showDate = new JComboBox<String>(dates);
+		numberDates = new ArrayList<Integer>();
 		
 		//set label properties
 		lblTitle.setHorizontalAlignment(JLabel.CENTER);
@@ -103,10 +106,9 @@ public class MovieInfoPanel extends JPanel
 		}
 	}
 	
-	public void setMovie(MovieRecord movie)
+	public void setMovie(MovieRecord movieRecord)
 	{	
-		this.movie = movie;
-		
+		movie = movieRecord;
 		
 		lblTitle.setText(movie.movieTitle);
 		lblSummary.setText(movie.movieSummary);
@@ -132,31 +134,53 @@ public class MovieInfoPanel extends JPanel
 		
 		lblSummary.append("\nReleased: " + releaseDate + " --- Final date: " + finalDate);
 
+		dates = new DefaultComboBoxModel<String>();
 		for(int i = 0; i < movie.finalDate - movie.releaseDate; i++)
 		{
-			dates.addElement(""+(movie.releaseDate + i));
+			numberDates.add(movie.releaseDate + i);
+			String currDate = Integer.toString(movie.releaseDate + i);
+			String formattedDate = getMonth(Integer.parseInt(currDate.substring(0, 1))) + " " + currDate.substring(1, 3);
+			dates.addElement(formattedDate);
 		}
-		showDate = new JComboBox<String>(dates);
+		showDate.setModel(dates);
 		
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			String formattedShowTime;
 			String stringShowTime = Integer.toString(movie.showTimes[i]);
-			if(stringShowTime.length() <= 4)
+			if(stringShowTime.length() == 3)
 			{
-				String timePeriod = stringShowTime.substring(3, 4).equals("0") ? "AM" : "PM";
-				formattedShowTime = stringShowTime.substring(0, 1) + ":" + stringShowTime.substring(1, 3) + timePeriod;
+				formattedShowTime = stringShowTime.substring(0, 1) + ":" + stringShowTime.substring(1, 3) + "PM";
 			}
 			else
 			{
-				String timePeriod = stringShowTime.substring(4, 5).equals("0") ? "AM" : "PM";
-				formattedShowTime = stringShowTime.substring(0,  2) + ":" + stringShowTime.substring(2, 4) + timePeriod;
+				formattedShowTime = stringShowTime.substring(0,  2) + ":" + stringShowTime.substring(2, 4) + "PM";
 			}
 			btnShowTimes[i].setText(formattedShowTime);
 		}
 		lblCast.setText("<html><b>Director:</b> " + movie.movieCast[0] + "&nbsp;&nbsp;&nbsp;<b>Producer</b>: " + movie.movieCast[1] + "&nbsp;&nbsp;&nbsp;<b>Featuring:</b> " + movie.movieCast[2] + "</html>");
 		movieImageIcon = new ImageIcon(new ImageIcon(Main.class.getResource(movie.imageID + ".jpg")).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
 		movieImage.setIcon(movieImageIcon);
+	}
+	
+	private String getMonth(int month)
+	{
+		switch(month)
+		{
+		case 1 : return "January";
+		case 2 : return "February";
+		case 3 : return "March";
+		case 4 : return "April";
+		case 5 : return "May";
+		case 6 : return "June";
+		case 7 : return "July";
+		case 8 : return "August";
+		case 9 : return "September";
+		case 10 : return "October";
+		case 11: return "November";
+		case 12: return "December";
+		default: return "Error";
+		}
 	}
 	
 	public void setCards(JPanel masterCards)
@@ -183,7 +207,7 @@ public class MovieInfoPanel extends JPanel
 				{
 					cl.show(cards, "3");
 					TicketPanel tp = (TicketPanel) cards.getComponent(2);
-					tp.setMovie(movie, (String)showDate.getSelectedItem(), btnShowTimes[i].getText());
+					tp.setMovie(movie, (String)showDate.getSelectedItem(), i, btnShowTimes[i].getText());
 				}
 			}
 		}

@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -28,9 +29,13 @@ public class TicketPanel extends JPanel
 	
 	private ButtonHandler onClick;
 	
+	protected static JButton btnBack;
+	
 	public TicketPanel()
 	{
 		setLayout(new BorderLayout());
+
+		btnBack = new JButton("Cancel");
 		
 		seatPanel = new JPanel(new GridLayout(3, 4));
 		moviePanel = new JPanel(new BorderLayout());
@@ -39,23 +44,28 @@ public class TicketPanel extends JPanel
 		movieDateTime = new JLabel("", JLabel.CENTER);
 		onClick = new ButtonHandler();
 		
+		btnBack.addActionListener(onClick);
+		
 		moviePanel.add(movieTitle, BorderLayout.PAGE_START);
 		moviePanel.add(movieDateTime, BorderLayout.CENTER);
 		
 		add(moviePanel, BorderLayout.PAGE_START);
 		add(seatPanel, BorderLayout.CENTER);
+		add(btnBack, BorderLayout.PAGE_END);
 	}
 	
-	public void setMovie(MovieRecord movie, String date, String time)
+	public void setMovie(MovieRecord movie, String date, int dateIndex, String time)
 	{
 		this.movie = movie;
+		
+		seatPanel.removeAll();
 		
 		movieTitle.setText(movie.movieTitle);
 		movieDateTime.setText(date + " ---- " + time);
 		for(int i = 0; i < movie.seatplan.getSeats().length; i++) //loop thoruhg dates
 		{
 			//convert dates
-			dateIndex = Integer.parseInt(date) - movie.releaseDate;
+			this.dateIndex = dateIndex;
 			if(i == dateIndex) //find date we are on
 			{
 				for(int j = 0; j < movie.seatplan.getSeats()[i].length; j++)//loop through showtimes
@@ -63,8 +73,7 @@ public class TicketPanel extends JPanel
 					//convert showtime
 					String showTimeString = time;
 					showTimeString = showTimeString.replaceAll(":", "");
-					showTimeString = showTimeString.replaceAll("AM", "0");
-					showTimeString = showTimeString.replaceAll("PM", "1");
+					showTimeString = showTimeString.replaceAll("PM", "");
 
 					if(Integer.toString(movie.showTimes[j]).equalsIgnoreCase(showTimeString)) //find showtime we are on
 					{
@@ -84,6 +93,10 @@ public class TicketPanel extends JPanel
 				}
 			}
 		}
+		
+
+		seatPanel.repaint();
+		seatPanel.validate();
 	}
 	
 	public class seatBlock extends JButton
@@ -102,6 +115,15 @@ public class TicketPanel extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			if(e.getActionCommand().equals("Cancel"))
+			{
+				cl.show(cards, "2");
+				SearchPanel sp = (SearchPanel) cards.getComponent(0);
+				sp.updateFilm();
+			}
+			
+			//booking seats
 			for(int i = 0; i < seatBlocks.length; i++)
 			{
 				for(int j = 0; j < seatBlocks[i].length; j++)
@@ -117,7 +139,7 @@ public class TicketPanel extends JPanel
 							e2.printStackTrace();
 						}
 						movie.seatplan.getSeats()[dateIndex][showTimeIndex][i][j] = true;
-						log.v("Seat row index " + i + " and col index " + j + " booked for record " + recordNum + " at show index " + showTimeIndex + " for date index"  + dateIndex);
+						log.v("Seat row " + (i + 1) + " and col " + (j + 1) + " booked for " + movie.movieTitle + " at time " + movie.showTimes[showTimeIndex] + "PM for date "  + (movie.releaseDate + dateIndex));
 						try {
 							MovieFile.writeRecord(recordNum, movie);
 						} catch (IOException e1) {
