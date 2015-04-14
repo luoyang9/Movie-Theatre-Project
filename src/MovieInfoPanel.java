@@ -105,7 +105,10 @@ public class MovieInfoPanel extends JPanel
 			btnBack.addActionListener(onClick);
 		}
 	}
-	
+	public void setMovie(MovieRecord movieRecord, int day, int timeSlot){
+		setMovie(movieRecord);
+		
+	}
 	public void setMovie(MovieRecord movieRecord)
 	{	
 		movie = movieRecord;
