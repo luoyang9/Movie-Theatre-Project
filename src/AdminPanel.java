@@ -18,17 +18,25 @@ public class AdminPanel extends JPanel
 	private static JPanel cards;
 	private static JButton viewAllMovies;
 	private static JButton viewAllCustomers;
+	private static JButton btnBack;
 	
 	public AdminPanel()
 	{
 		viewAllMovies = new JButton("View All Movies");
 		viewAllCustomers = new JButton("View All Customers");
+		btnBack = new JButton("Back");
+		
+		ButtonHandler onClick = new ButtonHandler();
+		viewAllMovies.addActionListener(onClick);
+		viewAllCustomers.addActionListener(onClick);
+		btnBack.addActionListener(onClick);
 		
 		add(viewAllMovies);
 		add(viewAllCustomers);
+		add(btnBack);
 	}
 	
-	public static void setCards(JPanel masterCard)
+	public void setCards(JPanel masterCard)
 	{
 		cards = masterCard;
 	}
@@ -40,11 +48,22 @@ public class AdminPanel extends JPanel
 		public void actionPerformed(ActionEvent e) {
 			
 			String command = e.getActionCommand();
+			CardLayout cl = (CardLayout)cards.getLayout();
 			
 			if(command.equals(viewAllMovies.getActionCommand()))
 			{
-				CardLayout cl = (CardLayout)cards.getLayout();
-				//cl.show(cards, "4");
+				cl.show(cards, "5");
+			    ViewAllMoviesPanel allMoviesPanel = (ViewAllMoviesPanel) cards.getComponent(4);
+			    try {
+					allMoviesPanel.refreshMovies();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			else if(command.equals("Back"))
+			{
+				cl.show(cards, "1");
 			}
 		}
 		
