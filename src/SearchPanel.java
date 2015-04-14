@@ -48,7 +48,7 @@ public class SearchPanel extends JPanel{
 	protected static movieBlock[] mBlocks;
 	final static int SLIDER_INTERVAL = 4;
 	static int lastValue = -1;
-	
+	static boolean searchByTime;
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -113,28 +113,33 @@ public class SearchPanel extends JPanel{
 		updateFilm();
 	}
 	public void updateFilm(int time){
+		searchByTime = true;
 		filmsPnl.removeAll();
 		searchType.setText("Results");
 		int timeMin = (time*60/SLIDER_INTERVAL);
-		log.v("Searching for time " + timeMin);
+		int compareTime;
+		
 		String displayTime;
 		boolean am = false;
 		if(timeMin == 720) am = true;
-		if(timeMin>=60)
+		if(timeMin>=60){
 			displayTime = ""+((int)timeMin/60)+":"+ ((timeMin%60 ==0)?"00":timeMin%60);
-		else displayTime = "12:" + ((timeMin ==0)?"00":timeMin);
+			compareTime = Integer.parseInt(""+((int)timeMin/60)+((timeMin%60 ==0)?"00":timeMin%60));
+		}else{
+			displayTime = "12:" + ((timeMin ==0)?"00":timeMin);
+			compareTime = Integer.parseInt("12" + ((timeMin ==0)?"00":timeMin));
+		}
+		log.v("Searching for time " + compareTime);
 		this.time.setText(displayTime + ((am)?"AM":"PM"));
 		loop:
 		for(movieBlock i:mBlocks){
-			for(Integer x:i.getRecord().showTimes){
-				int timeMin1 = (int)( x*60/100) + x%100;
-				if(timeMin == timeMin1){
+			for(int x:i.getRecord().showTimes){
+				if(x == compareTime){
 					filmsPnl.add(i);
-				}else if(timeMin>timeMin1) continue loop;
+					continue loop;
+				}
 			}
 		}
-		
-		
 		
 		filmsPnl.repaint();
 		scroll.repaint();
@@ -143,6 +148,7 @@ public class SearchPanel extends JPanel{
 	}
 	public void updateFilm()
 	{
+		searchByTime = false;
 		String query = searchBox.getText();
 		filmsPnl.removeAll();
 		
@@ -276,6 +282,9 @@ public class SearchPanel extends JPanel{
 				 CardLayout cardLayout = (CardLayout)cards.getLayout();
 			     cardLayout.show(cards,"2");
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
+			     if(searchByTime){
+			    	 
+			     }
 			     moviePanel.setMovie(record);
 			     if(allFrame != null){
 			    	 allFrame.dispose();
