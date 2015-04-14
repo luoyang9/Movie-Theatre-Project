@@ -83,7 +83,15 @@ public class TicketPanel extends JPanel
 							for(int l = 0; l < movie.seatplan.getSeats()[i][j][k].length; l++) //loop col
 							{
 								seatBlock seat = new seatBlock();
-								if(movie.seatplan.getSeats()[i][j][k][l]) seat.setEnabled(false);
+								if(movie.seatplan.getSeats()[i][j][k][l]) 
+								{
+									seat.setEnabled(false);
+									seat.setText("Booked");
+								}
+								else
+								{
+									seat.setText("Open");
+								}
 								seat.setActionCommand(k + "" +  l);
 								seatBlocks[k][l] = seat;
 								seatPanel.add(seat);
