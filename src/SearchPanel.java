@@ -43,14 +43,17 @@ public class SearchPanel extends JPanel{
 	private JButton managementBtn;
 	private JScrollPane scroll;
 	private static JTextField searchBox; //Search by title
-	private static JList searchBox2; //Search by date
+	private static JComboBox searchBox2; //Search by date
 	private static JSlider timeSlide;
 	//Labels
 	private static JLabel time;
 	protected static movieBlock[] mBlocks;
 	final static int SLIDER_INTERVAL = 4;
+	final static int SEARCH_DAYS = 7;
 	static int lastValue = -1;
 	static boolean searchByTime;
+	static String[] dates;
+	static int[] datesInt;
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -63,7 +66,19 @@ public class SearchPanel extends JPanel{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		searchBox2 = new JList<String>(new String[]{"Today" , "Tomorrow", "Day after that", "Day after that"});
+		dates = new String[SEARCH_DAYS];
+		datesInt = new int[SEARCH_DAYS];
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(new Date()); 
+	
+		for(int x = 0;x<SEARCH_DAYS;x++){	
+			Date dt = c.getTime();
+			datesInt[x] = Integer.parseInt(String.format("%d%d",dt.getMonth(),dt.getDay()));
+			c.add(Calendar.DATE, 1);
+		}
+		
+		
+		searchBox2 = new JComboBox<String>(new String[]{"Today" , "Tomorrow", "Day after that", "Day after that"});
 		
 		setLayout(new BorderLayout());
 		byDatePnl = new JPanel(new CardLayout());
