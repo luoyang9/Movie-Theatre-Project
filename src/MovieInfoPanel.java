@@ -35,7 +35,6 @@ public class MovieInfoPanel extends JPanel
 	protected static JComboBox<String> showDate;
 	protected static DefaultComboBoxModel<String> dates;
 	protected static ArrayList<Integer> numberDates;
-	protected static JList<String> dateList;
 	
 	//Image
 	protected static ImageIcon movieImageIcon;
