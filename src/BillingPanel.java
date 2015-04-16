@@ -1,23 +1,32 @@
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-public class BillingPanel {
-	static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, blank;
-	static JButton back, proceed;
-	static JTextField nameIn, bDayIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
-	static JPanel mainPanel, personal, credInfo, inputCVV, allInfo, button;
+
+@SuppressWarnings("serial")
+public class BillingPanel extends JPanel
+{
+	private static MovieRecord record;
+	private static int dateIndex, timeIndex, rowIndex, colIndex;
+	private static long recordNum;
+	
+	private static JPanel cards;
+	
+	private static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, blank;
+	private static JButton back, proceed;
+	private static JTextField nameIn, bDayIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
+	private static JPanel mainPanel, personal, credInfo, inputCVV, allInfo, button;
+	
 	public BillingPanel(){
-		JFrame mainFrame = new JFrame("Billing");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
 		
-		JPanel mainPanel = new JPanel(new BorderLayout());
 		JPanel personal = new JPanel(new GridLayout(4,2));
 		JPanel credInfo = new JPanel(new GridLayout(5,1));
 		JPanel inputCVV = new JPanel(new GridLayout(1,2));
@@ -34,9 +43,8 @@ public class BillingPanel {
 		secureCode = new JLabel("CVV");
 		blank = new JLabel(" ");
 		
-		back = new JButton("Back");
-		proceed = new JButton("Proceed" +
-				"");
+		back = new JButton("Cancel");
+		proceed = new JButton("Proceed");
 		
 		nameIn = new JTextField("");
 		bDayIn = new JTextField("");
@@ -50,7 +58,7 @@ public class BillingPanel {
 		back.addActionListener(onClick);
 		proceed.addActionListener(onClick);
 		
-		mainPanel.add(banner, BorderLayout.PAGE_START);
+		add(banner, BorderLayout.PAGE_START);
 		
 		personal.add(name);
 		personal.add(nameIn);
@@ -71,22 +79,57 @@ public class BillingPanel {
 		credInfo.add(inputCVV);
 		allInfo.add(credInfo);
 		
-		mainPanel.add(allInfo, BorderLayout.CENTER);
+		add(allInfo, BorderLayout.CENTER);
 		
 		button.add(back);
 		button.add(blank);
 		button.add(proceed);
-		mainPanel.add(button, BorderLayout.PAGE_END);
-		
-		mainFrame.add(mainPanel);
-		mainFrame.setSize(600,350);
-		mainFrame.setVisible(true);
+		add(button, BorderLayout.PAGE_END);
 	}
 	private static class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String action = e.getActionCommand();
-			if (action.equals("Proceed"))
-				System.out.println("Proceed guys");
+			CardLayout cl = (CardLayout)cards.getLayout();
+			
+			if(action.equals("Proceed"))
+			{
+				CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), Integer.parseInt(bDayIn.getText()), addressIn.getText(), Long.parseLong(phoneNumIn.getText()), Integer.parseInt(credCardIn.getText()), Integer.parseInt(expDateIn.getText()), Integer.parseInt(secureCodeIn.getText()));
+				
+				//book the seat
+				record.seatplan.getSeats()[dateIndex][timeIndex][rowIndex][colIndex] = true;
+				log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + (record.releaseDate + dateIndex));
+				try {
+					MovieFile.writeRecord(recordNum, record);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				//proceed to check out panel
+				cl.show(cards, "7");
+				CheckOutPanel checkOut = (CheckOutPanel)cards.getComponent(6);
+				checkOut.setInfo(customer);
+			}
+			else if(action.equals("Cancel"))
+			{
+				cl.show(cards, "3");
+			}
+			
 		}
+	}
+	
+	public void setMovie(MovieRecord movie, long recordNumber, int date, int time, int row, int col)
+	{
+		record = movie;
+		recordNum = recordNumber;
+		dateIndex = date;
+		timeIndex = time;
+		rowIndex = row;
+		colIndex = col;
+	}
+	
+	public void setCards(JPanel masterCard)
+	{
+		cards = masterCard;
 	}
 }

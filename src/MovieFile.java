@@ -44,11 +44,20 @@ public class MovieFile
 			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
 			
-			SeatPlan seatplan = new SeatPlan(getRecord(i + 1).seatplan.getSeats());
-			if(seatplan.getSeats() == null) 
+			SeatPlan seatplan;
+			if(i >= numRecords)
 			{
 				seatplan = new SeatPlan();
 				seatplan.setAllFalse();
+			}
+			else
+			{
+				seatplan = new SeatPlan(getRecord(i + 1).seatplan.getSeats());
+				if(seatplan.getSeats() == null) 
+				{
+					seatplan = new SeatPlan();
+					seatplan.setAllFalse();
+				}
 			}
 			record = new MovieRecord(movieInfo[0], movieInfo[1], Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), tempShowTimes, seatplan.getSeats(), tempCast, Integer.parseInt(movieInfo[11]));
 			writeRecord(i + 1, record);

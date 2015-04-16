@@ -18,20 +18,24 @@ public class AdminPanel extends JPanel
 	private static JPanel cards;
 	private static JButton viewAllMovies;
 	private static JButton viewAllCustomers;
+	private static JButton addMovie;
 	private static JButton btnBack;
 	
 	public AdminPanel()
 	{
 		viewAllMovies = new JButton("View All Movies");
 		viewAllCustomers = new JButton("View All Customers");
+		addMovie = new JButton("Add Movie");
 		btnBack = new JButton("Back");
 		
 		ButtonHandler onClick = new ButtonHandler();
 		viewAllMovies.addActionListener(onClick);
 		viewAllCustomers.addActionListener(onClick);
+		addMovie.addActionListener(onClick);
 		btnBack.addActionListener(onClick);
 		
 		add(viewAllMovies);
+		add(addMovie);
 		add(viewAllCustomers);
 		add(btnBack);
 	}
@@ -60,6 +64,10 @@ public class AdminPanel extends JPanel
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+			else if(command.equals("Add Movie"))
+			{
+				cl.show(cards, "8");
 			}
 			else if(command.equals("Back"))
 			{
