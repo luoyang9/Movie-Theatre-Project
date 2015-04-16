@@ -47,7 +47,7 @@ public class ViewAllMoviesPanel extends JPanel
 			if(e.getActionCommand().equals("Back"))
 			{
 				CardLayout cl = (CardLayout)cards.getLayout();
-				cl.show(cards, "5");
+				cl.show(cards, "4");
 			}
 		}
 	}
