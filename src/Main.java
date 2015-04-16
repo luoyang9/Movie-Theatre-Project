@@ -10,6 +10,8 @@ public class Main {
 	public static MovieInfoPanel moviePanel;
 	public static SearchPanel searchPanel;
 	public static TicketPanel ticketPanel;
+	public static AdminPanel adminPanel;
+	public static ViewAllMoviesPanel allMoviesPanel;
 	//
 	public static void main(String[] args) throws Exception 
 	{
@@ -37,13 +39,19 @@ public class Main {
 		searchPanel = new SearchPanel();
 		moviePanel = new MovieInfoPanel();
 		ticketPanel = new TicketPanel();
+		adminPanel = new AdminPanel();
+		allMoviesPanel = new ViewAllMoviesPanel();
 
 		cards.add("1",searchPanel);
 		cards.add("2", moviePanel);
 		cards.add("3", ticketPanel);
+		cards.add("4", adminPanel);
+		cards.add("5", allMoviesPanel);
 		searchPanel.setCards(cards);
 		moviePanel.setCards(cards);
 		ticketPanel.setCards(cards);
+		adminPanel.setCards(cards);
+		allMoviesPanel.setCards(cards);
 		
 		//Execute frame
 		frame.add(cards);

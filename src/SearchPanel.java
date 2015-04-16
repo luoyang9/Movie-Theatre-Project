@@ -32,11 +32,13 @@ public class SearchPanel extends JPanel{
 	protected JPanel centerPnl; //Contains filmsPnl and the picture
 	protected JLabel searchType;
 	protected JPanel leftPanel;
+	protected JPanel leftBottomPanel;
 	protected JFrame allFrame;
 	//Buttons
 	private static JButton byDateBtn;
 	private static JButton byTitleBtn;
 	private static JButton viewAll;
+	private static JButton adminBtn;
 	private JButton optionsBtn;
 	private JButton managementBtn;
 	private JScrollPane scroll;
@@ -90,7 +92,9 @@ public class SearchPanel extends JPanel{
 		searchType = new JLabel("Featured");
 		byDateContent = new JPanel(new BorderLayout());
 		leftPanel = new JPanel(new BorderLayout());
+		leftBottomPanel = new JPanel(new GridLayout(2, 1));
 		viewAll = new JButton("All Movies");
+		adminBtn = new JButton("Management");
 		time = new JLabel("Choose a time", JLabel.CENTER);
 		timeSlide = new JSlider(0,12*SLIDER_INTERVAL,12/2*SLIDER_INTERVAL);
 		byDateContent.add(timeSlide, BorderLayout.CENTER);
@@ -108,6 +112,7 @@ public class SearchPanel extends JPanel{
 		byDateBtn.addActionListener(onClick);
 		byTitleBtn.addActionListener(onClick);
 		viewAll.addActionListener(onClick);
+		adminBtn.addActionListener(onClick);
 		//Adding document Listener for search box
 		SearchHandler onSearch = new SearchHandler();
 		searchBox.getDocument().addDocumentListener(onSearch);
@@ -115,8 +120,10 @@ public class SearchPanel extends JPanel{
 		//
 		scroll = new JScrollPane(filmsPnl);
 		//Add to panel
+		leftBottomPanel.add(viewAll);
+		leftBottomPanel.add(adminBtn);
 		leftPanel.add(searchType, BorderLayout.CENTER);
-		leftPanel.add(viewAll,BorderLayout.PAGE_END);
+		leftPanel.add(leftBottomPanel,BorderLayout.PAGE_END);
 		centerPnl.add(leftPanel,BorderLayout.LINE_START);
 		centerPnl.add(scroll,BorderLayout.CENTER);
 		searchPnl.add(byDatePnl,BorderLayout.LINE_START);
@@ -271,7 +278,12 @@ public class SearchPanel extends JPanel{
 				allFrame.pack();
 				allFrame.setVisible(true);
 				Main.frame.setVisible(false);
-		}
+			}
+			else if(command == adminBtn)
+			{
+				 CardLayout cardLayout = (CardLayout)cards.getLayout();
+			     cardLayout.show(cards,"4");
+			}
 		}
 
 		
