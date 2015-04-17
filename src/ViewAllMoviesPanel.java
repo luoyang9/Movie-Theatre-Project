@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,7 @@ public class ViewAllMoviesPanel extends JPanel
 	{
 		setLayout(new BorderLayout());
 		
-		movieList = new JPanel(new GridLayout(8, 1));
+		movieList = new JPanel();
 		btnBack = new JButton("Back");
 		scroll = new JScrollPane(movieList);
 		
@@ -56,6 +57,7 @@ public class ViewAllMoviesPanel extends JPanel
 	{
 		allMovies = MovieFile.getAllRecords();
 		movieList.removeAll();
+		movieList.setLayout(new GridLayout(allMovies.size(), 1));
 		
 		for(int i = 0; i < allMovies.size(); i++)
 		{
@@ -81,6 +83,7 @@ public class ViewAllMoviesPanel extends JPanel
 		private JLabel dateTime;
 		private JLabel image;
 		private ImageIcon icon;
+		private JPanel bottom;
 		
 		public movieBlock(MovieRecord record)
 		{
@@ -88,18 +91,22 @@ public class ViewAllMoviesPanel extends JPanel
 			image = new JLabel();
 			icon = new ImageIcon(new ImageIcon(Main.class.getResource(record.imageID + ".jpg")).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
 			image.setIcon(icon);
-			title = new JLabel(record.movieTitle);
+			title = new JLabel(record.movieTitle, JLabel.CENTER);
+			title.setFont(new Font("Impact", Font.BOLD, 30));
 			summary = new JTextArea(record.movieSummary);
 			summary.setEditable(false);
 			summary.setLineWrap(true);
 			cast = new JLabel(record.movieCast[0] + " " + record.movieCast[1] + " " + record.movieCast[2]);
-			dateTime = new JLabel(record.releaseDate + " - " + record.finalDate + " Times: " + record.showTimes[0] +  record.showTimes[1] + record.showTimes[2] + record.showTimes[3]);
+			dateTime = new JLabel(record.releaseDate + " - " + record.finalDate + " Times: " + record.showTimes[0] +" - " + record.showTimes[1] + " - " + record.showTimes[2] + "-" + record.showTimes[3]);
 			
+			bottom = new JPanel(new BorderLayout());
+			
+			bottom.add(cast, BorderLayout.PAGE_START);
+			bottom.add(dateTime, BorderLayout.CENTER);
 			add(title, BorderLayout.PAGE_START);
 			add(image, BorderLayout.LINE_START);
 			add(summary, BorderLayout.CENTER);
-			add(cast, BorderLayout.LINE_END);
-			add(dateTime, BorderLayout.PAGE_END);
+			add(bottom, BorderLayout.PAGE_END);
 		}
 	}
 	
