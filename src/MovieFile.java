@@ -20,7 +20,6 @@ public class MovieFile
 	private static BufferedReader bR;
 	private static ArrayList<String> databaseMovies;
 	
-	
 	public static void initialize() throws Exception
 	{
 		record = new MovieRecord();
@@ -28,7 +27,7 @@ public class MovieFile
 		numRecords = raf.length() / record.recSize;
 		
 		//csv file
-		bR = new BufferedReader(new FileReader("movies.csv"));
+		bR = new BufferedReader(new FileReader("movies.txt"));
 		databaseMovies = new ArrayList<String>();
 		String line = bR.readLine();
 		line = bR.readLine();
@@ -39,7 +38,7 @@ public class MovieFile
 		}
 		for(int i = 0; i < databaseMovies.size(); i++)
 		{
-			String[] movieInfo = databaseMovies.get(i).split(";");
+			String[] movieInfo = databaseMovies.get(i).split("\t");
 			
 			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};

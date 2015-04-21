@@ -75,11 +75,11 @@ public class SearchPanel extends JPanel{
 		for(int x = 0;x<SEARCH_DAYS;x++){	
 			Date dt = c.getTime();
 			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ dt.getDate());
-			dates[x] = String.format("%-15s %-7s %3d",((x<DATE_WORDS.length)?DATE_WORDS[x]:WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
+			dates[x] = String.format("%-10s %-7s %3d",((x<DATE_WORDS.length)?DATE_WORDS[x]:WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
 			
 			c.add(Calendar.DATE, 1);
 		}
-		searchDay = 402;//datesInt[0];
+		searchDay = 0;
 		
 		searchBox2 = new JComboBox<String>(dates);
 		
@@ -99,7 +99,7 @@ public class SearchPanel extends JPanel{
 		viewAll = new JButton("All Movies");
 		adminBtn = new JButton("Management");
 		time = new JLabel("Choose a time", JLabel.CENTER);
-		timeSlide = new JSlider(0,12*SLIDER_INTERVAL,12/2*SLIDER_INTERVAL);
+		timeSlide = new JSlider(0,12*SLIDER_INTERVAL+1,12/2*SLIDER_INTERVAL);
 		byDateContent.add(timeSlide, BorderLayout.CENTER);
 		byDateContent.add(time, BorderLayout.PAGE_START);
 		byDateContent.add(searchBox2,BorderLayout.LINE_START);
@@ -109,7 +109,16 @@ public class SearchPanel extends JPanel{
 		byTitlePnl.add("2",searchBox);
 		timeSlide.addChangeListener(new timeListener());
 		searchBox2.addActionListener(new dateListener());
-		
+		//Styling the slider
+		timeSlide.setMajorTickSpacing(4);
+		timeSlide.setMinorTickSpacing(2);
+		timeSlide.setPaintTicks(true);
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		labelTable.put(12*SLIDER_INTERVAL+1,new JLabel("All"));
+		labelTable.put(12*SLIDER_INTERVAL-3,new JLabel("12:00pm"));
+		labelTable.put(0,new JLabel("12:00am"));
+		timeSlide.setLabelTable(labelTable);
+		timeSlide.setPaintLabels(true);
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
 		byDateBtn.addActionListener(onClick);
@@ -138,11 +147,14 @@ public class SearchPanel extends JPanel{
 		updateFilm();
 	}
 	public void updateFilm(int time){
+		int compareTime = -1;
+		boolean all= false;
+		if(time!= 12*SLIDER_INTERVAL+1){
 		searchByTime = true;
 		filmsPnl.removeAll();
 		searchType.setText("Results");
 		int timeMin = (time*60/SLIDER_INTERVAL);
-		int compareTime;
+		
 		
 		String displayTime;
 		boolean am = false;
@@ -155,12 +167,18 @@ public class SearchPanel extends JPanel{
 			compareTime = Integer.parseInt("12" + ((timeMin ==0)?"00":timeMin));
 		}
 		log.v("Searching for time " + compareTime);
-		this.time.setText(displayTime + ((am)?"AM":"PM"));
+		this.time.setText("Searching for movies on " + displayTime + ((am)?"AM":"PM"));
+		}else{
+			all = true;
+			log.v("Searhcing for all movies on " + searchDay);
+			this.time.setText("Searching for all movies on " + dates[searchDay]);
+		}
 		loop:
+		
 		for(movieBlock i:mBlocks){
 			MovieRecord r = i.getRecord();
 			for(int x:r.showTimes){
-				if(x == compareTime&&searchDay>=r.releaseDate&&searchDay<=r.finalDate){
+				if((x == compareTime||all)&&(datesInt[searchDay]>=r.releaseDate&&datesInt[searchDay]<=r.finalDate)){
 					filmsPnl.add(i);
 					continue loop;
 				}
@@ -256,7 +274,8 @@ public class SearchPanel extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			searchDay = datesInt[((JComboBox) arg0.getSource()).getSelectedIndex()];
+			searchDay = ((JComboBox) arg0.getSource()).getSelectedIndex();
+			updateFilm(((JComboBox) arg0.getSource()).getSelectedIndex());
 		}
 		
 	}
