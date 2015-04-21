@@ -12,6 +12,9 @@ public class Main {
 	public static TicketPanel ticketPanel;
 	public static AdminPanel adminPanel;
 	public static ViewAllMoviesPanel allMoviesPanel;
+	public static BillingPanel billingPanel;
+	public static CheckOutPanel checkOutPanel;
+	public static AddMoviePanel addMoviePanel;
 	//
 	public static void main(String[] args) throws Exception 
 	{
@@ -41,17 +44,26 @@ public class Main {
 		ticketPanel = new TicketPanel();
 		adminPanel = new AdminPanel();
 		allMoviesPanel = new ViewAllMoviesPanel();
-
+		billingPanel = new BillingPanel();
+		checkOutPanel = new CheckOutPanel();
+		addMoviePanel = new AddMoviePanel();
+		
 		cards.add("1",searchPanel);
 		cards.add("2", moviePanel);
 		cards.add("3", ticketPanel);
 		cards.add("4", adminPanel);
 		cards.add("5", allMoviesPanel);
+		cards.add("6", billingPanel);
+		cards.add("7", checkOutPanel);
+		cards.add("8", addMoviePanel);
 		searchPanel.setCards(cards);
 		moviePanel.setCards(cards);
 		ticketPanel.setCards(cards);
 		adminPanel.setCards(cards);
 		allMoviesPanel.setCards(cards);
+		billingPanel.setCards(cards);
+		checkOutPanel.setCards(cards);
+		addMoviePanel.setCards(cards);
 		
 		//Execute frame
 		frame.add(cards);

@@ -138,6 +138,7 @@ public class TicketPanel extends JPanel
 				{
 					if(e.getActionCommand() == seatBlocks[i][j].getActionCommand())
 					{
+						//get the record number
 						long recordNum = 1;
 						try {
 							recordNum = MovieFile.getRecordNum(movieTitle.getText());
@@ -146,15 +147,12 @@ public class TicketPanel extends JPanel
 							// TODO Auto-generated catch block
 							e2.printStackTrace();
 						}
-						//cl.show(cards, "asdf");
-						movie.seatplan.getSeats()[dateIndex][showTimeIndex][i][j] = true;
-						log.v("Seat row " + (i + 1) + " and col " + (j + 1) + " booked for " + movie.movieTitle + " at time " + movie.showTimes[showTimeIndex] + "PM for date "  + (movie.releaseDate + dateIndex));
-						try {
-							MovieFile.writeRecord(recordNum, movie);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						
+						//proceed to billing panel
+						cl.show(cards, "6");
+					    BillingPanel billingPanel = (BillingPanel) cards.getComponent(5);
+					    billingPanel.setMovie(movie, recordNum, dateIndex, showTimeIndex, i, j);
+						
 					}
 				}
 			}
