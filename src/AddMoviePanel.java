@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class AddMoviePanel extends JPanel
 {
-	private JPanel cards;
+	private static JPanel cards;
 	
 	protected JLabel lblTitle;
 	protected JLabel lblSummary;
@@ -28,6 +29,7 @@ public class AddMoviePanel extends JPanel
 	protected JLabel lblImage;
 	
 	protected static JButton btnAdd;
+	protected static JButton btnBack;
 	
 	protected static JTextField txtTitle;
 	protected static JTextField txtSummary;
@@ -55,6 +57,7 @@ public class AddMoviePanel extends JPanel
 		txtImage = new JTextField();
 		
 		btnAdd = new JButton("Add");
+		btnBack = new JButton("Cancel");
 		
 		lblShowTimes = new JLabel[4];
 		txtShowTimes = new JTextField[4];
@@ -95,9 +98,11 @@ public class AddMoviePanel extends JPanel
 		
 		ButtonHandler onClick = new ButtonHandler();
 		btnAdd.addActionListener(onClick);
+		btnBack.addActionListener(onClick);
 		
-		add(moviePanel, BorderLayout.CENTER);
-		add(btnAdd, BorderLayout.PAGE_END);
+		add(moviePanel, BorderLayout.PAGE_START);
+		add(btnAdd, BorderLayout.CENTER);
+		add(btnBack, BorderLayout.PAGE_END);
 	}
 	
 	private static class ButtonHandler implements ActionListener
@@ -133,6 +138,11 @@ public class AddMoviePanel extends JPanel
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			}
+			else if(e.getActionCommand().equals("Cancel"))
+			{
+				CardLayout cl = (CardLayout)cards.getLayout();
+				cl.show(cards, "4");
 			}
 		}
 		
