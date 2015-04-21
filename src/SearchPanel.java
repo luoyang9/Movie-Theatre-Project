@@ -54,6 +54,9 @@ public class SearchPanel extends JPanel{
 	static boolean searchByTime;
 	static String[] dates;
 	static int[] datesInt;
+	static final String DATE_WORDS[] = {"Today", "Tomorrow"};
+	static final String WEEK_DAYS[] = {"Sunday" ,"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	protected int searchDay;
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -69,16 +72,16 @@ public class SearchPanel extends JPanel{
 		dates = new String[SEARCH_DAYS];
 		datesInt = new int[SEARCH_DAYS];
 		Calendar c = Calendar.getInstance(); 
-		c.setTime(new Date()); 
-	
 		for(int x = 0;x<SEARCH_DAYS;x++){	
 			Date dt = c.getTime();
-			datesInt[x] = Integer.parseInt(String.format("%d%d",dt.getMonth(),dt.getDay()));
+			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ dt.getDate());
+			dates[x] = String.format("%-15s %-7s %3d",((x<DATE_WORDS.length)?DATE_WORDS[x]:WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
+			
 			c.add(Calendar.DATE, 1);
 		}
+		searchDay = 402;//datesInt[0];
 		
-		
-		searchBox2 = new JComboBox<String>(new String[]{"Today" , "Tomorrow", "Day after that", "Day after that"});
+		searchBox2 = new JComboBox<String>(dates);
 		
 		setLayout(new BorderLayout());
 		byDatePnl = new JPanel(new CardLayout());
@@ -104,8 +107,8 @@ public class SearchPanel extends JPanel{
 		byDatePnl.add("2",byDateContent);
 		byTitlePnl.add("1",byTitleBtn);
 		byTitlePnl.add("2",searchBox);
-		timeSlide.addChangeListener(new SliderListener());
-		
+		timeSlide.addChangeListener(new timeListener());
+		searchBox2.addActionListener(new dateListener());
 		
 		//add action listeners
 		ButtonHandler onClick = new ButtonHandler();
@@ -155,8 +158,9 @@ public class SearchPanel extends JPanel{
 		this.time.setText(displayTime + ((am)?"AM":"PM"));
 		loop:
 		for(movieBlock i:mBlocks){
-			for(int x:i.getRecord().showTimes){
-				if(x == compareTime){
+			MovieRecord r = i.getRecord();
+			for(int x:r.showTimes){
+				if(x == compareTime&&searchDay>=r.releaseDate&&searchDay<=r.finalDate){
 					filmsPnl.add(i);
 					continue loop;
 				}
@@ -238,19 +242,23 @@ public class SearchPanel extends JPanel{
 		  
 		}
 	}
-	private class SliderListener implements ChangeListener {
-		
+	private class timeListener implements ChangeListener {
 	    public void stateChanged(ChangeEvent e) {
 	        JSlider source = (JSlider)e.getSource();
 	            int value = source.getValue();
 	            if(value!=lastValue){
 	            	updateFilm(value);
 	            	lastValue = value;
-	            }
-	            
-	            
-	            
+	            } 
 	    }
+	}
+	private class dateListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			searchDay = datesInt[((JComboBox) arg0.getSource()).getSelectedIndex()];
+		}
+		
 	}
 	private class ButtonHandler implements ActionListener{
 
