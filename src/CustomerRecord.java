@@ -15,16 +15,19 @@ public class CustomerRecord
 	protected int age;//1 int - 4 bytes
 	protected String address;//30 chars - 60 bytes
 	protected long telephone;//1 long - 8 bytes
-	protected int creditCardNum;//1 int - 4 bytes
+	protected long creditCardNum;//1 long - 8 bytes
 	protected int expiryDate;//1 int - 4 bytes
 	protected int securityCode;//1 int - 4 bytes
+	
+	//40 + 4 + 4 + 4 + 4 + 80 + 4 + 60 + 8 + 8 + 4 + 4 = 224
+	protected int recSize = 224;
 	
 	public CustomerRecord()
 	{
 		
 	}
 	
-	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, String name, int age, String address, long telephone, int creditNum, int expDate, int secCode)
+	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, String name, int age, String address, long telephone, long creditNum, int expDate, int secCode)
 	{
 		//set movie
 		if (movie.length () > 20)

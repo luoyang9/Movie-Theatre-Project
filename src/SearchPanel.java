@@ -282,7 +282,7 @@ public class SearchPanel extends JPanel{
 			else if(command == adminBtn)
 			{
 				 CardLayout cardLayout = (CardLayout)cards.getLayout();
-			     cardLayout.show(cards,"4");
+			     cardLayout.show(cards,Value.ADMIN);
 			}
 		}
 
@@ -307,7 +307,7 @@ public class SearchPanel extends JPanel{
 		private class ButtonHandler implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				 CardLayout cardLayout = (CardLayout)cards.getLayout();
-			     cardLayout.show(cards,"2");
+			     cardLayout.show(cards, Value.MOVIE);
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
 			     if(searchByTime){
 			    	 

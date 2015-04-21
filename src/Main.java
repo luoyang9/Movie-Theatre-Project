@@ -12,6 +12,7 @@ public class Main {
 	public static TicketPanel ticketPanel;
 	public static AdminPanel adminPanel;
 	public static ViewAllMoviesPanel allMoviesPanel;
+	public static ViewAllCustomersPanel allCustomersPanel;
 	public static BillingPanel billingPanel;
 	public static CheckOutPanel checkOutPanel;
 	public static AddMoviePanel addMoviePanel;
@@ -36,6 +37,8 @@ public class Main {
 	{	
 		//initialize movie raf (open the file connection)
 		MovieFile.initialize();
+		CustomerFile.initialize();
+		
 		frame = new JFrame("Movie Theatre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
@@ -44,18 +47,20 @@ public class Main {
 		ticketPanel = new TicketPanel();
 		adminPanel = new AdminPanel();
 		allMoviesPanel = new ViewAllMoviesPanel();
+		allCustomersPanel = new ViewAllCustomersPanel();
 		billingPanel = new BillingPanel();
 		checkOutPanel = new CheckOutPanel();
 		addMoviePanel = new AddMoviePanel();
 		
-		cards.add("1",searchPanel);
-		cards.add("2", moviePanel);
-		cards.add("3", ticketPanel);
-		cards.add("4", adminPanel);
-		cards.add("5", allMoviesPanel);
-		cards.add("6", billingPanel);
-		cards.add("7", checkOutPanel);
-		cards.add("8", addMoviePanel);
+		cards.add(Value.SEARCH, searchPanel);
+		cards.add(Value.MOVIE, moviePanel);
+		cards.add(Value.TICKET, ticketPanel);
+		cards.add(Value.ADMIN, adminPanel);
+		cards.add(Value.ALL_MOVIES, allMoviesPanel);
+		cards.add(Value.BILLING, billingPanel);
+		cards.add(Value.CHECK_OUT, checkOutPanel);
+		cards.add(Value.ADD_MOVIE, addMoviePanel);
+		cards.add(Value.ALL_CUSTOMERS, allCustomersPanel);
 		searchPanel.setCards(cards);
 		moviePanel.setCards(cards);
 		ticketPanel.setCards(cards);
@@ -64,6 +69,7 @@ public class Main {
 		billingPanel.setCards(cards);
 		checkOutPanel.setCards(cards);
 		addMoviePanel.setCards(cards);
+		allCustomersPanel.setCards(cards);
 		
 		//Execute frame
 		frame.add(cards);
