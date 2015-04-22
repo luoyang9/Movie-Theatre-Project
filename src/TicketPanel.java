@@ -126,7 +126,7 @@ public class TicketPanel extends JPanel
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			if(e.getActionCommand().equals("Cancel"))
 			{
-				cl.show(cards, "2");
+				cl.show(cards, Value.MOVIE);
 				SearchPanel sp = (SearchPanel) cards.getComponent(0);
 				sp.updateFilm();
 			}
@@ -149,7 +149,7 @@ public class TicketPanel extends JPanel
 						}
 						
 						//proceed to billing panel
-						cl.show(cards, "6");
+						cl.show(cards, Value.BILLING);
 					    BillingPanel billingPanel = (BillingPanel) cards.getComponent(5);
 					    billingPanel.setMovie(movie, recordNum, dateIndex, showTimeIndex, i, j);
 						

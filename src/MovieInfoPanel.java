@@ -186,7 +186,7 @@ public class MovieInfoPanel extends JPanel
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			if(command.equals("Back"))
 			{
-				cl.show(cards, "1");
+				cl.show(cards, Value.SEARCH);
 				SearchPanel sp = (SearchPanel) cards.getComponent(0);
 				sp.updateFilm();
 			}
@@ -195,7 +195,7 @@ public class MovieInfoPanel extends JPanel
 			{
 				if(command.equals(btnShowTimes[i].getActionCommand()))
 				{
-					cl.show(cards, "3");
+					cl.show(cards, Value.TICKET);
 					TicketPanel tp = (TicketPanel) cards.getComponent(2);
 					tp.setMovie(movie, (String)showDate.getSelectedItem(), i, btnShowTimes[i].getText());
 				}

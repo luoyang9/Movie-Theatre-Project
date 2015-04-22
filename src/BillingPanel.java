@@ -93,26 +93,32 @@ public class BillingPanel extends JPanel
 			
 			if(action.equals("Proceed"))
 			{
-				CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), Integer.parseInt(bDayIn.getText()), addressIn.getText(), Long.parseLong(phoneNumIn.getText()), Integer.parseInt(credCardIn.getText()), Integer.parseInt(expDateIn.getText()), Integer.parseInt(secureCodeIn.getText()));
+				//write new customer record
+				CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), Integer.parseInt(bDayIn.getText()), addressIn.getText(), Long.parseLong(phoneNumIn.getText()), Long.parseLong(credCardIn.getText()), Integer.parseInt(expDateIn.getText()), Integer.parseInt(secureCodeIn.getText()));
+				try {
+					log.v("Customer record created at record number " + CustomerFile.getNumRecords() + 1);
+					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
 				
 				//book the seat
 				record.seatplan.getSeats()[dateIndex][timeIndex][rowIndex][colIndex] = true;
-				log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + (record.releaseDate + dateIndex));
 				try {
+					log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + (record.releaseDate + dateIndex));
 					MovieFile.writeRecord(recordNum, record);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
 				//proceed to check out panel
-				cl.show(cards, "7");
+				cl.show(cards, Value.CHECK_OUT);
 				CheckOutPanel checkOut = (CheckOutPanel)cards.getComponent(6);
 				checkOut.setInfo(customer);
 			}
 			else if(action.equals("Cancel"))
 			{
-				cl.show(cards, "3");
+				cl.show(cards, Value.TICKET);
 			}
 			
 		}

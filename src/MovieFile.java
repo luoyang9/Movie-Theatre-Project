@@ -157,7 +157,7 @@ public class MovieFile
 			MovieRecord movie = new MovieRecord(currMovie.movieTitle, currMovie.movieSummary, currMovie.releaseDate, currMovie.finalDate, currMovie.showTimes, currMovie.seatplan.getSeats(), currMovie.movieCast, currMovie.imageID);
 			list.add(movie);
 		}
-		log.i(numRecords +" Records found");
+		log.i(list.size() +" Movie Records found");
 		return list;
 	}
 	
@@ -172,7 +172,7 @@ public class MovieFile
 		//put movie title data into StringBuffer
 		temp = new StringBuffer(record.movieTitle);
 		temp.setLength(20); //max length	
-		raf.writeChars(String.format("%20s", temp.toString())); //write to file	
+		raf.writeChars(temp.toString()); //write to file	
 		
 		//put movie summary data into StringBuffer
 		temp = new StringBuffer(record.movieSummary);
@@ -249,12 +249,5 @@ public class MovieFile
 	
 	public static RandomAccessFile getMovieFile(){return raf;}
 	public static long getNumRecords(){return numRecords;}
-	public static void close() throws IOException
-	{
-		raf.close();
-	}
-	
-	
-	
 	
 }

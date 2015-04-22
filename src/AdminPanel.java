@@ -56,7 +56,7 @@ public class AdminPanel extends JPanel
 			
 			if(command.equals(viewAllMovies.getActionCommand()))
 			{
-				cl.show(cards, "5");
+				cl.show(cards, Value.ALL_MOVIES);
 			    ViewAllMoviesPanel allMoviesPanel = (ViewAllMoviesPanel) cards.getComponent(4);
 			    try {
 					allMoviesPanel.refreshMovies();
@@ -65,13 +65,17 @@ public class AdminPanel extends JPanel
 					e1.printStackTrace();
 				}
 			}
+			else if(command.equalsIgnoreCase(viewAllCustomers.getActionCommand()))
+			{
+				cl.show(cards, Value.ALL_CUSTOMERS);
+			}
 			else if(command.equals("Add Movie"))
 			{
-				cl.show(cards, "8");
+				cl.show(cards, Value.ADD_MOVIE);
 			}
 			else if(command.equals("Back"))
 			{
-				cl.show(cards, "1");
+				cl.show(cards, Value.SEARCH);
 			}
 		}
 		

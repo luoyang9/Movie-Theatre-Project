@@ -142,7 +142,7 @@ public class AddMoviePanel extends JPanel
 			else if(e.getActionCommand().equals("Cancel"))
 			{
 				CardLayout cl = (CardLayout)cards.getLayout();
-				cl.show(cards, "4");
+				cl.show(cards, Value.ADMIN);
 			}
 		}
 		
