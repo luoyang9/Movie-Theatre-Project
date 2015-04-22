@@ -48,14 +48,12 @@ public class SearchPanel extends JPanel{
 	//Labels
 	private static JLabel time;
 	protected static movieBlock[] mBlocks;
-	final static int SLIDER_INTERVAL = 4;
-	final static int SEARCH_DAYS = 7;
+	
 	static int lastValue = -1;
 	static boolean searchByTime;
 	static String[] dates;
 	static int[] datesInt;
-	static final String DATE_WORDS[] = {"Today", "Tomorrow"};
-	static final String WEEK_DAYS[] = {"Sunday" ,"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	
 	protected int searchDay;
 	public SearchPanel(){
 		try {
@@ -69,13 +67,13 @@ public class SearchPanel extends JPanel{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		dates = new String[SEARCH_DAYS];
-		datesInt = new int[SEARCH_DAYS];
+		dates = new String[Value.SEARCH_DAYS];
+		datesInt = new int[Value.SEARCH_DAYS];
 		Calendar c = Calendar.getInstance(); 
-		for(int x = 0;x<SEARCH_DAYS;x++){	
+		for(int x = 0;x<Value.SEARCH_DAYS;x++){	
 			Date dt = c.getTime();
 			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ dt.getDate());
-			dates[x] = String.format("%-10s %-7s %3d",((x<DATE_WORDS.length)?DATE_WORDS[x]:WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
+			dates[x] = String.format("%-10s %-7s %3d",((x<Value.DATE_WORDS.length)?Value.DATE_WORDS[x]:Value.WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
 			
 			c.add(Calendar.DATE, 1);
 		}
@@ -99,7 +97,7 @@ public class SearchPanel extends JPanel{
 		viewAll = new JButton("All Movies");
 		adminBtn = new JButton("Management");
 		time = new JLabel("Choose a time", JLabel.CENTER);
-		timeSlide = new JSlider(0,12*SLIDER_INTERVAL+1,12/2*SLIDER_INTERVAL);
+		timeSlide = new JSlider(0,12*Value.SLIDER_INTERVAL+1,12/2*Value.SLIDER_INTERVAL);
 		byDateContent.add(timeSlide, BorderLayout.CENTER);
 		byDateContent.add(time, BorderLayout.PAGE_START);
 		byDateContent.add(searchBox2,BorderLayout.LINE_START);
@@ -114,8 +112,8 @@ public class SearchPanel extends JPanel{
 		timeSlide.setMinorTickSpacing(2);
 		timeSlide.setPaintTicks(true);
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put(12*SLIDER_INTERVAL+1,new JLabel("All"));
-		labelTable.put(12*SLIDER_INTERVAL-3,new JLabel("12:00pm"));
+		labelTable.put(12*Value.SLIDER_INTERVAL+1,new JLabel("All"));
+		labelTable.put(12*Value.SLIDER_INTERVAL-3,new JLabel("12:00pm"));
 		labelTable.put(0,new JLabel("12:00am"));
 		timeSlide.setLabelTable(labelTable);
 		timeSlide.setPaintLabels(true);
@@ -149,11 +147,11 @@ public class SearchPanel extends JPanel{
 	public void updateFilm(int time){
 		int compareTime = -1;
 		boolean all= false;
-		if(time!= 12*SLIDER_INTERVAL+1){
+		if(time!= 12*Value.SLIDER_INTERVAL+1){
 		searchByTime = true;
 		filmsPnl.removeAll();
 		searchType.setText("Results");
-		int timeMin = (time*60/SLIDER_INTERVAL);
+		int timeMin = (time*60/Value.SLIDER_INTERVAL);
 		
 		
 		String displayTime;
@@ -275,7 +273,7 @@ public class SearchPanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			searchDay = ((JComboBox) arg0.getSource()).getSelectedIndex();
-			updateFilm(((JComboBox) arg0.getSource()).getSelectedIndex());
+			updateFilm(timeSlide.getValue());
 		}
 		
 	}

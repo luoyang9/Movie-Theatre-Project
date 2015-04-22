@@ -10,4 +10,10 @@ public class Value
 	public final static String CHECK_OUT = "7";
 	public final static String ADD_MOVIE = "8";
 	public final static String ALL_CUSTOMERS = "9";
+	
+	//Search Panel
+	public final static int SLIDER_INTERVAL = 4;
+	public final static int SEARCH_DAYS = 7;
+	public final static String DATE_WORDS[] = {"Today", "Tomorrow"};
+	public final static String WEEK_DAYS[] = {"Sunday" ,"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 }
