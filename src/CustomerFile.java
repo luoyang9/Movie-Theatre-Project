@@ -94,7 +94,6 @@ public class CustomerFile {
 	{
 		List<CustomerRecord> list = new ArrayList<CustomerRecord>();
 		CustomerRecord currCustomer;
-		System.out.println(numRecords);
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currCustomer = getRecord(i+1);
