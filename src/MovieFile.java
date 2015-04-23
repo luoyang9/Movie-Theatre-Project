@@ -26,7 +26,7 @@ public class MovieFile
 		raf = new RandomAccessFile("movie_info", "rw");
 		numRecords = raf.length() / record.recSize;
 		
-		//csv file
+		//database file
 		bR = new BufferedReader(new FileReader("movies.txt"));
 		databaseMovies = new ArrayList<String>();
 		String line = bR.readLine();
@@ -44,7 +44,7 @@ public class MovieFile
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
 			
 			SeatPlan seatplan;
-			if(i >= numRecords)
+			if(i >= numRecords) //if we're out of raf's bounds (new movie)
 			{
 				seatplan = new SeatPlan();
 				seatplan.setAllFalse();

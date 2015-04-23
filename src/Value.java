@@ -1,6 +1,7 @@
 
 public class Value 
 {
+	//panels
 	public final static String SEARCH = "1";
 	public final static String MOVIE = "2";
 	public final static String TICKET = "3";

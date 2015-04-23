@@ -113,8 +113,8 @@ public class SearchPanel extends JPanel{
 		timeSlide.setPaintTicks(true);
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(12*Value.SLIDER_INTERVAL+1,new JLabel("All"));
-		labelTable.put(12*Value.SLIDER_INTERVAL-3,new JLabel("12:00pm"));
-		labelTable.put(0,new JLabel("12:00am"));
+		labelTable.put(12*Value.SLIDER_INTERVAL-3,new JLabel("12:00am"));
+		labelTable.put(0,new JLabel("12:00pm"));
 		timeSlide.setLabelTable(labelTable);
 		timeSlide.setPaintLabels(true);
 		//add action listeners
@@ -335,9 +335,13 @@ public class SearchPanel extends JPanel{
 			     cardLayout.show(cards, Value.MOVIE);
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
 			     if(searchByTime){
-			    	 
+			    	// moviePanel.setMovie( ); set movie's date to selected date
+			    	 moviePanel.setMovie(record);
 			     }
-			     moviePanel.setMovie(record);
+			     else
+			     {
+				     moviePanel.setMovie(record);
+			     }
 			     if(allFrame != null){
 			    	 allFrame.dispose();
 			    	 Main.frame.setVisible(true);

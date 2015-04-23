@@ -1,24 +1,50 @@
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 public class CheckOutPanel extends JPanel
 {
-	private JPanel cards;
-	private JLabel info;
-	private MovieRecord record;
+	private static JPanel cards;
+	private static JLabel info;
+	private static MovieRecord record;
 	
-	private JPanel infoPanel;
+	private static JButton btnConfirm;
+	
+	private static JPanel infoPanel;
 	
 	public CheckOutPanel()
 	{
+		setLayout(new BorderLayout());
 		infoPanel = new JPanel();
 		info = new JLabel();
+		btnConfirm = new JButton("Back to Browsing");
+		
+		ButtonHandler onClick = new ButtonHandler();
+		btnConfirm.addActionListener(onClick);
 		
 		infoPanel.add(info);
 		
-		add(infoPanel);
+		add(btnConfirm, BorderLayout.PAGE_END);
+		add(infoPanel, BorderLayout.CENTER);
 	}
+	
+	private static class ButtonHandler implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equals(btnConfirm.getActionCommand()))
+			{
+				CardLayout cl = (CardLayout)cards.getLayout();
+				cl.show(cards, Value.SEARCH);
+			}
+		}
+	}	
 	
 	public void setInfo(CustomerRecord record)
 	{

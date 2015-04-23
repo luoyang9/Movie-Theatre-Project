@@ -61,7 +61,7 @@ public class TicketPanel extends JPanel
 		seatPanel.removeAll();
 		
 		movieTitle.setText(movie.movieTitle);
-		movieDateTime.setText(date + " ---- " + time);
+		movieDateTime.setText(date + " ---- " + time + " date index : " + dateIndex);
 		for(int i = 0; i < movie.seatplan.getSeats().length; i++) //loop thoruhg dates
 		{
 			//convert dates

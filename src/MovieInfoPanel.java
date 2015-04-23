@@ -108,7 +108,7 @@ public class MovieInfoPanel extends JPanel
 		setMovie(movieRecord);
 		for(int x = 0; x<numberDates.size();x++){
 			if(numberDates.get(x) == day){
-				showDate.setSelectedIndex(x);
+				showDate.setSelectedItem(showDate.getItemAt(day));
 				break;
 			}
 		}
@@ -143,11 +143,24 @@ public class MovieInfoPanel extends JPanel
 		lblSummary.append("\nReleased: " + releaseDate + " --- Final date: " + finalDate);
 
 		dates = new DefaultComboBoxModel<String>();
-		for(int i = 0; i < movie.finalDate - movie.releaseDate; i++)
+		int lastDayInMonth = util.getLastDay(movie.releaseDate/100); //the last day in the movie's release month
+		int dateCount = 0; //counts the days if the movie's dates overlap two months
+		int numDays = util.getNumDaysPlaying(movie.releaseDate, movie.finalDate);
+		for(int i = 0; i < numDays; i++) //loop through the movie's dates
 		{
-			numberDates.add(movie.releaseDate + i);
-			String currDate = Integer.toString(movie.releaseDate + i);
-			String formattedDate = util.getMonth(Integer.parseInt(currDate.substring(0, 1))) + " " + currDate.substring(1, 3);
+			int currDate = movie.releaseDate + i;
+			
+			//if the current date is over the month's last date, then move on to the next month
+			if((currDate) % 100 >= lastDayInMonth + 1)
+			{
+				dateCount++;
+				currDate = ((currDate / 100) + 1) * 100 + dateCount;
+			}
+			
+			String dateString = Integer.toString(currDate);
+			String formattedDate = util.getMonth(Integer.parseInt(dateString.substring(0, 1))) + " " + dateString.substring(1, 3);
+			
+			numberDates.add(currDate);
 			dates.addElement(formattedDate);
 		}
 		showDate.setModel(dates);
@@ -197,7 +210,7 @@ public class MovieInfoPanel extends JPanel
 				{
 					cl.show(cards, Value.TICKET);
 					TicketPanel tp = (TicketPanel) cards.getComponent(2);
-					tp.setMovie(movie, (String)showDate.getSelectedItem(), i, btnShowTimes[i].getText());
+					tp.setMovie(movie, (String)showDate.getSelectedItem(), showDate.getSelectedIndex(), btnShowTimes[i].getText());
 				}
 			}
 		}
