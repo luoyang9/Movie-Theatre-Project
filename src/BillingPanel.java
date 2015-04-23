@@ -4,11 +4,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JCalendar;
 
 @SuppressWarnings("serial")
 public class BillingPanel extends JPanel
@@ -21,7 +25,8 @@ public class BillingPanel extends JPanel
 	
 	private static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, blank;
 	private static JButton back, proceed;
-	private static JTextField nameIn, bDayIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
+	private static JTextField nameIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
+	private static JCalendar calendar1, calendar2;
 	private static JPanel mainPanel, personal, credInfo, inputCVV, allInfo, button;
 	
 	public BillingPanel(){
@@ -42,12 +47,13 @@ public class BillingPanel extends JPanel
 		expDate = new JLabel("Expiry Date");
 		secureCode = new JLabel("CVV");
 		blank = new JLabel(" ");
+		calendar1 = new JCalendar();
+		calendar2 = new JCalendar();
 		
 		back = new JButton("Cancel");
 		proceed = new JButton("Proceed");
 		
 		nameIn = new JTextField("");
-		bDayIn = new JTextField("");
 		addressIn = new JTextField("");
 		phoneNumIn = new JTextField("");
 		credCardIn = new JTextField("");
@@ -63,7 +69,7 @@ public class BillingPanel extends JPanel
 		personal.add(name);
 		personal.add(nameIn);
 		personal.add(bDay);
-		personal.add(bDayIn);
+		personal.add(calendar1);
 		personal.add(address);
 		personal.add(addressIn);
 		personal.add(phoneNum);
@@ -73,7 +79,7 @@ public class BillingPanel extends JPanel
 		credInfo.add(credCard);
 		credInfo.add(credCardIn);
 		credInfo.add(expDate);
-		credInfo.add(expDateIn);
+		credInfo.add(calendar2);
 		inputCVV.add(secureCode);
 		inputCVV.add(secureCodeIn);
 		credInfo.add(inputCVV);
@@ -93,28 +99,40 @@ public class BillingPanel extends JPanel
 			
 			if(action.equals("Proceed"))
 			{
-				//write new customer record
-				CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), Integer.parseInt(bDayIn.getText()), addressIn.getText(), Long.parseLong(phoneNumIn.getText()), Long.parseLong(credCardIn.getText()), Integer.parseInt(expDateIn.getText()), Integer.parseInt(secureCodeIn.getText()));
-				try {
+				try
+				{
+					//formatting
+					long formatTelephone = Long.parseLong(phoneNumIn.getText().replaceAll("\\(|\\)|\\-|\\s", ""));
+					
+					Calendar tempCal1 = calendar1.getCalendar();
+					int birthDate = (tempCal1.get(Calendar.MONTH) + 1) * 1000000 + tempCal1.get(Calendar.DATE) *10000 + tempCal1.get(Calendar.YEAR);
+					
+					Calendar tempCal2 = calendar2.getCalendar();
+					int expDate = (tempCal2.get(Calendar.MONTH) + 1) * 1000000 + tempCal2.get(Calendar.DATE) *10000 + tempCal2.get(Calendar.YEAR);
+					
+					int secCode = Integer.parseInt(secureCodeIn.getText().replaceAll("\\s", ""));
+					
+					//write new customer record
+					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
+					
 					log.v("Customer record created at record number " + CustomerFile.getNumRecords() + 1);
-					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-				
-				//book the seat
-				record.seatplan.getSeats()[dateIndex][timeIndex][rowIndex][colIndex] = true;
-				try {
+					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);	
+
+					//book the seat
+					record.seatplan.getSeats()[dateIndex][timeIndex][rowIndex][colIndex] = true;	
+
 					log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + (record.releaseDate + dateIndex));
 					MovieFile.writeRecord(recordNum, record);
-				} catch (IOException e1) {
-					e1.printStackTrace();
+
+					//proceed to check out panel
+					cl.show(cards, Value.CHECK_OUT);
+					CheckOutPanel checkOut = (CheckOutPanel)cards.getComponent(6);
+					checkOut.setInfo(customer);
+				}catch(IOException io){
+					log.e("IOException occurred.");
+				}catch(NumberFormatException nf){
+					log.e("Number Format Exception - A non-integer was entered into a field expecting integers.");
 				}
-				
-				//proceed to check out panel
-				cl.show(cards, Value.CHECK_OUT);
-				CheckOutPanel checkOut = (CheckOutPanel)cards.getComponent(6);
-				checkOut.setInfo(customer);
 			}
 			else if(action.equals("Cancel"))
 			{

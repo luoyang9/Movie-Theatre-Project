@@ -48,9 +48,14 @@ public class CheckOutPanel extends JPanel
 	
 	public void setInfo(CustomerRecord record)
 	{
-		info.setText("<html>Movie: " +record.movie + "<br>Time: " + record.showTime + "<br>Date: " + record.date + "<br>Row: " + (record.seatRow + 1) + "<br>Col: " + (record.seatCol + 1) + "<br>Name: "
-				 + record.name + "<br>Birthdate: " + record.age + "<br>Address: " + record.address + "<br>Phone Num: " + record.telephone + "<br>Credit Card: "
-				 + record.creditCardNum + "<br> Exp Date: " + record.expiryDate + "<br>Security Code: " + record.securityCode + "<br></html>");
+	
+		String formatBirthDate = util.getMonth(record.birthday / 1000000) + " " + (record.birthday / 10000) % 100 + ", " + record.birthday % 10000;
+		String formatExpDate = util.getMonth(record.expiryDate / 1000000) + " " + (record.expiryDate / 10000) % 100 + ", " + record.expiryDate % 10000;
+		String showTimeString = Integer.toString(record.showTime);
+		String formatShowTime = record.showTime / 100 + ":" + showTimeString.substring(showTimeString.length() - 1, showTimeString.length()) + "PM";
+		info.setText("<html>Movie: " +record.movie + "<br>Time: " + formatShowTime + "<br>Date: " + record.date + "<br>Row: " + (record.seatRow + 1) + "<br>Col: " + (record.seatCol + 1) + "<br>Name: "
+				 + record.name + "<br>Birthdate: " + formatBirthDate + "<br>Address: " + record.address + "<br>Phone Num: " + record.telephone + "<br>Credit Card: "
+				 + record.creditCardNum + "<br> Exp Date: " + formatExpDate + "<br>Security Code: " + record.securityCode + "<br></html>");
 	}
 
 	

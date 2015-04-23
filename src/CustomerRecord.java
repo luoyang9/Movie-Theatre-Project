@@ -12,7 +12,7 @@ public class CustomerRecord
 	protected int seatRow;//1 int - 4 bytes
 	protected int seatCol;//1 int - 4 bytes
 	protected String name;//40 chars - 80 bytes
-	protected int age;//1 int - 4 bytes
+	protected int birthday;//1 int - 4 bytes
 	protected String address;//30 chars - 60 bytes
 	protected long telephone;//1 long - 8 bytes
 	protected long creditCardNum;//1 long - 8 bytes
@@ -27,7 +27,7 @@ public class CustomerRecord
 		
 	}
 	
-	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, String name, int age, String address, long telephone, long creditNum, int expDate, int secCode)
+	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, String name, int birthday, String address, long telephone, long creditNum, int expDate, int secCode)
 	{
 		//set movie
 		if (movie.length () > 20)
@@ -61,7 +61,7 @@ public class CustomerRecord
 			this.name = name;
 		}
 		
-		this.age = age;
+		this.birthday = birthday;
 		
 		//set movie
 		if (address.length () > 30)

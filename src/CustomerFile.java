@@ -64,7 +64,7 @@ public class CustomerFile {
 		}
 		record.name = new String(name);
 		
-		record.age = raf.readInt();
+		record.birthday = raf.readInt();
 		
 		//get chars for address
 		StringBuilder address = new StringBuilder(30);
@@ -97,7 +97,7 @@ public class CustomerFile {
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currCustomer = getRecord(i+1);
-			CustomerRecord customer = new CustomerRecord(currCustomer.movie, currCustomer.showTime, currCustomer.date, currCustomer.seatRow, currCustomer.seatCol, currCustomer.name, currCustomer.age, currCustomer.address, currCustomer.telephone, currCustomer.creditCardNum, currCustomer.expiryDate, currCustomer.securityCode);
+			CustomerRecord customer = new CustomerRecord(currCustomer.movie, currCustomer.showTime, currCustomer.date, currCustomer.seatRow, currCustomer.seatCol, currCustomer.name, currCustomer.birthday, currCustomer.address, currCustomer.telephone, currCustomer.creditCardNum, currCustomer.expiryDate, currCustomer.securityCode);
 			list.add(customer);
 		}
 		log.i(list.size() +" Customer Records found");
@@ -127,7 +127,7 @@ public class CustomerFile {
 		temp.setLength(40); //max length	
 		raf.writeChars(temp.toString()); //write to file
 
-		raf.writeInt(record.age);
+		raf.writeInt(record.birthday);
 		
 		//put address title data into StringBuffer
 		temp = new StringBuffer(record.address);

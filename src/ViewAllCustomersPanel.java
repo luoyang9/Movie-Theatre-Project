@@ -88,9 +88,15 @@ public class ViewAllCustomersPanel extends JPanel
 			setBorder(BorderFactory.createLineBorder(Color.black));
 			setLayout(new BorderLayout());
 			movie = new JLabel(record.movie);
-			movieInfo = new JLabel("When: " + record.date + " at " + record.showTime + ". Seat: R-" + record.seatRow + " C-" + record.seatCol);
-			customerInfo = new JLabel("Name: " + record.name + " Age: " + record.age + " Address: " + record.address + " Phone: " + record.telephone);
-			customerCard = new JLabel("Credit Card Num: " + record.creditCardNum + " Exp: " + record.expiryDate + "Security Code: " + record.securityCode);
+			
+			String formatBirthDate = util.getMonth(record.birthday / 1000000) + " " + (record.birthday / 10000) % 100 + ", " + record.birthday % 10000;
+			String formatExpDate = util.getMonth(record.expiryDate / 1000000) + " " + (record.expiryDate / 10000) % 100 + ", " + record.expiryDate % 10000;
+			String showTimeString = Integer.toString(record.showTime);
+			String formatShowTime = record.showTime / 100 + ":" + showTimeString.substring(showTimeString.length() - 1, showTimeString.length()) + "PM";
+		
+			movieInfo = new JLabel("When: " + record.date + " at " + formatShowTime + ". Seat: R-" + record.seatRow + " C-" + record.seatCol);
+			customerInfo = new JLabel("Name: " + record.name + " Birthday: " + formatBirthDate + " Address: " + record.address + " Phone: " + record.telephone);
+			customerCard = new JLabel("Credit Card Num: " + record.creditCardNum + " Exp: " + formatExpDate + "Security Code: " + record.securityCode);
 			
 			info = new JPanel(new GridLayout(3, 1));
 			

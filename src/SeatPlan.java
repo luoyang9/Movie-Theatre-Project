@@ -10,7 +10,7 @@ public class SeatPlan
 	
 	public SeatPlan()
 	{
-		seats = new boolean[4][4][3][4];
+		seats = new boolean[5][4][3][4];
 	}
 	
 	public SeatPlan(boolean[][][][] seats)
