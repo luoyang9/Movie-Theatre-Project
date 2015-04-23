@@ -26,6 +26,9 @@ public class Value
 	public final static String POSTER_PATH = "Posters\\";
 	public static ImageIcon[] POSTER_IMAGES;
 	
+	//Admin
+	public final static String PASSWORD = "123";
+	
 	public static void loadImages(){
 		
 		int numRecords = (int) MovieFile.getNumRecords();
