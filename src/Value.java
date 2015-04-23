@@ -1,3 +1,7 @@
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
 
 public class Value 
 {
@@ -20,4 +24,29 @@ public class Value
 	
 	//Pictures
 	public final static String POSTER_PATH = "Posters\\";
+	public static ImageIcon[] POSTER_IMAGES;
+	
+	public static void loadImages(){
+		
+		int numRecords = (int) MovieFile.getNumRecords();
+		log.v("Loading all images count = " + numRecords);
+		POSTER_IMAGES = new ImageIcon[numRecords];
+		for(int x = 0;x<numRecords;x++){
+			try{
+			POSTER_IMAGES[x] = new ImageIcon(POSTER_PATH+(x+1)+".jpg");
+			}catch(NullPointerException e){
+				log.e("IMAGE " + x + " not found! Using backup image instead");
+				POSTER_IMAGES[x] = new ImageIcon(POSTER_PATH+"error.jpg");
+			}
+		}
+		log.v("Images done loading");
+	}
+	public static ImageIcon getImage(int imageId){
+		try{
+		return POSTER_IMAGES[imageId-1];
+		}catch(ArrayIndexOutOfBoundsException e){
+			log.e("The image <"+ imageId + "> requested doesn't exist, sending error image");
+			return new ImageIcon(POSTER_PATH + "error.jpg");
+		}
+		}
 }

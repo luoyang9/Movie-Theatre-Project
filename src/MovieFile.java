@@ -30,7 +30,6 @@ public class MovieFile
 		bR = new BufferedReader(new FileReader("movies.txt"));
 		databaseMovies = new ArrayList<String>();
 		String line = bR.readLine();
-		line = bR.readLine();
 		while(line != null)
 		{
 			databaseMovies.add(line);

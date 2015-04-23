@@ -320,7 +320,8 @@ public class SearchPanel extends JPanel{
 			record = e;
 			setLayout(new BorderLayout());
 			image = new JLabel("",JLabel.CENTER);
-			image.setIcon(new ImageIcon(new ImageIcon((Value.POSTER_PATH+record.imageID + ".jpg")).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
+			image.setIcon(new ImageIcon(Value.getImage(record.imageID).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
+			//new ImageIcon(Value.getImage(record.imageID).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH))
 			add(image, BorderLayout.CENTER);
 			add(new JLabel(e.movieTitle,JLabel.CENTER),BorderLayout.PAGE_END);
 			

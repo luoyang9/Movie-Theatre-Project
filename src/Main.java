@@ -38,7 +38,7 @@ public class Main {
 		//initialize movie raf (open the file connection)
 		MovieFile.initialize();
 		CustomerFile.initialize();
-		
+		Value.loadImages();
 		frame = new JFrame("Movie Theatre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cards = new JPanel(new CardLayout());
