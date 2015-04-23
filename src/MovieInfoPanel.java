@@ -180,7 +180,7 @@ public class MovieInfoPanel extends JPanel
 			btnShowTimes[i].setText(formattedShowTime);
 		}
 		lblCast.setText("<html><b>Director:</b> " + movie.movieCast[0] + "&nbsp;&nbsp;&nbsp;<b>Producer</b>: " + movie.movieCast[1] + "&nbsp;&nbsp;&nbsp;<b>Featuring:</b> " + movie.movieCast[2] + "</html>");
-		movieImageIcon = new ImageIcon(new ImageIcon(Main.class.getResource(movie.imageID + ".jpg")).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
+		movieImageIcon = new ImageIcon(Value.getImage(movie.imageID).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
 		movieImage.setIcon(movieImageIcon);
 	}
 	
