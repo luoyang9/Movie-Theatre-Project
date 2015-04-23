@@ -17,4 +17,7 @@ public class Value
 	public final static int SEARCH_DAYS = 7;
 	public final static String DATE_WORDS[] = {"Today", "Tomorrow"};
 	public final static String WEEK_DAYS[] = {"Sunday" ,"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	
+	//Pictures
+	public final static String POSTER_PATH = "Posters\\";
 }
