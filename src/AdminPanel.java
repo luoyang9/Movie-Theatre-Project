@@ -25,7 +25,7 @@ public class AdminPanel extends JPanel
 	private static JButton btnBack;
 	private static JButton btnBack2;
 	
-	private static JTextField passwordField;
+	private static JPasswordField passwordField;
 	private static JButton okButton;
 	
 	private static JLabel passwordLabel;
@@ -35,7 +35,7 @@ public class AdminPanel extends JPanel
 		JPanel passwordPanel = new JPanel(new BorderLayout());
 		JPanel innerPasswordPanel = new JPanel(new GridLayout(5,1));
 		okButton = new JButton("Login");
-		passwordField = new JTextField(JTextField.CENTER);
+		passwordField = new JPasswordField(JTextField.CENTER);
 		passwordField.setFont(Value.LARGE_BOLD);
 		passwordLabel = new JLabel("Administrator Log in",JLabel.CENTER);
 		passwordLabel.setFont(Value.LARGE_BOLD);
@@ -47,7 +47,6 @@ public class AdminPanel extends JPanel
 		addMovie = new JButton("Add Movie");
 		btnBack = new JButton("Back");
 		btnBack2 = new JButton("Back");
-		passwordField.addKeyListener(new passwordHandler());
 		ButtonHandler onClick = new ButtonHandler();
 		viewAllMovies.addActionListener(onClick);
 		viewAllCustomers.addActionListener(onClick);
@@ -84,36 +83,7 @@ public class AdminPanel extends JPanel
 		 CardLayout cardLayout = (CardLayout)panel.getLayout();
 	     cardLayout.show(panel,""+card);
 	}
-	private static class passwordHandler implements KeyListener
-	{
-		@Override
-		public void keyPressed(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			update();
-		}
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	public static void update(){
-		input=input+(passwordField.getText().charAt(passwordField.getText().length()-1));
-		for(int x = 0;x<5;x++){
-			input.replace("*","");
-		}
-		log.v("Password Text " + input);
-		StringBuffer sb = new StringBuffer();
-		for(int x = 0;x<input.length();x++)
-			sb.append('*');
-		log.v("text: " + sb.toString());
-		passwordField.setText(sb.toString());
-	}
+
 	private static class ButtonHandler implements ActionListener
 	{
 
@@ -126,6 +96,9 @@ public class AdminPanel extends JPanel
 			if(command.equals("Login")){
 				if(passwordField.getText().equals(Value.PASSWORD)){
 					switchCard((JPanel)cards.getComponent(3),1);
+				}else{
+					passwordField.setText("");
+					passwordLabel.setForeground(Color.RED);
 				}
 			}
 			if(command.equals(viewAllMovies.getActionCommand()))
@@ -152,6 +125,7 @@ public class AdminPanel extends JPanel
 				cl.show(cards, Value.SEARCH);
 				switchCard((JPanel)cards.getComponent(3),2);
 				passwordField.setText("");
+				passwordLabel.setForeground(Color.BLACK);
 			}
 		}
 		
