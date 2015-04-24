@@ -7,8 +7,12 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 @SuppressWarnings("serial")
@@ -19,14 +23,22 @@ public class AdminPanel extends JPanel
 	private static JButton viewAllCustomers;
 	private static JButton addMovie;
 	private static JButton btnBack;
+	private static JButton btnBack2;
 	
 	private static JTextField passwordField;
 	private static JButton okButton;
+	
+	private static JLabel passwordLabel;
+	static String input = "";
 	public AdminPanel()
 	{
 		JPanel passwordPanel = new JPanel(new BorderLayout());
+		JPanel innerPasswordPanel = new JPanel(new GridLayout(5,1));
 		okButton = new JButton("Login");
-		passwordField = new JTextField();
+		passwordField = new JTextField(JTextField.CENTER);
+		passwordField.setFont(Value.LARGE_BOLD);
+		passwordLabel = new JLabel("Administrator Log in",JLabel.CENTER);
+		passwordLabel.setFont(Value.LARGE_BOLD);
 		
 		JPanel controlPanel = new JPanel(new GridLayout(1,4));
 		this.setLayout(new CardLayout());
@@ -34,19 +46,24 @@ public class AdminPanel extends JPanel
 		viewAllCustomers = new JButton("View All Customers");
 		addMovie = new JButton("Add Movie");
 		btnBack = new JButton("Back");
-		
+		btnBack2 = new JButton("Back");
+		passwordField.addKeyListener(new passwordHandler());
 		ButtonHandler onClick = new ButtonHandler();
 		viewAllMovies.addActionListener(onClick);
 		viewAllCustomers.addActionListener(onClick);
 		addMovie.addActionListener(onClick);
 		btnBack.addActionListener(onClick);
+		btnBack2.addActionListener(onClick);
 		okButton.addActionListener(onClick);
 		
-		
-		passwordPanel.add(passwordField,BorderLayout.CENTER);
-		passwordPanel.add(okButton, BorderLayout.PAGE_END);
-		
-		
+		innerPasswordPanel.add(new JLabel(""));
+		innerPasswordPanel.add(passwordLabel);
+		innerPasswordPanel.add(passwordField);
+		innerPasswordPanel.add(okButton);
+		innerPasswordPanel.add(new JLabel(""));
+		passwordPanel.add(innerPasswordPanel,BorderLayout.CENTER);
+		passwordPanel.add(btnBack2,BorderLayout.PAGE_END);
+
 		controlPanel.add(viewAllMovies);
 		controlPanel.add(addMovie);
 		controlPanel.add(viewAllCustomers);
@@ -67,7 +84,36 @@ public class AdminPanel extends JPanel
 		 CardLayout cardLayout = (CardLayout)panel.getLayout();
 	     cardLayout.show(panel,""+card);
 	}
-	
+	private static class passwordHandler implements KeyListener
+	{
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			update();
+		}
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	public static void update(){
+		input=input+(passwordField.getText().charAt(passwordField.getText().length()-1));
+		for(int x = 0;x<5;x++){
+			input.replace("*","");
+		}
+		log.v("Password Text " + input);
+		StringBuffer sb = new StringBuffer();
+		for(int x = 0;x<input.length();x++)
+			sb.append('*');
+		log.v("text: " + sb.toString());
+		passwordField.setText(sb.toString());
+	}
 	private static class ButtonHandler implements ActionListener
 	{
 

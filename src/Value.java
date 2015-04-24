@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -28,6 +29,8 @@ public class Value
 	
 	//Admin
 	public final static String PASSWORD = "123";
+	//Font
+	public final static Font LARGE_BOLD = new Font("Impact", Font.PLAIN, 80);
 	
 	public static void loadImages(){
 		

@@ -146,10 +146,10 @@ public class SearchPanel extends JPanel{
 	}
 	public void updateFilm(int time){
 		int compareTime = -1;
+		filmsPnl.removeAll();
 		boolean all= false;
 		if(time!= 12*Value.SLIDER_INTERVAL+1){
 		searchByTime = true;
-		filmsPnl.removeAll();
 		searchType.setText("Results");
 		int timeMin = (time*60/Value.SLIDER_INTERVAL);
 		
@@ -168,7 +168,7 @@ public class SearchPanel extends JPanel{
 		this.time.setText("Searching for movies on " + displayTime + ((am)?"AM":"PM"));
 		}else{
 			all = true;
-			log.v("Searhcing for all movies on " + searchDay);
+			log.v("Searhcing for all movies on " + datesInt[searchDay]);
 			this.time.setText("Searching for all movies on " + dates[searchDay]);
 		}
 		loop:
