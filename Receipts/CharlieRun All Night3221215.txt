@@ -1,0 +1,11 @@
+Receipt for Charlie
+
+Movie: Run All Night
+Date: March 22
+Time: 12:15PM
+Row: 0	Column: 1
+Name: Charlie
+Birthdate: 4152015
+Address: 165 Bob Bob
+Phone: 5194851835
+Credit Card #: 459485748376847

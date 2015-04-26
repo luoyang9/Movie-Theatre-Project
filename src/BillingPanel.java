@@ -112,8 +112,15 @@ public class BillingPanel extends JPanel
 					
 					int secCode = Integer.parseInt(secureCodeIn.getText().replaceAll("\\s", ""));
 					
+					int realDate = record.releaseDate + dateIndex;
+					int lastDayInMonth = util.getLastDay(record.releaseDate/100);
+					if((realDate) % 100 > lastDayInMonth)
+					{
+						realDate = ((realDate / 100) + 1) * 100 + ((realDate % 100) - lastDayInMonth);
+					}
+					
 					//write new customer record
-					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], record.releaseDate + dateIndex, rowIndex, colIndex, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
+					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], realDate, rowIndex, colIndex, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
 					
 					log.v("Customer record created at record number " + CustomerFile.getNumRecords() + 1);
 					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);	
