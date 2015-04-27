@@ -7,12 +7,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 
 @SuppressWarnings("serial")
@@ -94,7 +90,7 @@ public class AdminPanel extends JPanel
 			CardLayout cl = (CardLayout)cards.getLayout();
 			
 			if(command.equals("Login")){
-				if(passwordField.getText().equals(Value.PASSWORD)){
+				if(String.valueOf(passwordField.getPassword()).equals(Value.PASSWORD)){
 					switchCard((JPanel)cards.getComponent(3),1);
 				}else{
 					passwordField.setText("");

@@ -1,0 +1,11 @@
+Receipt for Bob
+
+Movie: Monkey Kingdom
+Date: April 20
+Time: 3:30PM
+Row: 1	Column: 2
+Name: Bob
+Birthdate: September 17, 1996
+Address: 194 Jordan Street
+Phone: 5194831394
+Credit Card #: 483759485728475
