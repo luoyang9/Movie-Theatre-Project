@@ -43,10 +43,10 @@ public class SearchPanel extends JPanel{
 	private JButton managementBtn;
 	private JScrollPane scroll;
 	private static JTextField searchBox; //Search by title
-	private static JComboBox searchBox2; //Search by date
+	private static JComboBox<String> searchBox2; //Search by date
 	private static JSlider timeSlide;
 	//Labels
-	private static JLabel time;
+	private JLabel time;
 	protected static movieBlock[] mBlocks;
 	
 	static int lastValue = -1;
@@ -55,6 +55,7 @@ public class SearchPanel extends JPanel{
 	static int[] datesInt;
 	
 	protected int searchDay;
+	@SuppressWarnings("deprecation")
 	public SearchPanel(){
 		try {
 			List<MovieRecord>records = MovieFile.getAllRecords();
@@ -228,7 +229,7 @@ public class SearchPanel extends JPanel{
 		 CardLayout cardLayout = (CardLayout)panel.getLayout();
 	     cardLayout.show(panel,""+card);
 	}
-	private void searchMode(int mode)
+	public void searchMode(int mode)
 	{
 		if(mode ==1){
 			switchCard(byDatePnl,2);
@@ -236,11 +237,18 @@ public class SearchPanel extends JPanel{
 			searchPnl.add(byDatePnl,BorderLayout.CENTER);
 			searchPnl.add(byTitlePnl,BorderLayout.LINE_END);
 			
-		}else{
+		}else if(mode ==2){
 			switchCard(byDatePnl,1);
 			switchCard(byTitlePnl,2);
 			searchPnl.add(byDatePnl,BorderLayout.LINE_START);
 			searchPnl.add(byTitlePnl,BorderLayout.CENTER);
+		}else {
+			switchCard(byDatePnl,1);
+			switchCard(byTitlePnl,1);
+			searchPnl.add(byTitlePnl,BorderLayout.CENTER);
+			searchPnl.add(byDatePnl,BorderLayout.LINE_START);
+			searchPnl.repaint();
+			searchPnl.validate();
 		}
 	}
 	
@@ -270,9 +278,10 @@ public class SearchPanel extends JPanel{
 	}
 	private class dateListener implements ActionListener{
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			searchDay = ((JComboBox) arg0.getSource()).getSelectedIndex();
+			searchDay = ((JComboBox<String>) arg0.getSource()).getSelectedIndex();
 			updateFilm(timeSlide.getValue());
 		}
 		
@@ -317,6 +326,10 @@ public class SearchPanel extends JPanel{
 		
 	}
 	public class movieBlock extends JButton{
+		/**
+		 * This block stores the data for a movie in searchpanel
+		 */
+		private static final long serialVersionUID = 1L;
 		private JLabel image;
 		protected MovieRecord record;
 		public movieBlock(MovieRecord e) {
