@@ -111,6 +111,8 @@ public class AdminPanel extends JPanel
 			else if(command.equalsIgnoreCase(viewAllCustomers.getActionCommand()))
 			{
 				cl.show(cards, Value.ALL_CUSTOMERS);
+				ViewAllCustomersPanel allCustomersPanel = (ViewAllCustomersPanel) cards.getComponent(8);
+				allCustomersPanel.refresh();
 			}
 			else if(command.equals("Add Movie"))
 			{

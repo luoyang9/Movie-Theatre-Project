@@ -11,11 +11,11 @@ public class MovieRecord
 	protected int releaseDate; //1 int - 4 bytes
 	protected int finalDate;//1 int - 4 bytes
 	protected int[] showTimes; //4 int - 16 bytes
-	protected SeatPlan seatplan; //48*5 booleans - 240 bytes
+	protected SeatPlan seatplan; //48*31 booleans - 1488 bytes
 	protected String[] movieCast; //3 * 20 chars - 120 bytes
 	protected int imageID;//1 int - 4 bytes
 	
-	protected final int recSize = 1428; //40+1000+16+192+120+4 + 4 + 4
+	protected final int recSize = 2676; //40+1000+16+1488+120+4 + 4 + 4
 	
 
 	

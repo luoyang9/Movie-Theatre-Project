@@ -27,6 +27,9 @@ public class Value
 	public final static String RECEIPT_PATH = "Receipts\\";
 	public static ImageIcon[] POSTER_IMAGES;
 	
+	//Movies
+	public final static int DAYS_RUNNING = 31;
+	
 	//Admin
 	public final static String PASSWORD = "123";
 	//Font
@@ -54,5 +57,5 @@ public class Value
 			log.e("The image <"+ imageId + "> requested doesn't exist, sending error image");
 			return new ImageIcon(POSTER_PATH + "error.jpg");
 		}
-		}
+	}
 }

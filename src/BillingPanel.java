@@ -125,7 +125,7 @@ public class BillingPanel extends JPanel
 					//book the seat
 					record.seatplan.getSeats()[dateIndex][timeIndex][rowIndex][colIndex] = true;	
 
-					log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + (record.releaseDate + dateIndex));
+					log.v("Seat row " + (rowIndex + 1) + " and col " + (colIndex + 1) + " booked for " + record.movieTitle + " at time " + record.showTimes[timeIndex] + "PM for date "  + realDate);
 					MovieFile.writeRecord(recordNum, record);
 
 					//proceed to check out panel

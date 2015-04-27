@@ -58,6 +58,8 @@ public class CheckOutPanel extends JPanel
 			{
 				CardLayout cl = (CardLayout)cards.getLayout();
 				cl.show(cards, Value.SEARCH);
+				SearchPanel searchPanel = (SearchPanel)cards.getComponent(0);
+				searchPanel.updateFilm();
 			}
 			else if(e.getActionCommand().equals(btnViewReceipt.getActionCommand()))
 			{

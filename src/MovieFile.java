@@ -50,12 +50,12 @@ public class MovieFile
 			}
 			else
 			{
-				seatplan = new SeatPlan(getRecord(i + 1).seatplan.getSeats());
-				if(seatplan.getSeats() == null) 
-				{
+				//seatplan = new SeatPlan(getRecord(i + 1).seatplan.getSeats());
+				//if(seatplan.getSeats() == null) 
+				//{
 					seatplan = new SeatPlan();
 					seatplan.setAllFalse();
-				}
+				//}
 			}
 			record = new MovieRecord(movieInfo[0], movieInfo[1], Integer.parseInt(movieInfo[2]), Integer.parseInt(movieInfo[3]), tempShowTimes, seatplan.getSeats(), tempCast, Integer.parseInt(movieInfo[11]));
 			writeRecord(i + 1, record);
