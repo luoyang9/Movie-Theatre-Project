@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,9 +24,8 @@ public class BillingPanel extends JPanel
 	
 	private static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, blank;
 	private static JButton back, proceed;
-	private static JTextField nameIn, addressIn, phoneNumIn, credCardIn, expDateIn, secureCodeIn;
+	private static JTextField nameIn, addressIn, phoneNumIn, credCardIn, secureCodeIn;
 	private static JCalendar calendar1, calendar2;
-	private static JPanel mainPanel, personal, credInfo, inputCVV, allInfo, button;
 	
 	public BillingPanel(){
 		setLayout(new BorderLayout());
@@ -57,7 +55,6 @@ public class BillingPanel extends JPanel
 		addressIn = new JTextField("");
 		phoneNumIn = new JTextField("");
 		credCardIn = new JTextField("");
-		expDateIn = new JTextField("");
 		secureCodeIn = new JTextField("");
 		
 		ButtonHandler onClick = new ButtonHandler();

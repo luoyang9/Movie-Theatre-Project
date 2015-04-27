@@ -1,0 +1,11 @@
+Receipt for Daewoon Kim
+
+Movie: Furious 7
+Date: April 7
+Time: 10:15PM
+Row: 1	Column: 2
+Name: Daewoon Kim
+Birthdate: November 19, 1998
+Address: 194 Hunter Street
+Phone: 5194933847
+Credit Card #: 4837564938593847
