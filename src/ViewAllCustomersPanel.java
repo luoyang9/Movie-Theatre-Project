@@ -1,9 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -22,6 +25,8 @@ public class ViewAllCustomersPanel extends JPanel
 	private static List<CustomerRecord> customers;
 	private static JButton btnBack;
 	
+	private static ButtonHandler onClick;
+	
 	public ViewAllCustomersPanel()
 	{
 		setLayout(new BorderLayout());
@@ -30,13 +35,17 @@ public class ViewAllCustomersPanel extends JPanel
 		btnBack = new JButton("Back");
 		scroll = new JScrollPane(customerList);
 		
-		ButtonHandler onClick = new ButtonHandler();
+		onClick = new ButtonHandler();
 		btnBack.addActionListener(onClick);
 		
 		add(scroll, BorderLayout.CENTER);
 		add(btnBack, BorderLayout.PAGE_END);
 		
 
+	}
+	
+	public void refresh()
+	{
 		try {
 			customers = CustomerFile.getAllRecords();
 		} catch (Exception e) {
@@ -50,6 +59,8 @@ public class ViewAllCustomersPanel extends JPanel
 			customerBlock block = new customerBlock(customers.get(i));
 			customerList.add(block);
 		}
+		
+		if(customerList.getComponentCount() == 0) customerList.add(new JLabel("No Customer Records Found"));
 	}
 	
 	private static class ButtonHandler implements ActionListener
@@ -61,6 +72,29 @@ public class ViewAllCustomersPanel extends JPanel
 				CardLayout cl = (CardLayout)cards.getLayout();
 				cl.show(cards, Value.ADMIN);
 			}
+			else
+			{
+				for(int i = 0; i < customerList.getComponentCount(); i++)
+				{
+					if(e.getSource().equals(((customerBlock) customerList.getComponent(i)).getViewButton()))
+					{
+						CustomerRecord selCustomer = customers.get(i);
+						File file = new File(Value.RECEIPT_PATH + selCustomer.name + selCustomer.movie + selCustomer.date + selCustomer.showTime + ".txt");
+						if(Desktop.isDesktopSupported()) 
+						{
+						    try {
+								Desktop.getDesktop().edit(file);
+							} catch (IOException e1) {
+								log.e("File Not Found");
+							}
+						} 
+						else 
+						{
+							log.e("Desktop not supported");
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -69,8 +103,9 @@ public class ViewAllCustomersPanel extends JPanel
 		cards = masterCards;
 	}
 	
-	private class customerBlock extends JPanel
+	private static class customerBlock extends JPanel
 	{
+		private JButton btnView;
 		private JLabel movie;
 		private JLabel movieInfo;
 		private JLabel customerInfo;
@@ -82,6 +117,9 @@ public class ViewAllCustomersPanel extends JPanel
 			setBorder(BorderFactory.createLineBorder(Color.black));
 			setLayout(new BorderLayout());
 			movie = new JLabel(record.movie);
+			
+			btnView = new JButton("View Receipt");
+			btnView.addActionListener(onClick);;
 			
 			String formatBirthDate = util.getMonth(record.birthday / 1000000) + " " + (record.birthday / 10000) % 100 + ", " + record.birthday % 10000;
 			String formatExpDate = util.getMonth(record.expiryDate / 1000000) + " " + (record.expiryDate / 10000) % 100 + ", " + record.expiryDate % 10000;
@@ -99,7 +137,15 @@ public class ViewAllCustomersPanel extends JPanel
 			info.add(customerCard);
 			add(movie, BorderLayout.PAGE_START);
 			add(info, BorderLayout.CENTER);
+			add(btnView, BorderLayout.PAGE_END);
+		
 		}
+		
+		public JButton getViewButton()
+		{
+			return btnView;
+		}
+		
 	}
 	
 }
