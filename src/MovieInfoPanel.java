@@ -201,6 +201,7 @@ public class MovieInfoPanel extends JPanel
 			{
 				cl.show(cards, Value.SEARCH);
 				SearchPanel sp = (SearchPanel) cards.getComponent(0);
+				sp.searchMode(3);
 				sp.updateFilm();
 			}
 			
