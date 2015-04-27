@@ -296,10 +296,13 @@ public class SearchPanel extends JPanel{
 	                    
 	                }
 	            });
-				Container c = allFrame.getContentPane();
-				c.setLayout(new GridLayout((int)Math.ceil(Math.sqrt(mBlocks.length)),(int)Math.ceil(mBlocks.length/Math.sqrt(mBlocks.length))));
+				JPanel movieContainer = new JPanel(new GridLayout((int)((Math.ceil(Math.sqrt(mBlocks.length))>Value.MAX_ALL_FRAME_VERTICAL_DISPLAY)?
+						Value.MAX_ALL_FRAME_VERTICAL_DISPLAY:Math.ceil(Math.sqrt(mBlocks.length))),
+						(int)Math.ceil(mBlocks.length/((Math.ceil(Math.sqrt(mBlocks.length))>Value.MAX_ALL_FRAME_VERTICAL_DISPLAY)?
+						Value.MAX_ALL_FRAME_VERTICAL_DISPLAY:Math.ceil(Math.sqrt(mBlocks.length))))));
 				for(int x = 0;x<mBlocks.length;x++)
-					allFrame.add(mBlocks[x]);
+					movieContainer.add(mBlocks[x]);
+				allFrame.add(new JScrollPane(movieContainer));
 				allFrame.pack();
 				allFrame.setVisible(true);
 				Main.frame.setVisible(false);
