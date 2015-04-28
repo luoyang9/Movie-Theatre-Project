@@ -25,6 +25,7 @@ public class Value
 	//Pictures
 	public final static String POSTER_PATH = "Posters\\";
 	public final static String RECEIPT_PATH = "Receipts\\";
+	public final static String ASSET_PATH = "Assets\\";
 	public static ImageIcon[] POSTER_IMAGES;
 	
 	//Movies
