@@ -73,7 +73,9 @@ public class SearchPanel extends JPanel{
 		Calendar c = Calendar.getInstance(); 
 		for(int x = 0;x<Value.SEARCH_DAYS;x++){	
 			Date dt = c.getTime();
-			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ dt.getDate());
+			String realDate = Integer.toString(dt.getDate());
+			if(dt.getDate() < 10) realDate = "0" + realDate;
+			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ realDate);
 			dates[x] = String.format("%-10s %-7s %3d",((x<Value.DATE_WORDS.length)?Value.DATE_WORDS[x]:Value.WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
 			
 			c.add(Calendar.DATE, 1);
