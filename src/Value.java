@@ -22,6 +22,7 @@ public class Value
 	public final static String DATE_WORDS[] = {"Today", "Tomorrow"};
 	public final static String WEEK_DAYS[] = {"Sunday" ,"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	public final static int MAX_ALL_FRAME_VERTICAL_DISPLAY = 4;
+	public final static int MAX_ALL_FRAME_HORIZONTAL_DISPLAY = 7;
 	//Pictures
 	public final static String POSTER_PATH = "Posters\\";
 	public final static String RECEIPT_PATH = "Receipts\\";
