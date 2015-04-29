@@ -39,8 +39,7 @@ public class SearchPanel extends JPanel{
 	private static JButton byTitleBtn;
 	private static JButton viewAll;
 	private static JButton adminBtn;
-	private JButton optionsBtn;
-	private JButton managementBtn;
+	private static JButton optionsBtn;
 	private JScrollPane scroll;
 	private static JTextField searchBox; //Search by title
 	private static JComboBox<String> searchBox2; //Search by date
@@ -64,9 +63,9 @@ public class SearchPanel extends JPanel{
 				mBlocks[x] = new movieBlock(records.get(x));
 				log.v("Record " + (x + 1) + " loaded" );
 			}
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (Exception e) {
+			log.e("Error while retrieving all records. Details below: ");
+			e.printStackTrace();
 		}
 		dates = new String[Value.SEARCH_DAYS];
 		datesInt = new int[Value.SEARCH_DAYS];

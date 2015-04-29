@@ -57,6 +57,9 @@ public class MovieInfoPanel extends JPanel
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			btnShowTimes[i] = new JButton();
+			btnShowTimes[i].setBackground(Value.BABY_BLUE);;
+			btnShowTimes[i].setForeground(Color.WHITE);
+			btnShowTimes[i].setBorder(BorderFactory.createLineBorder(Value.BLUE));
 		}
 		dates = new DefaultComboBoxModel<String>();
 		showDate = new JComboBox<String>(dates);

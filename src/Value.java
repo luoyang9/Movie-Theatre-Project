@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -35,6 +36,11 @@ public class Value
 	public final static String PASSWORD = "123";
 	//Font
 	public final static Font LARGE_BOLD = new Font("Impact", Font.PLAIN, 80);
+	//Colors
+	public final static Color BABY_BLUE = new Color(93, 151, 245);
+	public final static Color BLUE = new Color(66, 133, 244);
+	public final static Color GREY = new Color(236, 236, 236);
+	public final static Color RED = new Color(219, 68, 55);
 	
 	public static void loadImages(){
 		

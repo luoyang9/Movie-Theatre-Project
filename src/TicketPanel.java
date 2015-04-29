@@ -140,9 +140,7 @@ public class TicketPanel extends JPanel
 						long recordNum = 1;
 						try {
 							recordNum = MovieFile.getRecordNum(movieTitle.getText());
-							System.out.println(recordNum);
 						} catch (IOException e2) {
-							// TODO Auto-generated catch block
 							e2.printStackTrace();
 						}
 						
