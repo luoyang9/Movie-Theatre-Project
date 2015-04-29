@@ -37,6 +37,9 @@ public class Value
 	public final static String PASSWORD = "123";
 	//Font
 	public final static Font LARGE_BOLD = new Font("Impact", Font.PLAIN, 80);
+	public final static Font MEDIUM = new Font("Arial",Font.BOLD,25);
+	public final static Font SMALL_MEDIUM = new Font("Arial",Font.BOLD,20);
+	public final static Font SMALL = new Font("Arial", Font.PLAIN,15);
 	//Colors
 	public final static Color BABY_BLUE = new Color(93, 151, 245);
 	public final static Color BLUE = new Color(66, 133, 244);
