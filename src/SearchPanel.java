@@ -8,10 +8,12 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 
 public class SearchPanel extends JPanel{
@@ -143,7 +145,32 @@ public class SearchPanel extends JPanel{
 		
 		add(searchPnl,BorderLayout.PAGE_START);
 		add(centerPnl,BorderLayout.CENTER);
+		//Stylize
+		byDateBtn.setBackground(Value.BLUE);
+		byDateBtn.setBorder(BorderFactory.createLineBorder(Value.GREY));
+		byDateBtn.setFont(Value.SMALL_MEDIUM);
+		byDateBtn.setForeground(Color.WHITE);
 		
+		byTitleBtn.setBackground(Value.BLUE);
+		byTitleBtn.setBorder(BorderFactory.createLineBorder(Value.GREY));
+		byTitleBtn.setFont(Value.SMALL_MEDIUM);
+		byTitleBtn.setForeground(Color.WHITE);
+		
+		searchBox.setBackground(Value.BABY_BLUE);
+		searchBox.setForeground(Color.white);
+		searchBox.setFont(Value.MEDIUM);
+		searchBox.setHorizontalAlignment(JTextField.CENTER);
+		timeSlide.setBackground(Value.BABY_BLUE);
+		timeSlide.setForeground(Color.white);
+		byDateContent.setBackground(Value.BABY_BLUE);
+		time.setFont(Value.MEDIUM);
+		time.setForeground(Color.white);
+		
+		searchBox2.setForeground(Color.white);
+		searchBox2.setBackground(Value.BLUE);
+		searchBox2.setFont(Value.SMALL);
+		
+
 		updateFilm();
 	}
 	public void updateFilm(int time){
@@ -332,6 +359,7 @@ public class SearchPanel extends JPanel{
 		 */
 		private static final long serialVersionUID = 1L;
 		private JLabel image;
+		private JLabel title;
 		protected MovieRecord record;
 		public movieBlock(MovieRecord e) {
 			record = e;
@@ -340,10 +368,14 @@ public class SearchPanel extends JPanel{
 			image.setIcon(new ImageIcon(Value.getImage(record.imageID).getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH)));
 			//new ImageIcon(Value.getImage(record.imageID).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH))
 			add(image, BorderLayout.CENTER);
-			add(new JLabel(e.movieTitle,JLabel.CENTER),BorderLayout.PAGE_END);
+			title = new JLabel(e.movieTitle,JLabel.CENTER);
+			add(title,BorderLayout.PAGE_END);
 			
 			ButtonHandler onClick = new ButtonHandler();
 			addActionListener(onClick);
+			setBackground(Color.WHITE);
+			title.setForeground(Value.BLUE);
+			title.setFont(Value.SMALL_MEDIUM);
 		}
 
 		public MovieRecord getRecord(){return record;}
@@ -373,5 +405,6 @@ public class SearchPanel extends JPanel{
 	{
 		cards = masterCards;
 	}
+	
 	
 }
