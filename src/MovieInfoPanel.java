@@ -24,12 +24,14 @@ public class MovieInfoPanel extends JPanel
 	private static JPanel showTimesPanel;
 	private static JPanel selectTimePanel;
 	private static JPanel infoPanel;
+	private static JPanel container;
 	
 	//JLabels
 	protected static JLabel lblTitle;
 	protected static JTextArea lblSummary;
 	protected static JLabel lblCast;
 	protected static JLabel movieImage;
+	protected static JLabel lblOrder;
 	
 	//JComboBox
 	protected static JComboBox<String> showDate;
@@ -45,40 +47,63 @@ public class MovieInfoPanel extends JPanel
 	
 	public MovieInfoPanel()
 	{
-		setLayout(new BorderLayout());
+		setBackground(Value.GREY);
 		
 		//initialize
 		lblTitle = new JLabel();
 		lblSummary = new JTextArea();
 		lblCast = new JLabel();
+		lblOrder = new JLabel("Order Tickets: ");
 		movieImage = new JLabel();
 		btnShowTimes = new JButton[4];
-		btnBack = new JButton("Back");
+		btnBack = new JButton("Back ");
+		btnBack.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		btnBack.setBackground(Value.RED);
+		btnBack.setForeground(Color.black);
+		btnBack.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		btnBack.setCursor (Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBack.setIcon(new ImageIcon(new ImageIcon(Value.ASSET_PATH + "back.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH)));
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			btnShowTimes[i] = new JButton();
 			btnShowTimes[i].setBackground(Value.BABY_BLUE);;
 			btnShowTimes[i].setForeground(Color.WHITE);
-			btnShowTimes[i].setBorder(BorderFactory.createLineBorder(Value.BLUE));
+			btnShowTimes[i].setBorder(BorderFactory.createLineBorder(Color.white));
+			btnShowTimes[i].setCursor (Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 		dates = new DefaultComboBoxModel<String>();
 		showDate = new JComboBox<String>(dates);
+		showDate.setBackground(Value.GREY);
+		showDate.setForeground(Value.BLUE);
 		numberDates = new ArrayList<Integer>();
 		
 		//set label properties
+		lblTitle.setBorder(BorderFactory.createLineBorder(Value.BLUE));
+		lblTitle.setBackground(Value.BABY_BLUE);
+		lblTitle.setForeground(Color.white);
+		lblTitle.setOpaque(true);
 		lblTitle.setHorizontalAlignment(JLabel.CENTER);
-		lblTitle.setFont(new Font("Impact", Font.BOLD, 30));
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
 		lblSummary.setLineWrap(true);
+		lblSummary.setWrapStyleWord(true);
 		lblSummary.setEditable(false);
-		lblSummary.setBorder(BorderFactory.createLineBorder(Color.black));
-		lblSummary.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-		lblCast.setBorder(BorderFactory.createLineBorder(Color.black));
-		lblCast.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		lblSummary.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+		lblSummary.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblCast.setBorder(BorderFactory.createLineBorder(Color.orange));
+		lblCast.setOpaque(true);
+		lblCast.setBackground(Color.ORANGE);
+		lblCast.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblOrder.setHorizontalAlignment(JLabel.LEFT);
+		lblOrder.setFont(new Font("Arial", Font.BOLD, 20));
 		
 		//create jpanels
 		infoPanel = new JPanel(new BorderLayout());
 		showTimesPanel = new JPanel(new GridLayout(2, 2));
-		selectTimePanel = new JPanel(new GridLayout(2, 1));
+		showTimesPanel.setBorder(BorderFactory.createLineBorder(Value.BLUE));
+		selectTimePanel = new JPanel(new GridLayout(3, 1));
+		container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+		container.setSize(Value.WIDTH - 200, Value.HEIGHT);
 	
 		//create movie poster
 		movieImageIcon = new ImageIcon();
@@ -89,15 +114,20 @@ public class MovieInfoPanel extends JPanel
 		infoPanel.add(lblTitle, BorderLayout.PAGE_START);
 		infoPanel.add(lblSummary, BorderLayout.CENTER);
 		infoPanel.add(lblCast, BorderLayout.PAGE_END);
+		selectTimePanel.add(lblOrder);
 		selectTimePanel.add(showDate);
 		selectTimePanel.add(showTimesPanel);
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			showTimesPanel.add(btnShowTimes[i]);
 		}
-		add(infoPanel, BorderLayout.PAGE_START);
-		add(selectTimePanel, BorderLayout.CENTER);
-		add(btnBack, BorderLayout.PAGE_END);
+		container.add(infoPanel);
+		container.add(Box.createRigidArea(new Dimension(0, 15)));
+		container.add(selectTimePanel);
+		container.add(Box.createRigidArea(new Dimension(0, 20)));
+		container.add(btnBack);
+		
+		add(container);
 		
 		//add button handler
 		ButtonHandler onClick = new ButtonHandler();
@@ -143,7 +173,7 @@ public class MovieInfoPanel extends JPanel
 			finalDate = finalDate.substring(0, 2) + "/" + finalDate.substring(2, 4);
 		}
 		
-		lblSummary.append("\nReleased: " + releaseDate + " --- Final date: " + finalDate);
+		lblSummary.append("\n\nRelease Date: " + releaseDate + " - Final Date: " + finalDate);
 
 		dates = new DefaultComboBoxModel<String>();
 		int lastDayInMonth = util.getLastDay(movie.releaseDate/100); //the last day in the movie's release month
@@ -200,7 +230,7 @@ public class MovieInfoPanel extends JPanel
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			if(command.equals("Back"))
+			if(command.equals(btnBack.getActionCommand()))
 			{
 				cl.show(cards, Value.SEARCH);
 				SearchPanel sp = (SearchPanel) cards.getComponent(0);

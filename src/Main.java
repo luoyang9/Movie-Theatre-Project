@@ -52,6 +52,13 @@ public class Main {
 		checkOutPanel = new CheckOutPanel();
 		addMoviePanel = new AddMoviePanel();
 		
+		//ui stylizing
+		UIManager.put("ComboBox.buttonBackground", Value.BABY_BLUE);
+		UIManager.put("ComboBox.buttonShadow", Value.BABY_BLUE);
+		UIManager.put("ComboBox.buttonDarkShadow", Value.BABY_BLUE);
+		UIManager.put("ComboBox.buttonHighlight", Value.BABY_BLUE);
+		UIManager.put("scrollbar", Value.BABY_BLUE);
+		
 		cards.add(Value.SEARCH, searchPanel);
 		cards.add(Value.MOVIE, moviePanel);
 		cards.add(Value.TICKET, ticketPanel);
@@ -74,7 +81,7 @@ public class Main {
 		//Execute frame
 		frame.add(cards);
 		frame.pack();
-		frame.setSize(800, 700);
+		frame.setSize(Value.WIDTH, Value.HEIGHT);
 		frame.setVisible(true);
 	}
 	public static void switchCard(int card){

@@ -6,6 +6,10 @@ import javax.swing.ImageIcon;
 
 public class Value 
 {
+	//dimensions
+	public final static int WIDTH = 800;
+	public final static int HEIGHT = 700;
+	
 	//panels
 	public final static String SEARCH = "1";
 	public final static String MOVIE = "2";
