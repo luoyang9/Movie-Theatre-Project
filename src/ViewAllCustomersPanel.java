@@ -79,7 +79,7 @@ public class ViewAllCustomersPanel extends JPanel
 					if(e.getSource().equals(((customerBlock) customerList.getComponent(i)).getViewButton()))
 					{
 						CustomerRecord selCustomer = customers.get(i);
-						File file = new File(Value.RECEIPT_PATH + selCustomer.name + selCustomer.movie + selCustomer.date + selCustomer.showTime + ".txt");
+						File file = new File(Value.TICKET_PATH + selCustomer.name + selCustomer.movie + selCustomer.date + selCustomer.showTime + ".txt");
 						if(Desktop.isDesktopSupported()) 
 						{
 						    try {
@@ -118,7 +118,7 @@ public class ViewAllCustomersPanel extends JPanel
 			setLayout(new BorderLayout());
 			movie = new JLabel(record.movie);
 			
-			btnView = new JButton("View Receipt");
+			btnView = new JButton("View Ticket");
 			btnView.addActionListener(onClick);;
 			
 			String formatBirthDate = util.getMonth(record.birthday / 1000000) + " " + (record.birthday / 10000) % 100 + ", " + record.birthday % 10000;

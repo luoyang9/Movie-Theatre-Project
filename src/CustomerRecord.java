@@ -11,6 +11,7 @@ public class CustomerRecord
 	protected int date;//1 int - 4 bytes
 	protected int seatRow;//1 int - 4 bytes
 	protected int seatCol;//1 int - 4 bytes
+	protected int ticketType;//1 int - 4 bytes
 	protected String name;//40 chars - 80 bytes
 	protected int birthday;//1 int - 4 bytes
 	protected String address;//30 chars - 60 bytes
@@ -19,15 +20,15 @@ public class CustomerRecord
 	protected int expiryDate;//1 int - 4 bytes
 	protected int securityCode;//1 int - 4 bytes
 	
-	//40 + 4 + 4 + 4 + 4 + 80 + 4 + 60 + 8 + 8 + 4 + 4 = 224
-	protected int recSize = 224;
+	//40 + 4 + 4 + 4 + 4 + 4 + 80 + 4 + 60 + 8 + 8 + 4 + 4 = 228
+	protected int recSize = 228;
 	
 	public CustomerRecord()
 	{
 		
 	}
 	
-	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, String name, int birthday, String address, long telephone, long creditNum, int expDate, int secCode)
+	public CustomerRecord(String movie, int showTime, int date, int seatRow, int seatCol, int ticketType, String name, int birthday, String address, long telephone, long creditNum, int expDate, int secCode)
 	{
 		//set movie
 		if (movie.length () > 20)
@@ -48,6 +49,8 @@ public class CustomerRecord
 		this.seatRow = seatRow;
 
 		this.seatCol = seatCol;
+		
+		this.ticketType = ticketType;
 		
 		//set name
 		if (name.length () > 20)

@@ -38,6 +38,7 @@ public class Main {
 		//initialize movie raf (open the file connection)
 		MovieFile.initialize();
 		CustomerFile.initialize();
+		MovieFile.updateSeats(); //update seats based on customers
 		Value.loadImages();
 		frame = new JFrame("Movie Theatre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
