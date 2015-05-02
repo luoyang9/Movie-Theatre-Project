@@ -1,5 +1,8 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -33,7 +36,8 @@ public class Value
 	public final static String TICKET_PATH = "Tickets\\";
 	public final static String ASSET_PATH = "Assets\\";
 	public static ImageIcon[] POSTER_IMAGES;
-	
+	public static List<imageFile> ASSET_IMAGES;
+	public static ImageIcon errorImage;
 	//Movies
 	public final static int DAYS_RUNNING = 31;
 	
@@ -58,34 +62,65 @@ public class Value
 	public final static Color GREY = new Color(236, 236, 236);
 	public final static Color RED = new Color(219, 68, 55);
 	
+	
 	public static void loadImages(){
+		errorImage = new ImageIcon(POSTER_PATH + "error.jpg");
+		
 		
 		int numRecords = (int) MovieFile.getNumRecords();
-		log.v("Loading all images count = " + numRecords);
+		log.v("Loading all Posters count = " + numRecords);
 		POSTER_IMAGES = new ImageIcon[numRecords];
 		for(int x = 0;x<numRecords;x++){
 			try{
 			POSTER_IMAGES[x] = new ImageIcon(POSTER_PATH+(x+1)+".jpg");
 			}catch(NullPointerException e){
 				log.e("IMAGE " + x + " not found! Using backup image instead");
-				POSTER_IMAGES[x] = new ImageIcon(POSTER_PATH+"error.jpg");
+				POSTER_IMAGES[x] = errorImage;
 			}
 		}
-		log.v("Images done loading");
+		log.v("Posters done loading");
+		
+		ASSET_IMAGES = new ArrayList<imageFile>();
+		for(File file: new File(ASSET_PATH).listFiles()){
+			if(file.isFile()){
+				ASSET_IMAGES.add(new imageFile(file,file.getName()) );
+				
+			}
+		}
 	}
 	public static ImageIcon getImage(int imageId){
 		try{
 		return POSTER_IMAGES[imageId-1];
 		}catch(ArrayIndexOutOfBoundsException e){
 			log.e("The image <"+ imageId + "> requested doesn't exist, sending error image");
-			return new ImageIcon(POSTER_PATH + "error.jpg");
+			return errorImage;
 		}
 	}
 	public static ImageIcon getImage(String imageName){
-		try{
-			return new ImageIcon(ASSET_PATH+imageName+".jpg");
-			}catch(NullPointerException e){
-				return new ImageIcon(POSTER_PATH + "error.jpg");
-			}
+		for(imageFile i : ASSET_IMAGES){
+			if(i.getName().equalsIgnoreCase(imageName))
+				return i.getImage();
+		}
+		log.e("Image "+ imageName +" couldn't be found. Returning error image");
+		return errorImage;
 	}
+	public static class imageFile{
+		protected String imageName;
+		protected ImageIcon image;
+		
+		public imageFile(File file, String name){
+			
+			imageName = name.substring(0,name.indexOf("."));
+			try{
+			image = new ImageIcon(file.getAbsolutePath());
+			log.v("Loaded Image " + getName());
+			}catch(NullPointerException e){
+				log.wtf("WE CAN'T LOAD AN IMAGE WE JUST FOUND???");
+				image = errorImage;
+			}
+		}
+		public ImageIcon getImage(){return image;}
+		public String getName(){return imageName;}
+	}
+	
 }

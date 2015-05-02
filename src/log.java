@@ -20,7 +20,7 @@ public class log {
 	public static void e(String message){ //Error logging
 		printer("@@E@@",message,4);
 	}
-	public static void f(String message){ //We're screwed, the code should've never happened
+	public static void wtf(String message){ //We're screwed, the code should've never happened
 		printer("!WTF!",message,Integer.MAX_VALUE);
 	}
 }

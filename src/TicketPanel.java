@@ -60,7 +60,7 @@ public class TicketPanel extends JPanel
 		btnBack.setForeground(Color.black);
 		btnBack.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		btnBack.setCursor (Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBack.setIcon(new ImageIcon(new ImageIcon(Value.ASSET_PATH + "back.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH)));
+		btnBack.setIcon(new ImageIcon(Value.getImage("back").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH)));
 		
 		
 		container = new JPanel();
@@ -84,7 +84,7 @@ public class TicketPanel extends JPanel
 		errorMessage.setFont(new Font("Arial", Font.PLAIN, 15));
 		errorMessage.setForeground(Value.RED);
 		lblScreen = new JLabel("");
-		lblScreen.setIcon(new ImageIcon(new ImageIcon(Value.ASSET_PATH + "screen.png").getImage().getScaledInstance(300, 20, Image.SCALE_SMOOTH)));
+		lblScreen.setIcon(new ImageIcon(Value.getImage("Screen").getImage().getScaledInstance(300, 20, Image.SCALE_SMOOTH)));
 		childTicket = new JRadioButton("Child - $" + Value.CHILD_PRICE + " (3-13)");
 		adultTicket = new JRadioButton("Adult - $" + Value.ADULT_PRICE + " (14-64)");
 		seniorTicket = new JRadioButton("Senior - $" + Value.SENIOR_PRICE + "(65+)");
