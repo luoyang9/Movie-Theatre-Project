@@ -43,7 +43,7 @@ public class Value
 	public final static Font LARGE_BOLD = new Font("Impact", Font.PLAIN, 80);
 	public final static Font MEDIUM = new Font("Arial",Font.BOLD,25);
 	public final static Font SMALL_MEDIUM = new Font("Arial",Font.BOLD,20);
-	public final static Font SMALL = new Font("Arial", Font.PLAIN,15);
+	public final static Font SMALL = new Font("Arial", Font.BOLD,15);
 	//Colors
 	public final static Color BABY_BLUE = new Color(93, 151, 245);
 	public final static Color BLUE = new Color(66, 133, 244);
@@ -72,5 +72,12 @@ public class Value
 			log.e("The image <"+ imageId + "> requested doesn't exist, sending error image");
 			return new ImageIcon(POSTER_PATH + "error.jpg");
 		}
+	}
+	public static ImageIcon getImage(String imageName){
+		try{
+			return new ImageIcon(ASSET_PATH+imageName+".jpg");
+			}catch(NullPointerException e){
+				return new ImageIcon(POSTER_PATH + "error.jpg");
+			}
 	}
 }

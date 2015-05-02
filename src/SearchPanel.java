@@ -167,7 +167,7 @@ public class SearchPanel extends JPanel{
 		time.setForeground(Color.white);
 		
 		searchBox2.setForeground(Color.white);
-		searchBox2.setBackground(Value.BLUE);
+		searchBox2.setBackground(Value.BABY_BLUE);
 		searchBox2.setFont(Value.SMALL);
 		
 
