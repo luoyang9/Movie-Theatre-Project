@@ -94,7 +94,7 @@ public class SearchPanel extends JPanel{
 		searchBox = new JTextField();
 		byDateBtn = new JButton("Search By Date");
 		byTitleBtn = new JButton("Search By Title");
-		searchType = new JLabel("Featured");
+		searchType = new JLabel(Value.getImage("featured"));
 		byDateContent = new JPanel(new BorderLayout());
 		leftPanel = new JPanel(new BorderLayout());
 		leftBottomPanel = new JPanel(new GridLayout(2, 1));
@@ -225,7 +225,7 @@ public class SearchPanel extends JPanel{
 		
 		if(query.equals(""))
 		{
-			searchType.setText("Featured");
+			searchType.setIcon(Value.getImage("Featured"));
 			for(int i = 0; i < mBlocks.length; i++)
 			{
 				if(i < 5)
@@ -236,7 +236,7 @@ public class SearchPanel extends JPanel{
 		}
 		else
 		{
-			searchType.setText("Results:");
+			searchType.setIcon(Value.getImage("Results"));
 			for(int x = 0;x<mBlocks.length;x++)
 			{
 				if(mBlocks[x].getRecord().movieTitle.toLowerCase().contains(query.toLowerCase()))
