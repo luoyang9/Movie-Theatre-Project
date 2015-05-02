@@ -21,7 +21,7 @@ public class CheckOutPanel extends JPanel
 	private static JLabel info;
 	
 	private static JButton btnConfirm;
-	private static JButton btnViewReceipt;
+	private static JButton btnViewTicket;
 	
 	private static JPanel infoPanel;
 
@@ -36,15 +36,15 @@ public class CheckOutPanel extends JPanel
 		infoPanel = new JPanel();
 		info = new JLabel();
 		btnConfirm = new JButton("Back to Browsing");
-		btnViewReceipt = new JButton("View Receipt");
+		btnViewTicket = new JButton("View Ticket");
 		
 		ButtonHandler onClick = new ButtonHandler();
 		btnConfirm.addActionListener(onClick);
-		btnViewReceipt.addActionListener(onClick);
+		btnViewTicket.addActionListener(onClick);
 		
 		infoPanel.add(info);
 		
-		add(btnViewReceipt, BorderLayout.PAGE_START);
+		add(btnViewTicket, BorderLayout.PAGE_START);
 		add(btnConfirm, BorderLayout.PAGE_END);
 		add(infoPanel, BorderLayout.CENTER);
 		
@@ -61,7 +61,7 @@ public class CheckOutPanel extends JPanel
 				SearchPanel searchPanel = (SearchPanel)cards.getComponent(0);
 				searchPanel.updateFilm();
 			}
-			else if(e.getActionCommand().equals(btnViewReceipt.getActionCommand()))
+			else if(e.getActionCommand().equals(btnViewTicket.getActionCommand()))
 			{
 				if(Desktop.isDesktopSupported()) 
 				{
@@ -90,30 +90,31 @@ public class CheckOutPanel extends JPanel
 		String formatDate = util.getMonth(record.date/100) + " " + record.date % 100;
 		
 		//set info
-		info.setText("<html>Movie: " +record.movie + "<br>Time: " + formatShowTime + "<br>Date: " + formatDate + "<br>Row: " + (record.seatRow + 1) + "<br>Col: " + (record.seatCol + 1) + "<br>Name: "
-				 + record.name + "<br>Birthdate: " + formatBirthDate + "<br>Address: " + record.address + "<br>Phone Num: " + record.telephone + "<br>Credit Card: "
+		info.setText("<html>Movie: " +record.movie + "<br>Time: " + formatShowTime + "<br>Date: " + formatDate + ""
+				+ "<br>Row: " + (record.seatRow + 1) + "<br>Col: " + (record.seatCol + 1) + "<br>Name: "
+				 + record.name + "<br>Birthdate: " + formatBirthDate + "<br>Address: " + record.address + ""
+				 + "<br>Phone Num: " + record.telephone + "<br>Credit Card: "
 				 + record.creditCardNum + "<br> Exp Date: " + formatExpDate + "<br>Security Code: " + record.securityCode + "<br></html>");
 	
 		//printwriter
-		file = new File(Value.RECEIPT_PATH + record.name + record.movie + record.date + record.showTime + ".txt");
+		file = new File(Value.TICKET_PATH + record.name + record.movie + record.date + record.showTime + ".txt");
 		if(!file.exists())
 			file.createNewFile();
 		fw = new FileWriter(file);
 		bw = new BufferedWriter(fw);
 		pw = new PrintWriter(bw);
 		
-		//print receipt to txt
-		pw.println("Receipt for " + record.name);
+		//print ticket to txt
+		pw.println("Ticket for " + record.name);
 		pw.println();
 		pw.println("Movie: " + record.movie);
 		pw.println("Date: " + formatDate);
 		pw.println("Time: " + formatShowTime);
 		pw.println("Row: " + (record.seatRow + 1) + "\tColumn: " + (record.seatCol + 1));
-		pw.println("Name: " + record.name);
-		pw.println("Birthdate: " + formatBirthDate);
-		pw.println("Address: " + record.address);
-		pw.println("Phone: " + record.telephone);
-		pw.println("Credit Card #: " + record.creditCardNum);
+		pw.println("Ticket: " + util.getTicketType(record.ticketType));
+		pw.println("Price: " + util.getTicketPrice(record.ticketType));
+		pw.println();
+		pw.println("Show this ticket to gain entrance to the movie.");
 		
 		//close
 		pw.close();

@@ -23,6 +23,11 @@ public class SeatPlan
 		this.seats = seats;
 	}
 	
+	public void setSeat(int d, int t, int r, int c, boolean bool)
+	{
+		this.seats[d][t][r][c] = bool;
+	}
+	
 	public void setAllFalse()
 	{
 		for(int a = 0; a < seats.length; a++)

@@ -30,12 +30,20 @@ public class Value
 	public final static int MAX_ALL_FRAME_HORIZONTAL_DISPLAY = 7;
 	//Pictures
 	public final static String POSTER_PATH = "Posters\\";
-	public final static String RECEIPT_PATH = "Receipts\\";
+	public final static String TICKET_PATH = "Tickets\\";
 	public final static String ASSET_PATH = "Assets\\";
 	public static ImageIcon[] POSTER_IMAGES;
 	
 	//Movies
 	public final static int DAYS_RUNNING = 31;
+	
+	//Tickets
+	public final static int CHILD = 1;
+	public final static int ADULT = 2;
+	public final static int SENIOR = 3;
+	public final static double CHILD_PRICE = 7.99;
+	public final static double ADULT_PRICE = 11.99;
+	public final static double SENIOR_PRICE = 9.99;
 	
 	//Admin
 	public final static String PASSWORD = "123";

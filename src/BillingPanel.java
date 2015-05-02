@@ -17,7 +17,7 @@ import com.toedter.calendar.JCalendar;
 public class BillingPanel extends JPanel
 {
 	private static MovieRecord record;
-	private static int dateIndex, timeIndex, rowIndex, colIndex;
+	private static int dateIndex, timeIndex, rowIndex, colIndex, ticket;
 	private static long recordNum;
 	
 	private static JPanel cards;
@@ -117,7 +117,7 @@ public class BillingPanel extends JPanel
 					}
 					
 					//write new customer record
-					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], realDate, rowIndex, colIndex, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
+					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], realDate, rowIndex, colIndex, ticket, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
 					
 					log.v("Customer record created at record number " + CustomerFile.getNumRecords() + 1);
 					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);	
@@ -134,8 +134,10 @@ public class BillingPanel extends JPanel
 					checkOut.setInfo(customer);
 				}catch(IOException io){
 					log.e("IOException occurred.");
+					io.printStackTrace();
 				}catch(NumberFormatException nf){
 					log.e("Number Format Exception - A non-integer was entered into a field expecting integers.");
+					nf.printStackTrace();
 				}
 			}
 			else if(action.equals("Cancel"))
@@ -146,7 +148,7 @@ public class BillingPanel extends JPanel
 		}
 	}
 	
-	public void setMovie(MovieRecord movie, long recordNumber, int date, int time, int row, int col)
+	public void setMovie(MovieRecord movie, long recordNumber, int date, int time, int row, int col, int ticketType)
 	{
 		record = movie;
 		recordNum = recordNumber;
@@ -154,6 +156,7 @@ public class BillingPanel extends JPanel
 		timeIndex = time;
 		rowIndex = row;
 		colIndex = col;
+		ticket = ticketType;
 	}
 	
 	public void setCards(JPanel masterCard)

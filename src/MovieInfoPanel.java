@@ -178,8 +178,7 @@ public class MovieInfoPanel extends JPanel
 		dates = new DefaultComboBoxModel<String>();
 		int lastDayInMonth = util.getLastDay(movie.releaseDate/100); //the last day in the movie's release month
 		int dateCount = 0; //counts the days if the movie's dates overlap two months
-		int numDays = util.getNumDaysPlaying(movie.releaseDate, movie.finalDate);
-		for(int i = 0; i < numDays; i++) //loop through the movie's dates
+		for(int i = 0; i < Value.DAYS_RUNNING; i++) //loop through the movie's dates
 		{
 			int currDate = movie.releaseDate + i;
 			

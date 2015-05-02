@@ -40,21 +40,40 @@ public class util {
 		}
 	}
 	
-	public static int getNumDaysPlaying(int releaseDate, int finalDate)
+	public static String getTicketType(int type)
 	{
-		int numDays;
-		int lastDay = getLastDay(releaseDate/100);
-		
-		if(releaseDate/100 != finalDate/100)
+		switch(type)
 		{
-			int numDays1 = ((releaseDate/100) * 100 + lastDay) - releaseDate + 1; //add 1 to compensate 
-			int numDays2 = finalDate - (finalDate / 100) * 100;
-			numDays = numDays1 + numDays2;
+		case Value.CHILD: return "Child";
+		case Value.ADULT: return "Adult";
+		case Value.SENIOR: return "Senior";
+		default: return "ERROR";
+		}
+	}
+	
+	public static double getTicketPrice(int type)
+	{
+		switch(type)
+		{
+		case Value.CHILD: return Value.CHILD_PRICE;
+		case Value.ADULT: return Value.ADULT_PRICE;
+		case Value.SENIOR: return Value.SENIOR_PRICE;
+		default: return Value.ADULT_PRICE;
+		}
+	}
+	
+	public static int getDaysBetween(int start, int end)
+	{
+		if(start/100 != end/100)
+		{
+			int first = end - (end/100) * 100;
+			int second = ((start/100)*100 + getLastDay(start/100)) - start + 1;
+			return first + second;
 		}
 		else
 		{
-			numDays = finalDate - releaseDate + 1;
+			return end - start;
 		}
-		return numDays;
+		
 	}
 }

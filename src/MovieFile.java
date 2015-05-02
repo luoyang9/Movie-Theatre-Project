@@ -6,6 +6,7 @@
  **/
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -35,6 +36,8 @@ public class MovieFile
 			databaseMovies.add(line);
 			line = bR.readLine();
 		}
+		
+		
 		for(int i = 0; i < databaseMovies.size(); i++)
 		{
 			String[] movieInfo = databaseMovies.get(i).split("\t");
@@ -42,6 +45,7 @@ public class MovieFile
 			int[] tempShowTimes = {Integer.parseInt(movieInfo[4]), Integer.parseInt(movieInfo[5]), Integer.parseInt(movieInfo[6]), Integer.parseInt(movieInfo[7])};
 			String[] tempCast = {movieInfo[8], movieInfo[9], movieInfo[10]};
 			
+			//write seat plans
 			SeatPlan seatplan;
 			if(i >= numRecords) //if we're out of raf's bounds (new movie)
 			{
@@ -61,6 +65,37 @@ public class MovieFile
 			writeRecord(i + 1, record);
 		}
 		raf.close();
+	}
+	
+	public static void updateSeats() throws Exception
+	{
+		raf = new RandomAccessFile("movie_info", "rw");
+		record = new MovieRecord();
+		List<CustomerRecord> customers = CustomerFile.getAllRecords();
+		List<MovieRecord> movies = getAllRecords();
+		
+		for(int m = 0; m < movies.size(); m++) //loop through movies
+		{
+			MovieRecord currMovie = movies.get(m);
+			currMovie.seatplan.setAllFalse(); //set all seats to false
+			for(int i = 0; i < customers.size(); i++) //loop through customer
+			{
+				CustomerRecord currCustomer = customers.get(i);
+				if(currMovie.movieTitle.equalsIgnoreCase(currCustomer.movie)) //if customer booked this movie
+				{
+					int dateIndex = util.getDaysBetween(currMovie.releaseDate, currCustomer.date);
+					int timeIndex = 0;
+					for(int s = 0; s < currMovie.showTimes.length; s++)
+					{
+						if(currMovie.showTimes[s] == currCustomer.showTime) timeIndex = s;
+					}
+					
+					currMovie.seatplan.setSeat(dateIndex, timeIndex, currCustomer.seatRow, currCustomer.seatCol, true); //set customer's seat to booked
+				}
+			}
+			
+			writeRecord(m + 1, currMovie);
+		}
 	}
 	
 	//get a specific record

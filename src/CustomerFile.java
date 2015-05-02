@@ -49,6 +49,7 @@ public class CustomerFile {
 		record.date = raf.readInt();
 		record.seatRow = raf.readInt();
 		record.seatCol = raf.readInt();
+		record.ticketType = raf.readInt();
 		
 		//get chars for name
 		StringBuilder name = new StringBuilder(40);
@@ -58,7 +59,7 @@ public class CustomerFile {
 			if(nextChar != nullChar) name.append(nextChar);
 			else
 			{
-				raf.seek(position + 136);
+				raf.seek(position + 140);
 				break;
 			}
 		}
@@ -74,7 +75,7 @@ public class CustomerFile {
 			if(nextChar != nullChar) address.append(nextChar);
 			else
 			{
-				raf.seek(position + 200);
+				raf.seek(position + 204);
 				break;
 			}
 		}
@@ -97,7 +98,7 @@ public class CustomerFile {
 		for(int i = 0; i < numRecords; i++)
 		{	
 			currCustomer = getRecord(i+1);
-			CustomerRecord customer = new CustomerRecord(currCustomer.movie, currCustomer.showTime, currCustomer.date, currCustomer.seatRow, currCustomer.seatCol, currCustomer.name, currCustomer.birthday, currCustomer.address, currCustomer.telephone, currCustomer.creditCardNum, currCustomer.expiryDate, currCustomer.securityCode);
+			CustomerRecord customer = new CustomerRecord(currCustomer.movie, currCustomer.showTime, currCustomer.date, currCustomer.seatRow, currCustomer.seatCol, currCustomer.ticketType, currCustomer.name, currCustomer.birthday, currCustomer.address, currCustomer.telephone, currCustomer.creditCardNum, currCustomer.expiryDate, currCustomer.securityCode);
 			list.add(customer);
 		}
 		log.i(list.size() +" Customer Records found");
@@ -121,6 +122,7 @@ public class CustomerFile {
 		raf.writeInt(record.date);
 		raf.writeInt(record.seatRow);
 		raf.writeInt(record.seatCol);
+		raf.writeInt(record.ticketType);
 		
 		//put name data into StringBuffer
 		temp = new StringBuffer(record.name);
