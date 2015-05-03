@@ -77,7 +77,7 @@ public class SearchPanel extends JPanel{
 			String realDate = Integer.toString(dt.getDate());
 			if(dt.getDate() < 10) realDate = "0" + realDate;
 			datesInt[x] = Integer.parseInt((dt.getMonth()+1) +""+ realDate);
-			dates[x] = String.format("%-10s %-7s %3d",((x<Value.DATE_WORDS.length)?Value.DATE_WORDS[x]:Value.WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
+			dates[x] = String.format("%s, %s %d",((x<Value.DATE_WORDS.length)?Value.DATE_WORDS[x]:Value.WEEK_DAYS[dt.getDay()]), util.getMonth(dt.getMonth()+1),dt.getDate()); 
 			
 			c.add(Calendar.DATE, 1);
 		}
@@ -170,7 +170,10 @@ public class SearchPanel extends JPanel{
 		searchBox2.setBackground(Value.BABY_BLUE);
 		searchBox2.setFont(Value.SMALL);
 		
-
+		viewAll.setBackground(Value.BABY_BLUE);
+		viewAll.setForeground(Color.white);
+		adminBtn.setBackground(Value.BABY_BLUE);
+		adminBtn.setForeground(Color.white);
 		updateFilm();
 	}
 	public void updateFilm(int time){
@@ -179,7 +182,7 @@ public class SearchPanel extends JPanel{
 		boolean all= false;
 		if(time!= 12*Value.SLIDER_INTERVAL+1){
 		searchByTime = true;
-		searchType.setText("Results");
+		searchType.setIcon(Value.getImage("Results"));
 		int timeMin = (time*60/Value.SLIDER_INTERVAL);
 		
 		

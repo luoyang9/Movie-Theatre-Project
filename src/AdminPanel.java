@@ -30,22 +30,38 @@ public class AdminPanel extends JPanel
 	{
 		JPanel passwordPanel = new JPanel(new BorderLayout());
 		JPanel innerPasswordPanel = new JPanel(new GridLayout(5,1));
+		innerPasswordPanel.setBackground(Color.WHITE);
 		okButton = new JButton("Login");
+		okButton.setBackground(Value.BLUE);
+		okButton.setForeground(Color.white);
+		okButton.setFont(Value.MEDIUM);
 		passwordField = new JPasswordField(JTextField.CENTER);
 		passwordField.setFont(Value.LARGE_BOLD);
+		passwordField.setBackground(Value.GREY);
+		passwordField.setForeground(Color.white);
 		passwordLabel = new JLabel("Administrator Log in",JLabel.CENTER);
 		passwordLabel.setFont(Value.LARGE_BOLD);
-		
+		passwordLabel.setForeground(Value.BLUE);
 		JPanel controlPanel = new JPanel(new GridLayout(1,4));
 		this.setLayout(new CardLayout());
 		viewAllMovies = new JButton("View All Movies");
 		viewAllCustomers = new JButton("View All Customers");
 		addMovie = new JButton("Add Movie");
+		addMovie.setBackground(Value.BLUE);
+		addMovie.setForeground(Color.WHITE);
 		btnBack = new JButton("Back");
+		btnBack.setBackground(Value.RED);
+		btnBack.setForeground(Color.white);
 		btnBack2 = new JButton("Back");
+		btnBack2.setBackground(Value.RED);
+		btnBack2.setForeground(Color.white);
 		ButtonHandler onClick = new ButtonHandler();
 		viewAllMovies.addActionListener(onClick);
+		viewAllMovies.setBackground(Value.BLUE);
+		viewAllMovies.setForeground(Color.WHITE);
 		viewAllCustomers.addActionListener(onClick);
+		viewAllCustomers.setBackground(Value.BLUE);
+		viewAllCustomers.setForeground(Color.WHITE);
 		addMovie.addActionListener(onClick);
 		btnBack.addActionListener(onClick);
 		btnBack2.addActionListener(onClick);
@@ -123,7 +139,7 @@ public class AdminPanel extends JPanel
 				cl.show(cards, Value.SEARCH);
 				switchCard((JPanel)cards.getComponent(3),2);
 				passwordField.setText("");
-				passwordLabel.setForeground(Color.BLACK);
+				passwordLabel.setForeground(Value.BLUE);
 			}
 		}
 		
