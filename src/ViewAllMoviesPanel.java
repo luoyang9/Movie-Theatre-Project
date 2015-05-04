@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -80,7 +79,6 @@ public class ViewAllMoviesPanel extends JPanel
 		private JLabel cast;
 		private JLabel dateTime;
 		private JLabel image;
-		private ImageIcon icon;
 		private JPanel bottom;
 		
 		public movieBlock(MovieRecord record)

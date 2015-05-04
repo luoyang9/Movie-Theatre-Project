@@ -1,0 +1,10 @@
+Ticket for Charlie
+
+Movie: Iron Man 2
+Date: April 1
+Time: 1:00PM
+Row: 2	Column: 2
+Ticket: Child
+Price: 7.99
+
+Show this ticket to gain entrance to the movie.

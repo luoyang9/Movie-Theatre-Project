@@ -1,12 +1,16 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Calendar;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,23 +24,45 @@ public class BillingPanel extends JPanel
 	private static int dateIndex, timeIndex, rowIndex, colIndex, ticket;
 	private static long recordNum;
 	
+	private static JFrame calendarFrame;
 	private static JPanel cards;
 	
-	private static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, blank;
-	private static JButton back, proceed;
-	private static JTextField nameIn, addressIn, phoneNumIn, credCardIn, secureCodeIn;
+	private static JLabel banner, name, bDay, address, phoneNum, credCard, expDate, secureCode, errorMessage;
+	private static JButton back, proceed, btnCalendar1, btnCalendar2, btnConfirm1, btnConfirm2;
+	private static JTextField nameIn, addressIn, phoneNumIn, credCardIn, secureCodeIn, birthdateIn, expDateIn;
 	private static JCalendar calendar1, calendar2;
 	
 	public BillingPanel(){
-		setLayout(new BorderLayout());
+		setBackground(Value.GREY);
 		
-		JPanel personal = new JPanel(new GridLayout(4,2));
-		JPanel credInfo = new JPanel(new GridLayout(5,1));
-		JPanel inputCVV = new JPanel(new GridLayout(1,2));
-		JPanel allInfo = new JPanel(new GridLayout(1,2));
-		JPanel button = new JPanel(new GridLayout(1,3));
+		JPanel calendarPnl1 = new JPanel();
+		JPanel calendarPnl2 = new JPanel();
+		JPanel namePnl = new JPanel();
+		JPanel addressPnl = new JPanel();
+		JPanel phonePnl = new JPanel();
+		JPanel creditCardPnl = new JPanel();
+		JPanel secCodePnl = new JPanel();
+		JPanel personal = new JPanel();
+		personal.setLayout(new BoxLayout(personal, BoxLayout.Y_AXIS));
+		JPanel credInfo = new JPanel();
+		credInfo.setLayout(new BoxLayout(credInfo, BoxLayout.Y_AXIS));
+		JPanel allInfo = new JPanel();
+		JPanel button = new JPanel();
+		button.setLayout(new BoxLayout(button, BoxLayout.X_AXIS));
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+		container.setSize(Value.WIDTH - 100, Value.HEIGHT);
 		
+		btnCalendar1 = new JButton("CAL");
+		btnCalendar1.setActionCommand("cal1");
+		btnCalendar2 = new JButton("CAL");
+		btnCalendar2.setActionCommand("cal2");
+		btnConfirm1 = new JButton("OK");
+		btnConfirm1.setActionCommand("confirm1");
+		btnConfirm2 = new JButton("OK");
+		btnConfirm2.setActionCommand("confirm2");
 		banner = new JLabel("Payment Information");
+		banner.setFont(new Font("Arial", Font.BOLD, 25));
 		name = new JLabel("Name");
 		bDay = new JLabel("Birthdate");
 		address = new JLabel("Address");
@@ -44,50 +70,67 @@ public class BillingPanel extends JPanel
 		credCard = new JLabel("Credit Card No.");
 		expDate = new JLabel("Expiry Date");
 		secureCode = new JLabel("CVV");
-		blank = new JLabel(" ");
+		errorMessage = new JLabel("");
 		calendar1 = new JCalendar();
 		calendar2 = new JCalendar();
 		
 		back = new JButton("Cancel");
 		proceed = new JButton("Proceed");
 		
-		nameIn = new JTextField("");
-		addressIn = new JTextField("");
-		phoneNumIn = new JTextField("");
-		credCardIn = new JTextField("");
-		secureCodeIn = new JTextField("");
+		nameIn = new JTextField("", 20);
+		addressIn = new JTextField("", 20);
+		phoneNumIn = new JTextField("", 20);
+		credCardIn = new JTextField("", 20);
+		secureCodeIn = new JTextField("", 20);
+		birthdateIn = new JTextField("", 15);
+		expDateIn = new JTextField("", 15);
 		
 		ButtonHandler onClick = new ButtonHandler();
 		back.addActionListener(onClick);
 		proceed.addActionListener(onClick);
+		btnCalendar1.addActionListener(onClick);
+		btnCalendar2.addActionListener(onClick);
+		btnConfirm1.addActionListener(onClick);
+		btnConfirm2.addActionListener(onClick);
 		
-		add(banner, BorderLayout.PAGE_START);
-		
-		personal.add(name);
-		personal.add(nameIn);
-		personal.add(bDay);
-		personal.add(calendar1);
-		personal.add(address);
-		personal.add(addressIn);
-		personal.add(phoneNum);
-		personal.add(phoneNumIn);
+		container.add(banner);
+
+		calendarPnl1.add(bDay);
+		calendarPnl1.add(birthdateIn);
+		calendarPnl1.add(btnCalendar1);
+		calendarPnl2.add(expDate);
+		calendarPnl2.add(expDateIn);
+		calendarPnl2.add(btnCalendar2);
+		namePnl.add(name);
+		namePnl.add(nameIn);
+		addressPnl.add(address);
+		addressPnl.add(addressIn);
+		phonePnl.add(phoneNum);
+		phonePnl.add(phoneNumIn);
+		personal.add(namePnl);
+		personal.add(calendarPnl1);
+		personal.add(addressPnl);
+		personal.add(phonePnl);
 		allInfo.add(personal);
 		
-		credInfo.add(credCard);
-		credInfo.add(credCardIn);
-		credInfo.add(expDate);
-		credInfo.add(calendar2);
-		inputCVV.add(secureCode);
-		inputCVV.add(secureCodeIn);
-		credInfo.add(inputCVV);
+		creditCardPnl.add(credCard);
+		creditCardPnl.add(credCardIn);
+		secCodePnl.add(secureCode);
+		secCodePnl.add(secureCodeIn);
+		credInfo.add(creditCardPnl);
+		credInfo.add(calendarPnl2);
+		credInfo.add(secCodePnl);
 		allInfo.add(credInfo);
 		
-		add(allInfo, BorderLayout.CENTER);
+		container.add(allInfo);
 		
 		button.add(back);
-		button.add(blank);
+		button.add(Box.createHorizontalGlue());
 		button.add(proceed);
-		add(button, BorderLayout.PAGE_END);
+		container.add(button);
+		
+		add(container);
+		add(errorMessage);
 	}
 	private static class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -101,13 +144,16 @@ public class BillingPanel extends JPanel
 					//formatting
 					long formatTelephone = Long.parseLong(phoneNumIn.getText().replaceAll("\\(|\\)|\\-|\\s", ""));
 					
-					Calendar tempCal1 = calendar1.getCalendar();
-					int birthDate = (tempCal1.get(Calendar.MONTH) + 1) * 1000000 + tempCal1.get(Calendar.DATE) *10000 + tempCal1.get(Calendar.YEAR);
-					
-					Calendar tempCal2 = calendar2.getCalendar();
-					int expDate = (tempCal2.get(Calendar.MONTH) + 1) * 1000000 + tempCal2.get(Calendar.DATE) *10000 + tempCal2.get(Calendar.YEAR);
+					String[] birthdateString = birthdateIn.getText().split("/");
+					int birthDate = (Integer.parseInt(birthdateString[0]) * 1000000 + Integer.parseInt(birthdateString[1]) *10000 
+							+ Integer.parseInt(birthdateString[2]));
+
+					String[] expDateString = expDateIn.getText().split("/");
+					int expDate = (Integer.parseInt(expDateString[0]) * 1000000 + Integer.parseInt(expDateString[1]) *10000 
+							+ Integer.parseInt(expDateString[2]));
 					
 					int secCode = Integer.parseInt(secureCodeIn.getText().replaceAll("\\s", ""));
+					long credCardNum = Long.parseLong(credCardIn.getText());
 					
 					int realDate = record.releaseDate + dateIndex;
 					int lastDayInMonth = util.getLastDay(record.releaseDate/100);
@@ -117,7 +163,9 @@ public class BillingPanel extends JPanel
 					}
 					
 					//write new customer record
-					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], realDate, rowIndex, colIndex, ticket, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, Long.parseLong(credCardIn.getText()), expDate, secCode);
+					CustomerRecord customer = new CustomerRecord(record.movieTitle, record.showTimes[timeIndex], 
+							realDate, rowIndex, colIndex, ticket, nameIn.getText(), birthDate, addressIn.getText(), formatTelephone, 
+							credCardNum, expDate, secCode);
 					
 					log.v("Customer record created at record number " + CustomerFile.getNumRecords() + 1);
 					CustomerFile.writeRecord(CustomerFile.getNumRecords() + 1, customer);	
@@ -135,14 +183,50 @@ public class BillingPanel extends JPanel
 				}catch(IOException io){
 					log.e("IOException occurred.");
 					io.printStackTrace();
+					errorMessage.setText("An error occurred while processing your request. Please contact the administrator for help.");
+					return;
 				}catch(NumberFormatException nf){
 					log.e("Number Format Exception - A non-integer was entered into a field expecting integers.");
 					nf.printStackTrace();
+					errorMessage.setText("ERROR! An unexpected character was entered in one of the fields above. Did you accidently enter a letter in a field expecting all numbers?");
+					return;
 				}
 			}
 			else if(action.equals("Cancel"))
 			{
 				cl.show(cards, Value.TICKET);
+			}
+			else if(action.equals(btnCalendar1.getActionCommand()))
+			{
+				calendarFrame = new JFrame("Calendar");
+				JPanel temp = new JPanel();
+				temp.add(calendar1);
+				temp.add(btnConfirm1);
+				calendarFrame.add(temp);
+				calendarFrame.pack();
+				calendarFrame.setVisible(true);
+			}
+			else if(action.equalsIgnoreCase(btnConfirm1.getActionCommand()))
+			{
+				Calendar tempCal1 = calendar1.getCalendar();
+				birthdateIn.setText((tempCal1.get(Calendar.MONTH) + 1) + "/" + tempCal1.get(Calendar.DATE) + "/" + tempCal1.get(Calendar.YEAR));
+				calendarFrame.setVisible(false);
+			}
+			else if(action.equals(btnCalendar2.getActionCommand()))
+			{
+				calendarFrame = new JFrame("Calendar");
+				JPanel temp = new JPanel();
+				temp.add(calendar2);
+				temp.add(btnConfirm2);
+				calendarFrame.add(temp);
+				calendarFrame.pack();
+				calendarFrame.setVisible(true);
+			}
+			else if(action.equalsIgnoreCase(btnConfirm2.getActionCommand()))
+			{
+				Calendar tempCal1 = calendar2.getCalendar();
+				expDateIn.setText((tempCal1.get(Calendar.MONTH) + 1) + "/" + tempCal1.get(Calendar.DATE) + "/" + tempCal1.get(Calendar.YEAR));
+				calendarFrame.setVisible(false);
 			}
 			
 		}
