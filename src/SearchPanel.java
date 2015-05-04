@@ -8,12 +8,10 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.plaf.basic.BasicSliderUI;
 
 
 public class SearchPanel extends JPanel{
