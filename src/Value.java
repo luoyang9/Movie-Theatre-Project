@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,9 @@ public class Value
 			return errorImage;
 		}
 	}
+	public static ImageIcon getImage(int imageId, int width, int height){
+		return new ImageIcon(getImage(imageId).getImage().getScaledInstance(width,height,Image.SCALE_SMOOTH));
+	}
 	public static ImageIcon getImage(String imageName){
 		for(imageFile i : ASSET_IMAGES){
 			if(i.getName().equalsIgnoreCase(imageName))
@@ -103,6 +107,9 @@ public class Value
 		}
 		log.e("Image "+ imageName +" couldn't be found. Returning error image");
 		return errorImage;
+	}
+	public static ImageIcon getImage(String imageName, int width, int height){
+		return new ImageIcon(getImage(imageName).getImage().getScaledInstance(width, height,Image.SCALE_SMOOTH));
 	}
 	public static class imageFile{
 		protected String imageName;

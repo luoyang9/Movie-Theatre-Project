@@ -62,7 +62,7 @@ public class MovieInfoPanel extends JPanel
 		btnBack.setForeground(Color.black);
 		btnBack.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		btnBack.setCursor (Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBack.setIcon(new ImageIcon(new ImageIcon(Value.ASSET_PATH + "back.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH)));
+		btnBack.setIcon(Value.getImage("back",15,15));
 		for(int i = 0; i < btnShowTimes.length; i++)
 		{
 			btnShowTimes[i] = new JButton();
@@ -212,8 +212,7 @@ public class MovieInfoPanel extends JPanel
 			btnShowTimes[i].setText(formattedShowTime);
 		}
 		lblCast.setText("<html><b>Director:</b> " + movie.movieCast[0] + "&nbsp;&nbsp;&nbsp;<b>Producer</b>: " + movie.movieCast[1] + "&nbsp;&nbsp;&nbsp;<b>Featuring:</b> " + movie.movieCast[2] + "</html>");
-		movieImageIcon = new ImageIcon(Value.getImage(movie.imageID).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
-		movieImage.setIcon(movieImageIcon);
+		movieImage.setIcon(Value.getImage(movie.imageID,300,400));
 	}
 	
 	
