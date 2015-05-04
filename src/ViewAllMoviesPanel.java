@@ -87,8 +87,7 @@ public class ViewAllMoviesPanel extends JPanel
 		{
 			setLayout(new BorderLayout());
 			image = new JLabel();
-			icon = new ImageIcon(Value.getImage(record.imageID).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
-			image.setIcon(icon);
+			image.setIcon(Value.getImage(record.imageID,300, 400));
 			title = new JLabel(record.movieTitle, JLabel.CENTER);
 			title.setFont(new Font("Impact", Font.BOLD, 30));
 			summary = new JTextArea(record.movieSummary);
