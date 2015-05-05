@@ -1,0 +1,10 @@
+Ticket for Jordan Ho
+
+Movie: Iron Man
+Date: March 26
+Time: 3:00PM
+Row: 2	Column: 3
+Ticket: Adult
+Price: 11.99
+
+Show this ticket to gain entrance to the movie.

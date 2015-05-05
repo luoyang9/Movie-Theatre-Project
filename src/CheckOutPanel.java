@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -9,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +22,9 @@ import javax.swing.JPanel;
 public class CheckOutPanel extends JPanel
 {
 	private static JPanel cards;
+	private static JPanel container;
 	private static JLabel info;
+	private static JLabel title;
 	
 	private static JButton btnConfirm;
 	private static JButton btnViewTicket;
@@ -32,22 +38,39 @@ public class CheckOutPanel extends JPanel
 	
 	public CheckOutPanel()
 	{
-		setLayout(new BorderLayout());
+		
+		container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		infoPanel = new JPanel();
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.PAGE_AXIS));
 		info = new JLabel();
+		info.setHorizontalAlignment(JLabel.LEFT);
+		title = new JLabel("You have successfully booked your seat. Please print your ticket.");
+		title.setHorizontalAlignment(JLabel.LEFT);
 		btnConfirm = new JButton("Back to Browsing");
+		btnConfirm.setBackground(Value.RED);
+		btnConfirm.setForeground(Color.black);
+		btnConfirm.setAlignmentX(JButton.LEFT_ALIGNMENT);
 		btnViewTicket = new JButton("View Ticket");
+		btnViewTicket.setAlignmentX(JButton.LEFT_ALIGNMENT);
+		btnViewTicket.setBackground(Value.BABY_BLUE);
+		btnViewTicket.setForeground(Color.WHITE);
 		
 		ButtonHandler onClick = new ButtonHandler();
 		btnConfirm.addActionListener(onClick);
 		btnViewTicket.addActionListener(onClick);
 		
+		infoPanel.add(title);
+		infoPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		infoPanel.add(info);
+		infoPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		infoPanel.add(btnViewTicket);
+
+		container.add(infoPanel);
+		container.add(Box.createRigidArea(new Dimension(0, 20)));
+		container.add(btnConfirm);
 		
-		add(btnViewTicket, BorderLayout.PAGE_START);
-		add(btnConfirm, BorderLayout.PAGE_END);
-		add(infoPanel, BorderLayout.CENTER);
-		
+		add(container);
 	}
 	
 	private static class ButtonHandler implements ActionListener

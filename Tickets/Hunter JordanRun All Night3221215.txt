@@ -1,0 +1,10 @@
+Ticket for Hunter Jordan
+
+Movie: Run All Night
+Date: March 22
+Time: 12:15PM
+Row: 2	Column: 2
+Ticket: Adult
+Price: 11.99
+
+Show this ticket to gain entrance to the movie.

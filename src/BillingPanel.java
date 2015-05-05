@@ -153,6 +153,13 @@ public class BillingPanel extends JPanel
 			{
 				try
 				{
+					if(nameIn.getText().equals("") || birthdateIn.getText().equals("") || addressIn.getText().equals("") || 
+					phoneNumIn.getText().equals("") || credCardIn.getText().equals("") || expDateIn.getText().equals("") || 
+					secureCodeIn.getText().equals(""))
+					{
+						errorMessage.setText("ERROR! Please fill out all fields.");
+						return;
+					}
 					//formatting
 					long formatTelephone = Long.parseLong(phoneNumIn.getText().replaceAll("\\(|\\)|\\-|\\s", ""));
 					
@@ -192,6 +199,7 @@ public class BillingPanel extends JPanel
 					cl.show(cards, Value.CHECK_OUT);
 					CheckOutPanel checkOut = (CheckOutPanel)cards.getComponent(6);
 					checkOut.setInfo(customer);
+					errorMessage.setText("");
 				}catch(IOException io){
 					log.e("IOException occurred.");
 					io.printStackTrace();
@@ -207,6 +215,7 @@ public class BillingPanel extends JPanel
 			else if(action.equals(back.getActionCommand()))
 			{
 				cl.show(cards, Value.TICKET);
+				errorMessage.setText("");
 			}
 			else if(action.equals(btnCalendar1.getActionCommand()))
 			{

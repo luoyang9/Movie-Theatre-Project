@@ -1,0 +1,10 @@
+Ticket for FLorence
+
+Movie: Iron Man 2
+Date: April 1
+Time: 7:45PM
+Row: 3	Column: 4
+Ticket: Adult
+Price: 11.99
+
+Show this ticket to gain entrance to the movie.

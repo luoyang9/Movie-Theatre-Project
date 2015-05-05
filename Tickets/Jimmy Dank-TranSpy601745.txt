@@ -1,0 +1,10 @@
+Ticket for Jimmy Dank-Tran
+
+Movie: Spy
+Date: June 1
+Time: 7:45PM
+Row: 2	Column: 2
+Ticket: Adult
+Price: 11.99
+
+Show this ticket to gain entrance to the movie.

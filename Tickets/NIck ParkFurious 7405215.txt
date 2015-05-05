@@ -1,0 +1,10 @@
+Ticket for NIck Park
+
+Movie: Furious 7
+Date: April 5
+Time: 2:15PM
+Row: 1	Column: 3
+Ticket: Adult
+Price: 11.99
+
+Show this ticket to gain entrance to the movie.

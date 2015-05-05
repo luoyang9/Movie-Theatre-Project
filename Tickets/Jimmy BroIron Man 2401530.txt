@@ -1,0 +1,10 @@
+Ticket for Jimmy Bro
+
+Movie: Iron Man 2
+Date: April 1
+Time: 5:30PM
+Row: 1	Column: 2
+Ticket: Senior
+Price: 9.99
+
+Show this ticket to gain entrance to the movie.
