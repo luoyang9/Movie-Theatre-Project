@@ -64,8 +64,7 @@ public class BillingPanel extends JPanel
 		btnConfirm1.setActionCommand("confirm1");
 		btnConfirm2 = new JButton("OK");
 		btnConfirm2.setActionCommand("confirm2");
-		banner = new JLabel("Payment Information");
-		banner.setFont(new Font("Arial", Font.BOLD, 25));
+		banner = new JLabel(Value.getImage("Payment"));
 		name = new JLabel("Name");
 		bDay = new JLabel("Birthdate");
 		address = new JLabel("Address");
@@ -82,8 +81,10 @@ public class BillingPanel extends JPanel
 		back.setIcon(Value.getImage("back", 15, 15));
 		back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		back.setForeground(Color.BLACK);
+		back.setFont(Value.MEDIUM);
 		back.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		proceed = new JButton(" Proceed ");
+		proceed.setFont(Value.MEDIUM);
 		proceed.setBackground(Value.BABY_BLUE);
 		proceed.setForeground(Color.white);
 		proceed.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

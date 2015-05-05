@@ -31,7 +31,6 @@ public class TicketPanel extends JPanel
 	private JPanel container;
 	
 	private JLabel movieTitle;
-	private JLabel movieDateTime;
 	private JLabel lblSeats;
 	private JLabel lblTickets;
 	private JLabel lblScreen;
@@ -66,22 +65,17 @@ public class TicketPanel extends JPanel
 		container.setSize(Value.WIDTH - 200, Value.HEIGHT);
 		seatPanel = new JPanel(new GridLayout(3, 4,5,5));
 		moviePanel = new JPanel(new GridLayout(2, 1));
-		ticketPanel = new JPanel(new GridLayout(5, 1));
+		ticketPanel = new JPanel(new GridLayout(4, 1));
 		seatInfoPanel = new JPanel(new GridLayout(3, 1));
 		seatBlocks = new seatBlock[3][4];
 		movieTitle = new JLabel("", JLabel.CENTER);
-		movieTitle.setFont(Value.MEDIUM_LARGE);
+		movieTitle.setFont(Value.MEDIUM);
 		movieTitle.setForeground(Value.BLUE);
-		movieDateTime = new JLabel("", JLabel.CENTER);
-		movieDateTime.setFont(Value.MEDIUM);
-		movieDateTime.setForeground(Value.BABY_BLUE);
 		lblSeats = new JLabel("Seats: ");
 		lblSeats.setFont(Value.SMALL_MEDIUM);
 		lblSeats.setForeground(Value.BLUE);
 		lblSeats.setHorizontalAlignment(JLabel.LEFT);
-		lblTickets = new JLabel("Tickets: ", JLabel.LEFT);
-		lblTickets.setFont(Value.SMALL_MEDIUM);
-		lblTickets.setForeground(Value.BLUE);
+		lblTickets = new JLabel(Value.getImage("Ticket",200,100));
 		errorMessage = new JLabel("");
 		errorMessage.setFont(new Font("Arial", Font.PLAIN, 15));
 		errorMessage.setForeground(Value.RED);
@@ -105,19 +99,17 @@ public class TicketPanel extends JPanel
 		onClick = new ButtonHandler();
 		btnBack.addActionListener(onClick);
 		
-		ticketPanel.add(lblTickets);
 		ticketPanel.add(childTicket);
 		ticketPanel.add(adultTicket);
 		ticketPanel.add(seniorTicket);
 		ticketPanel.add(errorMessage);
+		moviePanel.add(lblTickets);
 		moviePanel.add(movieTitle);
-		moviePanel.add(movieDateTime);
 		seatInfoPanel.add(lblSeats);
 		seatInfoPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 		seatInfoPanel.add(lblScreen);
 		
 		container.add(moviePanel);
-		container.add(Box.createRigidArea(new Dimension(0, 20)));
 		container.add(ticketPanel);
 		container.add(Box.createRigidArea(new Dimension(0, 10)));
 		container.add(seatInfoPanel);
@@ -134,8 +126,7 @@ public class TicketPanel extends JPanel
 		
 		seatPanel.removeAll();
 		
-		movieTitle.setText(movie.movieTitle);
-		movieDateTime.setText(date + " - " + time);
+		movieTitle.setText(movie.movieTitle + " at "+ date + " - " + time);
 		for(int i = 0; i < movie.seatplan.getSeats().length; i++) //loop thoruhg dates
 		{
 			//convert dates
@@ -166,6 +157,7 @@ public class TicketPanel extends JPanel
 								{
 									seat.setIcon(Value.getImage("Open",50,50));
 								}
+								seat.setBackground(Value.GREY);
 								seat.setActionCommand(k + "" +  l);
 								seatBlocks[k][l] = seat;
 								seatPanel.add(seat);
