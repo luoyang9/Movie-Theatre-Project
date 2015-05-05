@@ -54,6 +54,7 @@ public class Value
 	public final static String PASSWORD = "123";
 	//Font
 	public final static Font LARGE_BOLD = new Font("Impact", Font.PLAIN, 80);
+	public final static Font MEDIUM_LARGE = new Font("Impact",Font.BOLD,50);
 	public final static Font MEDIUM = new Font("Arial",Font.BOLD,25);
 	public final static Font SMALL_MEDIUM = new Font("Arial",Font.BOLD,20);
 	public final static Font SMALL = new Font("Arial", Font.BOLD,15);

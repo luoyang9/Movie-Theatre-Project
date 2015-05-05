@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,8 @@ public class ViewAllMoviesPanel extends JPanel
 		
 		movieList = new JPanel();
 		btnBack = new JButton("Back");
+		btnBack.setBackground(Value.RED);
+		btnBack.setForeground(Color.white);
 		scroll = new JScrollPane(movieList);
 		
 		ButtonHandler onClick = new ButtonHandler();
@@ -86,10 +89,13 @@ public class ViewAllMoviesPanel extends JPanel
 			image = new JLabel();
 			image.setIcon(Value.getImage(record.imageID,300, 400));
 			title = new JLabel(record.movieTitle, JLabel.CENTER);
-			title.setFont(new Font("Impact", Font.BOLD, 30));
+			title.setFont(Value.MEDIUM);
+			title.setForeground(Value.BLUE);
 			summary = new JTextArea(record.movieSummary);
 			summary.setEditable(false);
 			summary.setLineWrap(true);
+			summary.setFont(Value.SMALL);
+			summary.setForeground(Value.BLUE);
 			cast = new JLabel(record.movieCast[0] + " " + record.movieCast[1] + " " + record.movieCast[2]);
 			dateTime = new JLabel(record.releaseDate + " - " + record.finalDate + " Times: " + record.showTimes[0] +" - " + record.showTimes[1] + " - " + record.showTimes[2] + "-" + record.showTimes[3]);
 			

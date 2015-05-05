@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,19 +47,32 @@ public class AddMoviePanel extends JPanel
 		JPanel moviePanel = new JPanel(new GridLayout(12, 2));
 		
 		lblTitle = new JLabel("Title: ");
+		lblTitle.setFont(Value.SMALL_MEDIUM);
+		lblTitle.setForeground(Value.BLUE);
 		txtTitle = new JTextField();
 		lblSummary = new JLabel("Summary: ");
+		lblSummary.setFont(Value.SMALL_MEDIUM);
+		lblSummary.setForeground(Value.BLUE);
 		txtSummary = new JTextField();
 		lblReleaseDate = new JLabel("Release Date: ");
+		lblReleaseDate.setFont(Value.SMALL_MEDIUM);
+		lblReleaseDate.setForeground(Value.BLUE);
 		txtReleaseDate = new JTextField();
 		lblFinalDate = new JLabel("FinalDate: ");
+		lblFinalDate.setFont(Value.SMALL_MEDIUM);
+		lblFinalDate.setForeground(Value.BLUE);
 		txtFinalDate = new JTextField();
 		lblImage = new JLabel("Image File: ");
+		lblImage.setFont(Value.SMALL_MEDIUM);
+		lblImage.setForeground(Value.BLUE);
 		txtImage = new JTextField();
 		
 		btnAdd = new JButton("Add");
-		btnBack = new JButton("Cancel");
-		
+		btnAdd.setBackground(Value.BLUE);
+		btnAdd.setForeground(Color.white);
+		btnBack = new JButton("Back");
+		btnBack.setBackground(Value.RED);
+		btnBack.setForeground(Color.white);
 		lblShowTimes = new JLabel[4];
 		txtShowTimes = new JTextField[4];
 		lblCast = new JLabel[3];
@@ -66,12 +80,16 @@ public class AddMoviePanel extends JPanel
 		for(int i = 0; i < lblShowTimes.length; i++)
 		{
 			lblShowTimes[i] = new JLabel("Show Time " + (i + 1));
+			lblShowTimes[i].setFont(Value.SMALL_MEDIUM);
+			lblShowTimes[i].setForeground(Value.BLUE);
 			txtShowTimes[i] = new JTextField();
 		}
 		
 		for(int i = 0; i < lblCast.length; i++)
 		{
 			lblCast[i] = new JLabel("Actor " + (i + 1));
+			lblCast[i] .setFont(Value.SMALL_MEDIUM);
+			lblCast[i] .setForeground(Value.BLUE);
 			txtCast[i] = new JTextField();
 		}
 		
@@ -100,8 +118,8 @@ public class AddMoviePanel extends JPanel
 		btnAdd.addActionListener(onClick);
 		btnBack.addActionListener(onClick);
 		
-		add(moviePanel, BorderLayout.PAGE_START);
-		add(btnAdd, BorderLayout.CENTER);
+		add(moviePanel, BorderLayout.CENTER);
+		add(btnAdd, BorderLayout.PAGE_START);
 		add(btnBack, BorderLayout.PAGE_END);
 	}
 	
@@ -139,7 +157,7 @@ public class AddMoviePanel extends JPanel
 					e1.printStackTrace();
 				}
 			}
-			else if(e.getActionCommand().equals("Cancel"))
+			else if(e.getActionCommand().equals("Back"))
 			{
 				CardLayout cl = (CardLayout)cards.getLayout();
 				cl.show(cards, Value.ADMIN);

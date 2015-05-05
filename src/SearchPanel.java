@@ -342,7 +342,7 @@ public class SearchPanel extends JPanel{
 				for(int x = 0;x<mBlocks.length;x++)
 					movieContainer.add(mBlocks[x]);
 				allFrame.add(new JScrollPane(movieContainer));
-				allFrame.pack();
+				allFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); ;
 				allFrame.setVisible(true);
 				Main.frame.setVisible(false);
 			}

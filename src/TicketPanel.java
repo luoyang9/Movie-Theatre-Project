@@ -64,28 +64,38 @@ public class TicketPanel extends JPanel
 		container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.setSize(Value.WIDTH - 200, Value.HEIGHT);
-		seatPanel = new JPanel(new GridLayout(3, 4));
+		seatPanel = new JPanel(new GridLayout(3, 4,5,5));
 		moviePanel = new JPanel(new GridLayout(2, 1));
 		ticketPanel = new JPanel(new GridLayout(5, 1));
 		seatInfoPanel = new JPanel(new GridLayout(3, 1));
 		seatBlocks = new seatBlock[3][4];
 		movieTitle = new JLabel("", JLabel.CENTER);
-		movieTitle.setFont(new Font("Arial", Font.BOLD, 25));
+		movieTitle.setFont(Value.MEDIUM_LARGE);
+		movieTitle.setForeground(Value.BLUE);
 		movieDateTime = new JLabel("", JLabel.CENTER);
-		movieDateTime.setFont(new Font("Arial", Font.PLAIN, 20));
+		movieDateTime.setFont(Value.MEDIUM);
+		movieDateTime.setForeground(Value.BABY_BLUE);
 		lblSeats = new JLabel("Seats: ");
-		lblSeats.setFont(new Font("Arial", Font.BOLD, 20));
+		lblSeats.setFont(Value.SMALL_MEDIUM);
+		lblSeats.setForeground(Value.BLUE);
 		lblSeats.setHorizontalAlignment(JLabel.LEFT);
 		lblTickets = new JLabel("Tickets: ", JLabel.LEFT);
-		lblTickets.setFont(new Font("Arial", Font.BOLD, 20));
+		lblTickets.setFont(Value.SMALL_MEDIUM);
+		lblTickets.setForeground(Value.BLUE);
 		errorMessage = new JLabel("");
 		errorMessage.setFont(new Font("Arial", Font.PLAIN, 15));
 		errorMessage.setForeground(Value.RED);
 		lblScreen = new JLabel("");
-		lblScreen.setIcon(Value.getImage("Screen",300,20));
+		lblScreen.setIcon(Value.getImage("Screen",400,20));
 		childTicket = new JRadioButton("Child - $" + Value.CHILD_PRICE + " (3-13)");
+		childTicket.setFont(Value.SMALL);
+		childTicket.setForeground(Value.BLUE);
 		adultTicket = new JRadioButton("Adult - $" + Value.ADULT_PRICE + " (14-64)");
+		adultTicket.setFont(Value.SMALL);
+		adultTicket.setForeground(Value.BLUE);
 		seniorTicket = new JRadioButton("Senior - $" + Value.SENIOR_PRICE + "(65+)");
+		seniorTicket.setFont(Value.SMALL);
+		seniorTicket.setForeground(Value.BLUE);
 		typeGroup = new ButtonGroup();
 		typeGroup.add(childTicket);
 		typeGroup.add(adultTicket);
@@ -115,7 +125,6 @@ public class TicketPanel extends JPanel
 		container.add(seatPanel);
 		container.add(Box.createRigidArea(new Dimension(0, 20)));
 		container.add(btnBack);
-		
 		add(container);
 	}
 	
@@ -151,12 +160,11 @@ public class TicketPanel extends JPanel
 								if(movie.seatplan.getSeats()[i][j][k][l]) 
 								{
 									seat.setEnabled(false);
-									seat.setBackground(Value.RED);
-									seat.setText("BOOKED");
+									seat.setIcon(Value.getImage("Booked2",50,50));
 								}
 								else
 								{
-									seat.setText("OPEN");
+									seat.setIcon(Value.getImage("Open",50,50));
 								}
 								seat.setActionCommand(k + "" +  l);
 								seatBlocks[k][l] = seat;
@@ -178,10 +186,10 @@ public class TicketPanel extends JPanel
 		public seatBlock()
 		{
 			addActionListener(onClick);
-			setBackground(Value.BABY_BLUE);
+			/*setBackground(Value.BABY_BLUE);
 			setBorder(BorderFactory.createLineBorder(Value.BLUE));
 			setForeground(Color.white);
-			setFont(new Font("Arial", Font.PLAIN, 15));
+			setFont(new Font("Arial", Font.PLAIN, 15));*/
 			setCursor (Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		}
 

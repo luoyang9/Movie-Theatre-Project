@@ -33,6 +33,8 @@ public class ViewAllCustomersPanel extends JPanel
 		
 		customerList = new JPanel();
 		btnBack = new JButton("Back");
+		btnBack.setBackground(Value.RED);
+		btnBack.setForeground(Color.white);
 		scroll = new JScrollPane(customerList);
 		
 		onClick = new ButtonHandler();
@@ -117,8 +119,12 @@ public class ViewAllCustomersPanel extends JPanel
 			setBorder(BorderFactory.createLineBorder(Color.black));
 			setLayout(new BorderLayout());
 			movie = new JLabel(record.movie);
-			
+			movie.setBackground(Color.white);
+			movie.setForeground(Value.BLUE);
+			movie.setFont(Value.SMALL);
 			btnView = new JButton("View Ticket");
+			btnView.setBackground(Value.BLUE);
+			btnView.setForeground(Color.white);
 			btnView.addActionListener(onClick);;
 			
 			String formatBirthDate = util.getMonth(record.birthday / 1000000) + " " + (record.birthday / 10000) % 100 + ", " + record.birthday % 10000;
@@ -127,11 +133,16 @@ public class ViewAllCustomersPanel extends JPanel
 			String formatShowTime = record.showTime / 100 + ":" + showTimeString.substring(showTimeString.length() - 1, showTimeString.length()) + "PM";
 		
 			movieInfo = new JLabel("When: " + record.date + " at " + formatShowTime + ". Seat: R-" + record.seatRow + " C-" + record.seatCol);
+			movieInfo.setFont(Value.SMALL);
+			movieInfo.setForeground(Value.BLUE);
 			customerInfo = new JLabel("Name: " + record.name + " Birthday: " + formatBirthDate + " Address: " + record.address + " Phone: " + record.telephone);
+			customerInfo.setFont(Value.SMALL);
+			customerInfo.setForeground(Value.BLUE);
 			customerCard = new JLabel("Credit Card Num: " + record.creditCardNum + " Exp: " + formatExpDate + "Security Code: " + record.securityCode);
-			
+			customerCard.setFont(Value.SMALL);
+			customerCard.setForeground(Value.BLUE);
 			info = new JPanel(new GridLayout(3, 1));
-			
+			info.setBackground(Color.white);
 			info.add(movieInfo);
 			info.add(customerInfo);
 			info.add(customerCard);
