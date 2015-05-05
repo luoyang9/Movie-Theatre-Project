@@ -38,7 +38,7 @@ public class AdminPanel extends JPanel
 		passwordField = new JPasswordField(JTextField.CENTER);
 		passwordField.setFont(Value.LARGE_BOLD);
 		passwordField.setBackground(Value.GREY);
-		passwordField.setForeground(Color.white);
+		passwordField.setForeground(Value.BLUE);
 		passwordLabel = new JLabel("Administrator Log in",JLabel.CENTER);
 		passwordLabel.setFont(Value.LARGE_BOLD);
 		passwordLabel.setForeground(Value.BLUE);
