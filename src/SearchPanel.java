@@ -131,6 +131,7 @@ public class SearchPanel extends JPanel{
 		
 		//
 		scroll = new JScrollPane(filmsPnl);
+		scroll.getHorizontalScrollBar().setUnitIncrement(16);
 		//Add to panel
 		leftBottomPanel.add(viewAll);
 		leftBottomPanel.add(adminBtn);
@@ -385,8 +386,7 @@ public class SearchPanel extends JPanel{
 			     cardLayout.show(cards, Value.MOVIE);
 			     MovieInfoPanel moviePanel = (MovieInfoPanel) cards.getComponent(1);
 			     if(searchByTime){
-			    	// moviePanel.setMovie( ); set movie's date to selected date
-			    	 moviePanel.setMovie(record);
+			    	 moviePanel.setMovie(record, datesInt[searchDay]);// set movie's date to selected date
 			     }
 			     else
 			     {

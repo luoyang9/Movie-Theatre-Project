@@ -137,15 +137,11 @@ public class MovieInfoPanel extends JPanel
 			btnBack.addActionListener(onClick);
 		}
 	}
-	public void setMovie(MovieRecord movieRecord, int day, int timeSlot){
+	public void setMovie(MovieRecord movieRecord, int day){
 		setMovie(movieRecord);
-		for(int x = 0; x<numberDates.size();x++){
-			if(numberDates.get(x) == day){
-				showDate.setSelectedItem(showDate.getItemAt(day));
-				break;
-			}
-		}
+		String actualDate = util.getMonth(day/100) + " " + day%100;
 		
+		showDate.setSelectedItem(actualDate);
 	}
 	public void setMovie(MovieRecord movieRecord)
 	{	
@@ -190,7 +186,10 @@ public class MovieInfoPanel extends JPanel
 			}
 			
 			String dateString = Integer.toString(currDate);
-			String formattedDate = util.getMonth(Integer.parseInt(dateString.substring(0, 1))) + " " + dateString.substring(1, 3);
+			String formatDay;
+			if(dateString.substring(1, 2).equals("0")) formatDay = dateString.substring(2, 3);
+			else formatDay = dateString.substring(1, 3);
+			String formattedDate = util.getMonth(Integer.parseInt(dateString.substring(0, 1))) + " " + formatDay;
 			
 			numberDates.add(currDate);
 			dates.addElement(formattedDate);

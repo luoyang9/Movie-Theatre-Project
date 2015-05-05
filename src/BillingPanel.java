@@ -1,12 +1,13 @@
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Calendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -53,10 +54,12 @@ public class BillingPanel extends JPanel
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.setSize(Value.WIDTH - 100, Value.HEIGHT);
 		
-		btnCalendar1 = new JButton("CAL");
+		btnCalendar1 = new JButton("");
 		btnCalendar1.setActionCommand("cal1");
-		btnCalendar2 = new JButton("CAL");
+		btnCalendar1.setIcon(Value.getImage("cal", 20, 20));
+		btnCalendar2 = new JButton("");
 		btnCalendar2.setActionCommand("cal2");
+		btnCalendar2.setIcon(Value.getImage("cal", 20, 20));
 		btnConfirm1 = new JButton("OK");
 		btnConfirm1.setActionCommand("confirm1");
 		btnConfirm2 = new JButton("OK");
@@ -74,8 +77,17 @@ public class BillingPanel extends JPanel
 		calendar1 = new JCalendar();
 		calendar2 = new JCalendar();
 		
-		back = new JButton("Cancel");
-		proceed = new JButton("Proceed");
+		back = new JButton("Cancel ");
+		back.setBackground(Value.RED);
+		back.setIcon(Value.getImage("back", 15, 15));
+		back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		back.setForeground(Color.BLACK);
+		back.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		proceed = new JButton(" Proceed ");
+		proceed.setBackground(Value.BABY_BLUE);
+		proceed.setForeground(Color.white);
+		proceed.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		proceed.setBorder(BorderFactory.createLineBorder(Value.BLUE));
 		
 		nameIn = new JTextField("", 20);
 		addressIn = new JTextField("", 20);
@@ -137,7 +149,7 @@ public class BillingPanel extends JPanel
 			String action = e.getActionCommand();
 			CardLayout cl = (CardLayout)cards.getLayout();
 			
-			if(action.equals("Proceed"))
+			if(action.equals(proceed.getActionCommand()))
 			{
 				try
 				{
@@ -192,7 +204,7 @@ public class BillingPanel extends JPanel
 					return;
 				}
 			}
-			else if(action.equals("Cancel"))
+			else if(action.equals(back.getActionCommand()))
 			{
 				cl.show(cards, Value.TICKET);
 			}
